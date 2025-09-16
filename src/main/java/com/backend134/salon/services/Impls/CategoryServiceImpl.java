@@ -31,4 +31,15 @@ public class CategoryServiceImpl implements CategoryService {
         return categoryHomeFeaturedDtoList;
     }
 
+    @Override
+    public List<Category> getAllCategories() {
+        return categoryRepository.findAll();
+    }
+
+    @Override
+    public Category getCategoryById(Long id) {
+        return categoryRepository.findById(id)
+                .orElseThrow(() -> new RuntimeException("Kateqoriya tapılmadı!"));
+    }
+
 }

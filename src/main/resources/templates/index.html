@@ -63,10 +63,10 @@
                         <a href="#" class="nav-link dropdown-toggle" data-bs-toggle="dropdown">Xidmətlər</a>
                         <div class="dropdown-menu bg-light mt-2">
                             <a class="dropdown-item"
-                               th:each="s : ${navServices}"
-                               th:text="${s.name}"
-                               th:href="@{'/service/' + ${s.id}}">
-                                Service name
+                               th:each="c : ${navCategories}"
+                               th:text="${c.name}"
+                               th:href="'/category/' + ${c.id}">
+                                Category name
                             </a>
                         </div>
                     </div>
@@ -146,21 +146,21 @@
         <div class="container">
             <div class="row g-5">
                 <div class="col-lg-6 wow fadeIn" data-wow-delay="0.2s">
-                    <img class="img-fluid mb-3" src="/front/img/about.jpg" alt="">
+                    <img class="img-fluid w-100" src="/front/img/about.jpg" alt="About">
                     <div class="d-flex align-items-center bg-light">
                         <div class="btn-square flex-shrink-0 bg-primary" style="width: 100px; height: 100px;">
                             <i class="fa fa-phone fa-2x text-dark"></i>
                         </div>
                         <div class="px-3">
                             <h3>+0123456789</h3>
-                            <span>Call us direct 24/7 for get a free consultation</span>
+                            <span>Pulsuz konsultasiya üçün 24/7 zəng edin</span>
                         </div>
                     </div>
                 </div>
                 <div class="col-lg-6 wow fadeIn" data-wow-delay="0.5s">
-                    <h1 class="font-dancing-script text-primary">Haqqımızda</h1>
-                    <h1 class="mb-5">Niyə bizi seçirlər?</h1>
-                    <p class="mb-4">Salonumuz peşəkar komanda və keyfiyyətli məhsullarla müştərilərinə fərqli təcrübə təqdim edir.</p>
+                    <h1 class="font-dancing-script text-primary" th:text="${about.title}">Haqqımızda</h1>
+                    <h1 class="mb-5" th:text="${about.subtitle}">Niyə bizi seçirlər?</h1>
+                    <p class="mb-4" th:text="${about.description}">Salonumuz peşəkar komanda və keyfiyyətli məhsullarla müştərilərinə fərqli təcrübə təqdim edir.</p>
                     <div class="row g-3 mb-5">
                         <div class="col-sm-6">
                             <div class="bg-light text-center p-4">
@@ -204,14 +204,6 @@
                     </div>
                 </div>
             </div>
-                    <div class="service-item h-100 p-4 wow fadeIn" data-wow-delay="0.5s">
-                        <img class="img-fluid" src="/front/img/skin-care.png" alt="">
-                        <h3 class="mb-3">Skin Care</h3>
-                        <p class="mb-3">Clita erat ipsum et lorem et sit, sed stet no labore lorem sit clita duo justo
-                            et tempor eirmod magna dolore erat amet</p>
-                        <a class="btn btn-sm btn-primary text-uppercase" href="">Read More <i
-                                class="bi bi-arrow-right"></i></a>
-                    </div>
                 </div>
             </div>
         </div>

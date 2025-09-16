@@ -28,8 +28,9 @@
         <div class="container">
             <div class="row g-5">
                 <div class="col-lg-6 wow fadeIn" data-wow-delay="0.2s">
-                    <img class="img-fluid mb-3" src="/front/img/about.jpg" alt="">
-                    <div class="d-flex align-items-center bg-light">
+                    <img class="img-fluid w-100" src="/front/img/about.jpg" alt="About">
+
+                    <div class="d-flex align-items-center bg-light p-4 mb-4">
                         <div class="btn-square flex-shrink-0 bg-primary" style="width: 100px; height: 100px;">
                             <i class="fa fa-phone fa-2x text-dark"></i>
                         </div>
@@ -39,12 +40,14 @@
                         </div>
                     </div>
                 </div>
+
                 <div class="col-lg-6 wow fadeIn" data-wow-delay="0.5s">
                     <h1 class="font-dancing-script text-primary">Haqqımızda</h1>
-                    <h1 class="mb-5">Niyə bizi seçirlər?</h1>
-                    <p class="mb-4">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Maecenas eget libero
-                        lobortis, auctor nisi quis, aliquet nunc. Nam dapibus interdum lacus, suscipit tempor odio
-                        viverra aliquam. Etiam non ex ex.</p>
+                    <h1 class="mb-5" th:text="${about.subtitle}">Niyə bizi seçirlər?</h1>
+                    <p class="mb-4 about-text" th:text="${about.description}"></p>
+
+
+
                     <div class="row g-3 mb-5">
                         <div class="col-sm-6">
                             <div class="bg-light text-center p-4">
@@ -61,8 +64,10 @@
                             </div>
                         </div>
                     </div>
+
                     <a class="btn btn-primary text-uppercase px-5 py-3" href="">Daha çox</a>
                 </div>
+
             </div>
         </div>
     </div>
