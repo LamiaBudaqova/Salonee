@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" xmlns:th="http://www.w3.org/1999/xhtml">
 
 <head>
     <meta charset="utf-8">
@@ -9,7 +9,7 @@
     <meta content="" name="description">
 
     <!-- Favicon -->
-    <link href="img/favicon.ico" rel="icon">
+    <link href="/front/img/favicon.ico" rel="icon">
 
     <!-- Google Web Fonts -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -23,15 +23,15 @@
     <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.4.1/font/bootstrap-icons.css" rel="stylesheet">
 
     <!-- Libraries Stylesheet -->
-    <link href="lib/animate/animate.min.css" rel="stylesheet">
-    <link href="lib/lightbox/css/lightbox.min.css" rel="stylesheet">
-    <link href="lib/owlcarousel/assets/owl.carousel.min.css" rel="stylesheet">
+    <link href="/front/lib/animate/animate.min.css" rel="stylesheet">
+    <link href="/front/lib/lightbox/css/lightbox.min.css" rel="stylesheet">
+    <link href="/front/lib/owlcarousel/assets/owl.carousel.min.css" rel="stylesheet">
 
     <!-- Customized Bootstrap Stylesheet -->
-    <link href="css/bootstrap.min.css" rel="stylesheet">
+    <link href="/front/css/bootstrap.min.css" rel="stylesheet">
 
     <!-- Template Stylesheet -->
-    <link href="css/style.css" rel="stylesheet">
+    <link href="/front/css/style.css" rel="stylesheet">
 </head>
 
 <body>
@@ -103,41 +103,42 @@
     <!-- Blog Start -->
     <div class="container-fluid blog p-0">
         <div class="row g-0">
-            <div class="col-md-6 col-lg-3 wow fadeIn" data-wow-delay="0.1s">
-                <div class="h-100 d-flex flex-column justify-content-center bg-primary py-5 px-4">
-                    <p class="mb-2"><i class="fa fa-calendar-alt text-dark me-1"></i>Jan 01, 2045 | <i
-                            class="fa fa-folder-open text-dark me-1"></i>Hair Salon</p>
-                    <h3 class="mb-3">How to Extend The Life of Your Haircolor</h3>
-                    <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Maecenas eget libero lobortis, auctor
-                        nisi quis, aliquet nunc. Nam dapibus interdum lacus.</p>
-                    <a class="btn btn-dark align-self-start text-uppercase" href="">Read More <i
-                            class="bi bi-arrow-right"></i></a>
-                </div>
-            </div>
-            <div class="col-md-6 col-lg-3 wow fadeIn" data-wow-delay="0.3s">
-                <div class="h-100">
-                    <img class="img-fluid w-100 h-100" src="img/blog-1.jpg" alt="" style="object-fit: cover;">
-                </div>
-            </div>
-            <div class="col-md-6 col-lg-3 wow fadeIn" data-wow-delay="0.5s">
-                <div class="h-100 d-flex flex-column justify-content-center bg-primary py-5 px-4">
-                    <p class="mb-2"><i class="fa fa-calendar-alt text-dark me-1"></i>Jan 01, 2045 | <i
-                            class="fa fa-folder-open text-dark me-1"></i>Hair Salon</p>
-                    <h3 class="mb-3">Hottest Hairstyles and Haircuts in 2045</h3>
-                    <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Maecenas eget libero lobortis, auctor
-                        nisi quis, aliquet nunc. Nam dapibus interdum lacus.</p>
-                    <a class="btn btn-dark align-self-start text-uppercase" href="">Read More <i
-                            class="bi bi-arrow-right"></i></a>
-                </div>
-            </div>
-            <div class="col-md-6 col-lg-3 wow fadeIn" data-wow-delay="0.7s">
-                <div class="h-100">
-                    <img class="img-fluid w-100 h-100" src="img/blog-2.jpg" alt="" style="object-fit: cover;">
+            <!-- her blog ucun col -->
+            <div class="col-md-6 col-lg-3 wow fadeIn" data-wow-delay="0.1s" th:each="blog : ${blogs}">
+                <div class="blog-item h-100">
+
+                    <!-- sekil yuxarıda -->
+                    <div class="blog-img position-relative">
+                        <img class="img-fluid w-100"
+                             th:src="${blog.imagePath}"
+                             alt="Blog Image"
+                             style="object-fit: cover; height: 250px;">
+
+                    </div>
+
+                    <!-- metn aşagıda -->
+                    <div class="bg-primary py-5 px-4 h-100 d-flex flex-column justify-content-center">
+                        <p class="mb-2">
+                            <i class="fa fa-calendar-alt text-dark me-1"></i>
+                            <span th:text="${#temporals.format(blog.createdAt, 'dd MMM yyyy')}"></span>
+                        </p>
+                        <h3 class="mb-3" th:text="${blog.title}">Blog Title</h3>
+                        <p th:text="${#strings.abbreviate(blog.content, 120)}">Blog short text...</p>
+                        <a class="btn btn-dark align-self-start text-uppercase"
+                           th:href="'/blog/' + ${blog.id}">
+                            Daha çox oxu <i class="bi bi-arrow-right"></i>
+                        </a>
+                    </div>
+
                 </div>
             </div>
         </div>
     </div>
     <!-- Blog End -->
+
+
+
+
 
 
     <!-- Footer Start -->
@@ -221,15 +222,15 @@
     <!-- JavaScript Libraries -->
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.1/jquery.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0/dist/js/bootstrap.bundle.min.js"></script>
-    <script src="lib/wow/wow.min.js"></script>
-    <script src="lib/easing/easing.min.js"></script>
-    <script src="lib/waypoints/waypoints.min.js"></script>
-    <script src="lib/counterup/counterup.min.js"></script>
-    <script src="lib/lightbox/js/lightbox.min.js"></script>
-    <script src="lib/owlcarousel/owl.carousel.min.js"></script>
+    <script src="/front/lib/wow/wow.min.js"></script>
+    <script src="/front/lib/easing/easing.min.js"></script>
+    <script src="/front/lib/waypoints/waypoints.min.js"></script>
+    <script src="/front/lib/counterup/counterup.min.js"></script>
+    <script src="/front/lib/lightbox/js/lightbox.min.js"></script>
+    <script src="/front/lib/owlcarousel/owl.carousel.min.js"></script>
 
     <!-- Template Javascript -->
-    <script src="js/main.js"></script>
+    <script src="/front/js/main.js"></script>
 </body>
 
 </html>

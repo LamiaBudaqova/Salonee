@@ -496,43 +496,41 @@
 
 
     <!-- Blog Start -->
-    <div class="container-fluid blog p-0 mt-5">
-        <div class="row g-0">
-            <div class="col-md-6 col-lg-3 wow fadeIn" data-wow-delay="0.1s">
-                <div class="h-100 d-flex flex-column justify-content-center bg-primary py-5 px-4">
-                    <p class="mb-2"><i class="fa fa-calendar-alt text-dark me-1"></i>Jan 01, 2045 | <i
-                            class="fa fa-folder-open text-dark me-1"></i>Hair Salon</p>
-                    <h3 class="mb-3">Saç rənginizin ömrünü necə uzatmaq olar?</h3>
-                    <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Maecenas eget libero lobortis, auctor
-                        nisi quis, aliquet nunc. Nam dapibus interdum lacus.</p>
-                    <a class="btn btn-dark align-self-start text-uppercase" href="">Read More <i
-                            class="bi bi-arrow-right"></i></a>
-                </div>
+    <div class="container-fluid blog py-5">
+        <div class="container">
+            <div class="text-center mb-5">
+                <h1 class="font-dancing-script text-primary">Son Bloqlar</h1>
+                <h2 class="mb-0">Ən son paylaşılan yazılar</h2>
             </div>
-            <div class="col-md-6 col-lg-3 wow fadeIn" data-wow-delay="0.3s">
-                <div class="h-100">
-                    <img class="img-fluid w-100 h-100" src="/front/img/blog-1.jpg" alt="" style="object-fit: cover;">
-                </div>
-            </div>
-            <div class="col-md-6 col-lg-3 wow fadeIn" data-wow-delay="0.5s">
-                <div class="h-100 d-flex flex-column justify-content-center bg-primary py-5 px-4">
-                    <p class="mb-2"><i class="fa fa-calendar-alt text-dark me-1"></i>Jan 01, 2045 | <i
-                            class="fa fa-folder-open text-dark me-1"></i>Hair Salon</p>
-                    <h3 class="mb-3">Ən trend saç düzümü və kəsimlər</h3>
-                    <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Maecenas eget libero lobortis, auctor
-                        nisi quis, aliquet nunc. Nam dapibus interdum lacus.</p>
-                    <a class="btn btn-dark align-self-start text-uppercase" href="">Daha çox oxu <i
-                            class="bi bi-arrow-right"></i></a>
-                </div>
-            </div>
-            <div class="col-md-6 col-lg-3 wow fadeIn" data-wow-delay="0.7s">
-                <div class="h-100">
-                    <img class="img-fluid w-100 h-100" src="/front/img/blog-2.jpg" alt="" style="object-fit: cover;">
+            <div class="row g-4">
+                <!-- Yalnız 2 blog cıxacaq -->
+                <div class="col-md-6" th:each="post, iterStat : ${blogs}" th:if="${iterStat.index < 2}">
+                    <div class="card h-100">
+                        <img class="card-img-top" th:src="${post.imagePath}" alt="Blog şəkli"
+                             style="object-fit: cover; height: 250px;">
+                        <div class="card-body bg-primary text-white">
+                            <p class="mb-2">
+                                <i class="fa fa-calendar-alt text-dark me-1"></i>
+                                <span th:text="${post.createdAt}">2025-09-01</span> |
+                                <i class="fa fa-folder-open text-dark me-1"></i>Bloq
+                            </p>
+                            <h5 class="card-title" th:text="${post.title}">Bloq Başlığı</h5>
+                            <p class="card-text" th:text="${#strings.abbreviate(post.content, 200)}">
+                                Bloq məzmununun qısa hissəsi burda olacaq.
+                            </p>
+                            <a class="btn btn-dark text-uppercase" th:href="'/blog/' + ${post.id}">
+                                Daha çox oxu <i class="bi bi-arrow-right"></i>
+                            </a>
+                        </div>
+                    </div>
                 </div>
             </div>
         </div>
     </div>
     <!-- Blog End -->
+
+
+
 
 
     <!-- Footer Start -->
