@@ -29,7 +29,7 @@ public class HomeController {
         model.addAttribute("ctaText", "Rezervasiya et");
         return "index";
     }
-    @GetMapping({"/about", "/about.html"})
+    @GetMapping("/about")
     public String about(Model model){
         model.addAttribute("about", aboutService.getAboutContent());
         return "about";

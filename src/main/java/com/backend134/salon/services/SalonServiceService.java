@@ -7,4 +7,6 @@ import java.util.List;
 public interface SalonServiceService {
     List<SalonService> getAllServices();
     List<SalonService> getServicesByCategoryId(Long categoryId);
+
+    SalonService getServiceById(Long id);
 }

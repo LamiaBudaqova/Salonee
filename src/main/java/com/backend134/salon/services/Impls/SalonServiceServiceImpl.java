@@ -23,4 +23,10 @@ public class SalonServiceServiceImpl implements SalonServiceService {
     public List<SalonService> getServicesByCategoryId(Long categoryId) {
         return salonServiceRepository.findByCategoryId(categoryId);
     }
+
+    @Override
+    public SalonService getServiceById(Long id) {
+        return salonServiceRepository.findById(id)
+                .orElseThrow(() -> new RuntimeException("Service not found"));
+    }
 }

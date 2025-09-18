@@ -6,21 +6,18 @@ import org.springframework.web.bind.annotation.GetMapping;
 @Controller
 public class PagesController {
 
-    @GetMapping("/xidmetler")
+    @GetMapping("/services")
     public String services(){
-
         return "service";
     }
 
-    @GetMapping("/qiymetler")
+    @GetMapping("/pricing")
     public String pricing(){
-
         return "price";
     }
 
-    @GetMapping("/elaqe")
+    @GetMapping("/contact")
     public String contact(){
-
         return "contact";
     }
 }
