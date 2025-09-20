@@ -17,10 +17,10 @@ public class AboutServiceImpl implements AboutService {
 
     @Override
     public AboutHomeDto getAboutContent() {
-        About about = aboutRepository.findAll()
+        return aboutRepository.findAll()
                 .stream()
-                .findFirst()
+                .reduce((first, second) -> second)
+                .map(about -> modelMapper.map(about, AboutHomeDto.class))
                 .orElse(null);
-        return about != null? modelMapper.map(about,AboutHomeDto.class) : null;
     }
 }

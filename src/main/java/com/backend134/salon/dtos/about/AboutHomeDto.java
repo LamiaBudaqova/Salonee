@@ -15,4 +15,6 @@ public class AboutHomeDto {
     private String subtitle;
     private String description;
     private String imagePath;
+    private Integer experienceYears;
+    private Integer clientsCount;
 }

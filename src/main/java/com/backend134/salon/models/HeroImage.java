@@ -11,14 +11,15 @@ import lombok.Setter;
 @AllArgsConstructor
 @NoArgsConstructor
 @Entity
-@Table(name ="gallery_images")
-public class GalleryImage {
+@Table(name = "hero_img")
+public class HeroImage {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @Column(nullable = false)
     private String imagePath;
-    private Integer sortOrder;
-    private String columnSize;
+
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "hero_id")
+    private Hero hero;
 }

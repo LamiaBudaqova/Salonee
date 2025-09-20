@@ -17,6 +17,7 @@ public class HomeController {
    // private final TeamMemberService teamMemberService;
     //private final TestimonialService testimonialService;
     private final BlogService blogService;
+    private final HeroService heroService;
 
     @GetMapping("/")
     public String home(Model model) {
@@ -25,15 +26,14 @@ public class HomeController {
         model.addAttribute("navCategories", categoryService.getAllCategories());
         model.addAttribute("blogs", blogService.getLatestPosts());
 
-        model.addAttribute("pageTitle", "Salone - Gözəllik və Spa");
-        model.addAttribute("heroTitle", "Dəriyə qayğı, gözəlliyə yol");
-        model.addAttribute("heroSubtitle", "Peşəkar komanda ilə premium xidmətlər");
-        model.addAttribute("ctaText", "Rezervasiya et");
+        model.addAttribute("hero", heroService.getHero());
+
         return "index";
     }
     @GetMapping("/about")
     public String about(Model model){
         model.addAttribute("about", aboutService.getAboutContent());
+        model.addAttribute("hero", heroService.getHero());
         return "about";
     }
 }

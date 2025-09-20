@@ -10,7 +10,7 @@
     <!-- Hero Start -->
     <div class="container-fluid bg-light page-header py-5 mb-5">
         <div class="container text-center py-5">
-            <h1 class="display-1 animated slideInLeft">Haqqımızda</h1>
+            <h1 class="display-1 animated slideInLeft" th:text="${about.title}">Haqqımızda</h1>
             <nav aria-label="breadcrumb">
                 <ol class="breadcrumb justify-content-center animated slideInLeft mb-0">
                     <li class="breadcrumb-item"><a class="text-primary" href="/">Ana səhifə</a></li>
@@ -26,23 +26,23 @@
         <div class="container">
             <div class="row g-5">
                 <div class="col-lg-6 wow fadeIn" data-wow-delay="0.2s">
-                    <img class="img-fluid w-100" src="/front/img/about.jpg" alt="About">
+                    <img class="img-fluid w-100" th:src="${about.imagePath}" alt="About">
 
                     <div class="d-flex align-items-center bg-light p-4 mb-4">
                         <div class="btn-square flex-shrink-0 bg-primary" style="width: 100px; height: 100px;">
                             <i class="fa fa-phone fa-2x text-dark"></i>
                         </div>
                         <div class="px-3">
-                            <h3>+994 50 512 50 66</h3>
-                            <span>Pulsuz konsultasiya üçün 24/7 zəng edin</span>
+                            <h3 th:text="${hero.callNumber}">+994 50 512 50 66</h3>
+                            <span th:text="${hero.callLabel}">Pulsuz konsultasiya üçün 24/7 zəng edin</span>
                         </div>
                     </div>
                 </div>
 
                 <div class="col-lg-6 wow fadeIn" data-wow-delay="0.5s">
-                    <h1 class="font-dancing-script text-primary">Haqqımızda</h1>
-                    <h1 class="mb-5">Niyə bizi seçirlər?</h1>
-                    <p class="mb-4">
+                    <h1 class="font-dancing-script text-primary" th:text="${about.title}">Haqqımızda</h1>
+                    <h1 class="mb-5" th:text="${about.subtitle}">Niyə bizi seçirlər?</h1>
+                    <p class="mb-4" th:text="${about.description}">
                         Salonumuz peşəkar komanda və keyfiyyətli məhsullarla müştərilərinə fərqli təcrübə təqdim edir.
                     </p>
 
@@ -50,20 +50,19 @@
                         <div class="col-sm-6">
                             <div class="bg-light text-center p-4">
                                 <i class="fas fa-calendar-alt fa-4x text-primary"></i>
-                                <h1 class="display-5" data-toggle="counter-up">25</h1>
+                                <h1 class="display-5" data-toggle="counter-up" th:text="${about.experienceYears}">25</h1>
                                 <p class="text-dark text-uppercase mb-0">İllik təcrübə</p>
                             </div>
                         </div>
                         <div class="col-sm-6">
                             <div class="bg-light text-center p-4">
                                 <i class="fas fa-users fa-4x text-primary"></i>
-                                <h1 class="display-5" data-toggle="counter-up">999</h1>
+                                <h1 class="display-5" data-toggle="counter-up" th:text="${about.clientsCount}">999</h1>
                                 <p class="text-dark text-uppercase mb-0">Məmnun müştəri</p>
                             </div>
                         </div>
                     </div>
 
-                    <a class="btn btn-primary text-uppercase px-5 py-3" href="">Daha çox</a>
                 </div>
             </div>
         </div>
