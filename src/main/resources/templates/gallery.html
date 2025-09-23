@@ -11,12 +11,12 @@
     <!-- Hero Start -->
     <div class="container-fluid bg-light page-header py-5 mb-5">
         <div class="container text-center py-5">
-            <h1 class="display-1 animated slideInLeft">Gallery</h1>
+            <h1 class="display-1 animated slideInLeft">Foto Qalereyamız</h1>
             <nav aria-label="breadcrumb">
                 <ol class="breadcrumb justify-content-center animated slideInLeft mb-0">
-                    <li class="breadcrumb-item"><a class="text-primary" href="#">Home</a></li>
-                    <li class="breadcrumb-item"><a class="text-primary" href="#">Pages</a></li>
-                    <li class="breadcrumb-item active" aria-current="page">Gallery</li>
+                    <li class="breadcrumb-item"><a class="text-primary" href="#">Ana Səhifə</a></li>
+                    <li class="breadcrumb-item"><a class="text-primary" href="#">Səhifələr</a></li>
+                    <li class="breadcrumb-item active" aria-current="page">Qalereya</li>
                 </ol>
             </nav>
         </div>
@@ -28,14 +28,14 @@
     <div class="container-fluid gallery py-5">
         <div class="container">
             <div class="text-center wow fadeIn" data-wow-delay="0.2s">
-                <h1 class="font-dancing-script text-primary">Gallery</h1>
-                <h1 class="mb-5">Explore Our Gallery</h1>
+                <h1 class="font-dancing-script text-primary" th:text="${text.subtitle}">Gallery</h1>
+                <h1 class="mb-5" th:text="${text.title}">Explore Our Gallery</h1>
             </div>
 
             <div class="row g-0">
-
-                <div class="col-md-4 col-sm-6 wow fadeIn" data-wow-delay="0.2s"
-                     th:each="img : ${images}">
+                <div th:each="img : ${images}"
+                     th:class="${img.columnSize} + ' wow fadeIn'"
+                     data-wow-delay="0.2s">
                     <div class="gallery-item">
                         <!-- şəkil normal ölçüdə qalsın -->
                         <img th:src="${img.imagePath}" class="img-fluid w-100" alt="">

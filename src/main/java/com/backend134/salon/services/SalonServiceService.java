@@ -1,12 +1,13 @@
 package com.backend134.salon.services;
 
+import com.backend134.salon.dtos.salonservice.SalonServiceDto;
 import com.backend134.salon.models.SalonService;
 
 import java.util.List;
 
 public interface SalonServiceService {
-    List<SalonService> getAllServices();
-    List<SalonService> getServicesByCategoryId(Long categoryId);
+    List<SalonServiceDto> getAllServices();
+    List<SalonServiceDto> getServicesByCategoryId(Long categoryId);
 
-    SalonService getServiceById(Long id);
+    SalonServiceDto getServiceById(Long id);
 }

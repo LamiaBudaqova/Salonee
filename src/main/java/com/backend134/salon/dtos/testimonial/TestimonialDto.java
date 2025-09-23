@@ -1,6 +1,5 @@
-package com.backend134.salon.models;
+package com.backend134.salon.dtos.testimonial;
 
-import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -10,13 +9,7 @@ import lombok.Setter;
 @Setter
 @AllArgsConstructor
 @NoArgsConstructor
-@Entity
-@Table(name = "testimonials")
-public class Testimonial {
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long id;
-
+public class TestimonialDto {
     private String text;
     private String name;
     private String profession;

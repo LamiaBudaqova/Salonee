@@ -1,5 +1,6 @@
 package com.backend134.salon.controllers;
 
+import com.backend134.salon.dtos.salonservice.SalonServiceDto;
 import com.backend134.salon.models.Category;
 import com.backend134.salon.models.SalonService;
 import com.backend134.salon.services.CategoryService;
@@ -21,7 +22,7 @@ public class CategoryController {
     @GetMapping("/category/{id}")
     public String categoryPage(@PathVariable Long id, Model model){
         Category category = categoryService.getCategoryById(id);
-        List<SalonService> services = salonServiceService.getServicesByCategoryId(id);
+        List<SalonServiceDto> services = salonServiceService.getServicesByCategoryId(id);
 
         model.addAttribute("category", category);
         model.addAttribute("services", services);

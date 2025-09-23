@@ -1,5 +1,6 @@
 package com.backend134.salon.controllers;
 
+import com.backend134.salon.dtos.salonservice.SalonServiceDto;
 import com.backend134.salon.models.SalonService;
 import com.backend134.salon.services.SalonServiceService;
 import lombok.RequiredArgsConstructor;
@@ -15,7 +16,7 @@ public class SalonServiceController {
 
     @GetMapping("/service/{id}")
     public String servicePage(@PathVariable Long id, Model model){
-        SalonService service = salonServiceService.getServiceById(id);
+        SalonServiceDto service = salonServiceService.getServiceById(id);
 
         model.addAttribute("service", service);
         return "salonService";

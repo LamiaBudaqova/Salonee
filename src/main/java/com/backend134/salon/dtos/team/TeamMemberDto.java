@@ -1,6 +1,6 @@
-package com.backend134.salon.models;
+package com.backend134.salon.dtos.team;
 
-import jakarta.persistence.*;
+import jakarta.persistence.Entity;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -10,14 +10,7 @@ import lombok.Setter;
 @Setter
 @AllArgsConstructor
 @NoArgsConstructor
-@Entity
-@Table(name = "team_members")
-public class TeamMember {
-
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long id;
-
+public class TeamMemberDto {
     private String name;
     private String position;
     private String imageUrl;

@@ -20,6 +20,11 @@ public class BlogServiceImpl implements BlogService {
     }
 
     @Override
+    public List<Blog> getAllBlogs() {
+        return blogRepository.findAllByOrderByCreatedAtDesc();
+    }
+
+    @Override
     public Blog getById(Long id) {
         return blogRepository.findById(id)
                 .orElseThrow(() -> new RuntimeException("Bloq tapılmadı"));

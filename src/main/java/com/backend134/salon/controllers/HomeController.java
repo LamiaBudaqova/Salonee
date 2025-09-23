@@ -14,8 +14,6 @@ public class HomeController {
     private final AboutService aboutService;
     private final SalonServiceService salonServiceService;
     private final GalleryImageService galleryImageService;
-   // private final TeamMemberService teamMemberService;
-    //private final TestimonialService testimonialService;
     private final BlogService blogService;
     private final HeroService heroService;
 

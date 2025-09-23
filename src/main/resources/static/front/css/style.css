@@ -390,6 +390,9 @@
 
 .team-item img {
     transition: .5s;
+    width: 100%;
+    height: 400px; /* hamısı eyni boyda olacaq */
+    object-fit: cover; /* şekli uyğunlaşdırır */
 }
   
 .team-item:hover img {
@@ -540,10 +543,14 @@
     font-size: 17px;
     color: #333;
 }
-.gallery-item img {
-    height: 300px;
-    object-fit: cover;
-    width: 100%;
-    display: block;
+
+.gallery .row {
+    margin: 0;
 }
 
+.gallery-item img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    display: block;
+}

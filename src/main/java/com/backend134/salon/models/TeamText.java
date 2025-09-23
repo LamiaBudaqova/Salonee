@@ -11,14 +11,12 @@ import lombok.Setter;
 @AllArgsConstructor
 @NoArgsConstructor
 @Entity
-@Table(name = "testimonials")
-public class Testimonial {
+@Table(name = "team_texts")
+public class TeamText {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    private String text;
-    private String name;
-    private String profession;
-    private String imageUrl;
+    private String subtitle;
+    private String title;
 }
