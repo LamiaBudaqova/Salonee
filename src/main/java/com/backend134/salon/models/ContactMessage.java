@@ -19,5 +19,6 @@ public class ContactMessage {
 
     private String name;
     private String email;
+    private String subject; // Mövzu
     private String message;
 }

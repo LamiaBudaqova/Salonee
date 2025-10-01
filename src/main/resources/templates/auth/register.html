@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html lang="az"
+      xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="~{layout}">
+
+<body>
+<main layout:fragment="content">
+    <div class="container py-5">
+        <div class="row justify-content-center">
+            <div class="col-md-6">
+
+                <h2 class="text-center mb-4">Qeydiyyat</h2>
+
+                <!-- Error mesajı -->
+                <div th:if="${param.error}" class="alert alert-danger">
+                    Qeydiyyat zamanı xəta baş verdi ❌
+                </div>
+
+                <!-- Success mesajı -->
+                <div th:if="${param.success}" class="alert alert-success">
+                    Qeydiyyat uğurla başa çatdı ✅ İndi daxil olun.
+                </div>
+
+                <form th:action="@{/register}" method="post">
+                    <div class="mb-3">
+                        <label for="name" class="form-label">Ad</label>
+                        <input type="text" name="name" class="form-control" id="name" placeholder="Adınızı daxil edin">
+                    </div>
+                    <div class="mb-3">
+                        <label for="surname" class="form-label">Soyad</label>
+                        <input type="text" name="surname" class="form-control" id="surname" placeholder="Soyadınızı daxil edin">
+                    </div>
+                    <div class="mb-3">
+                        <label for="email" class="form-label">E-poçt ünvanı</label>
+                        <input type="email" name="email" class="form-control" id="email" placeholder="E-poçtunuzu daxil edin">
+                    </div>
+                    <div class="mb-3">
+                        <label for="password" class="form-label">Şifrə</label>
+                        <input type="password" name="password" class="form-control" id="password" placeholder="Şifrənizi daxil edin">
+                    </div>
+                    <div class="mb-3">
+                        <label for="confirmPassword" class="form-label">Şifrəni təsdiqləyin</label>
+                        <input type="password" name="confirmPassword" class="form-control" id="confirmPassword" placeholder="Şifrəni yenidən daxil edin">
+                    </div>
+                    <div class="d-grid">
+                        <button type="submit" class="btn btn-success">Qeydiyyatdan keç</button>
+                    </div>
+                    <p class="text-center mt-3">
+                        Artıq hesabınız var? <a href="/login">Daxil olun</a>
+                    </p>
+                </form>
+
+
+                <p class="mt-3 text-center">
+                    Artıq hesabın var? <a th:href="@{/login}">Daxil ol</a>
+                </p>
+            </div>
+        </div>
+    </div>
+</main>
+</body>
+</html>

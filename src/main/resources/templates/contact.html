@@ -2,7 +2,8 @@
 <html lang="az"
       xmlns:th="http://www.thymeleaf.org"
       xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
-      layout:decorate="~{layout}">
+      layout:decorate="~{layout}"
+      xmlns:sec="http://www.w3.org/1999/xhtml">
 
 <body>
 <main layout:fragment="content">
@@ -28,25 +29,87 @@
                 <div class="col-lg-6 wow fadeIn" data-wow-delay="0.1s">
                     <h1 class="mb-4">Bizimlə əlaqə saxlayın</h1>
                     <p class="mb-4">Sizə xidmət etməkdən məmnun olarıq. Zəhmət olmasa mesajınızı buradan göndərin.</p>
+
                     <form action="/contact" method="post">
                         <div class="row g-3">
+                            <!-- Ad -->
                             <div class="col-md-6">
-                                <input type="text" class="form-control" name="name" placeholder="Adınız" required>
+                                <input type="text" class="form-control" name="name" placeholder="Adınız" required sec:authorize="isAuthenticated()">
+                                <input type="text" class="form-control" placeholder="Adınız" required onfocus="showLoginModal()" sec:authorize="isAnonymous()">
                             </div>
+
+                            <!-- Mövzu -->
                             <div class="col-md-6">
-                                <input type="email" class="form-control" name="email" placeholder="E-poçt" required>
+                                <input type="text" class="form-control" name="subject" placeholder="Mövzu" required sec:authorize="isAuthenticated()">
+                                <input type="text" class="form-control" placeholder="Mövzu" required onfocus="showLoginModal()" sec:authorize="isAnonymous()">
                             </div>
+
+                            <!-- Mesaj -->
                             <div class="col-12">
-                                <input type="text" class="form-control" name="subject" placeholder="Mövzu" required>
+                                <textarea class="form-control" name="message" rows="5" placeholder="Mesajınız" required sec:authorize="isAuthenticated()"></textarea>
+                                <textarea class="form-control" rows="5" placeholder="Mesajınız" required onfocus="showLoginModal()" sec:authorize="isAnonymous()"></textarea>
                             </div>
-                            <div class="col-12">
-                                <textarea class="form-control" name="message" rows="5" placeholder="Mesajınız" required></textarea>
-                            </div>
+
+                            <!-- Submit -->
                             <div class="col-12">
                                 <button class="btn btn-primary w-100 py-3" type="submit">Göndər</button>
                             </div>
                         </div>
                     </form>
+
+                    <!-- Login Modal -->
+                    <div class="modal fade" id="loginModal" tabindex="-1" aria-hidden="true">
+                        <div class="modal-dialog modal-dialog-centered">
+                            <div class="modal-content">
+                                <div class="modal-header bg-light">
+                                    <h5 class="modal-title">Daxil ol</h5>
+                                    <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+                                </div>
+                                <div class="modal-body">
+                                    <form th:action="@{/perform_login}" method="post">
+                                        <div class="mb-3">
+                                            <input type="text" class="form-control" name="username" placeholder="E-Poçt" required>
+                                        </div>
+                                        <div class="mb-3">
+                                            <input type="password" class="form-control" name="password" placeholder="Şifrə" required>
+                                        </div>
+                                        <button type="submit" class="btn btn-primary w-100">Daxil ol</button>
+                                    </form>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Success Modal -->
+                    <div class="modal fade" id="successModal" tabindex="-1" aria-hidden="true">
+                        <div class="modal-dialog modal-dialog-centered">
+                            <div class="modal-content">
+                                <div class="modal-header bg-success text-white">
+                                    <h5 class="modal-title">Uğurlu əməliyyat</h5>
+                                    <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+                                </div>
+                                <div class="modal-body">
+                                    Mesajınız uğurla göndərildi ✅
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Error Modal -->
+                    <div class="modal fade" id="errorModal" tabindex="-1" aria-hidden="true">
+                        <div class="modal-dialog modal-dialog-centered">
+                            <div class="modal-content">
+                                <div class="modal-header bg-danger text-white">
+                                    <h5 class="modal-title">Xəta baş verdi</h5>
+                                    <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+                                </div>
+                                <div class="modal-body">
+                                    Zəhmət olmasa yenidən cəhd edin ❌
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
                 </div>
                 <div class="col-lg-6 wow fadeIn" data-wow-delay="0.5s">
                     <iframe class="w-100 h-100"
@@ -57,6 +120,26 @@
         </div>
     </div>
     <!-- Contact End -->
+
+    <script th:inline="javascript">
+        let success = [[${param.success != null}]];
+        let error = [[${param.error != null}]];
+
+        if (success) {
+            var modal = new bootstrap.Modal(document.getElementById('successModal'));
+            modal.show();
+        }
+        if (error) {
+            var modal = new bootstrap.Modal(document.getElementById('errorModal'));
+            modal.show();
+        }
+    </script>
+    <script>
+        function showLoginModal() {
+            var modal = new bootstrap.Modal(document.getElementById('loginModal'));
+            modal.show();
+        }
+    </script>
 
 </main>
 </body>

@@ -19,19 +19,22 @@ public class HomeController {
 
     @GetMapping("/")
     public String home(Model model) {
+        model.addAttribute("activePage", "home");
         model.addAttribute("categories", categoryService.getHomeFeaturedCategories());
-        model.addAttribute("about", aboutService.getAboutContent());
-        model.addAttribute("navCategories", categoryService.getAllCategories());
+        model.addAttribute("about", aboutService.getAboutForHome()); // ana səhifə üçün qısaldılmış
+        model.addAttribute("navCategories", categoryService.getAllCategories()); // ✅ əlavə etdik
         model.addAttribute("blogs", blogService.getLatestPosts());
-
         model.addAttribute("hero", heroService.getHero());
 
         return "index";
     }
+
     @GetMapping("/about")
     public String about(Model model){
-        model.addAttribute("about", aboutService.getAboutContent());
+        model.addAttribute("activePage", "about");
+        model.addAttribute("about", aboutService.getAboutForPage()); // tam description
         model.addAttribute("hero", heroService.getHero());
+        model.addAttribute("navCategories", categoryService.getAllCategories()); // ✅ əlavə etdik
         return "about";
     }
 }

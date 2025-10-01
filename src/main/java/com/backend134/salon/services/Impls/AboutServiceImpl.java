@@ -16,11 +16,29 @@ public class AboutServiceImpl implements AboutService {
     private final ModelMapper modelMapper;
 
     @Override
-    public AboutHomeDto getAboutContent() {
+    public AboutHomeDto getAboutForHome() {
+        return aboutRepository.findAll()
+                .stream()
+                .reduce((first, second) -> second)
+                .map(about -> {
+                    AboutHomeDto dto = modelMapper.map(about, AboutHomeDto.class);
+                    if (dto.getDescription() != null && dto.getDescription().length() > 120) {
+                        String shortDesc = dto.getDescription().substring(0, 120) + "...";
+                        dto.setDescription(shortDesc);
+                    }
+                    return dto;
+                })
+                .orElse(null);
+
+    }
+
+    @Override
+    public AboutHomeDto getAboutForPage() {
         return aboutRepository.findAll()
                 .stream()
                 .reduce((first, second) -> second)
                 .map(about -> modelMapper.map(about, AboutHomeDto.class))
                 .orElse(null);
+
     }
 }

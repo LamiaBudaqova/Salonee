@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      xmlns:th="http://www.w3.org/1999/xhtml"
+      layout:decorate="~{layout}">
+
+<head>
+    <meta charset="utf-8">
+    <title>La Beauty - Giriş</title>
+    <meta content="width=device-width, initial-scale=1.0" name="viewport">
+</head>
+
+<body>
+<div layout:fragment="content" class="bg-white p-0">
+
+    <div class="container d-flex align-items-center justify-content-center min-vh-100">
+        <div class="card p-4 shadow" style="width: 100%; max-width: 400px;">
+            <h4 class="text-center mb-4">Daxil ol</h4>
+
+            <!-- Error mesajı -->
+            <div th:if="${param.error}" class="alert alert-danger">
+                Email və ya şifrə yanlışdır ❌
+            </div>
+
+            <!-- Logout mesajı -->
+            <div th:if="${param.logout}" class="alert alert-success">
+                Uğurla çıxış etdiniz ✅
+            </div>
+
+            <form method="post" th:action="@{/login}">
+                <div class="mb-3">
+                    <label for="email" class="form-label">E-poçt</label>
+                    <input type="email" name="email" class="form-control" id="email"
+                           placeholder="E-poçtunuzu daxil edin" required>
+                </div>
+                <div class="mb-3">
+                    <label for="password" class="form-label">Şifrə</label>
+                    <input type="password" name="password" class="form-control" id="password"
+                           placeholder="Şifrənizi daxil edin" required>
+                </div>
+                <div class="d-grid">
+                    <button type="submit" class="btn btn-primary">Daxil ol</button>
+                </div>
+            </form>
+
+            <p class="text-center mt-3">
+                Hesabınız yoxdur? <a href="/register">Qeydiyyatdan keçin</a>
+            </p>
+
+
+        </div>
+    </div>
+
+</div>
+</body>
+</html>

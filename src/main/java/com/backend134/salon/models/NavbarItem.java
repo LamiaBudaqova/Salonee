@@ -11,17 +11,15 @@ import lombok.Setter;
 @AllArgsConstructor
 @NoArgsConstructor
 @Entity
-@Table(name = "locations")
-public class Location {
+@Table(name = "navbar_items")
+public class NavbarItem {
+
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    private String address;
-    private String phone;
-    private String email;
-    @Column(columnDefinition = "TEXT")
-    private String mapLink;
-    private boolean active = true; // admin paneldən idarə etmək üçün
-
+    private String title;      // Linkin adı (Ana sehife, haqqımızda...)
+    private String url;        // /, /about, /pricing
+    private boolean active;    // gosterilsin mi ya yox
+    private int orderIndex;     // Sıra (1,2,3,4)
 }

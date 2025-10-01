@@ -137,16 +137,16 @@
 }
 
 .navbar .navbar-nav .nav-link {
-    margin: 0 12px;
-    padding: 0;
-    outline: none;
+    margin: 0 7px;            /* yan boşluqları azaltdıq */
+    padding: 20px 0;           /* üst-alt eləmə, yanlarda 4px */
     font-family: "Playfair Display", serif;
-    font-size: 18px;
+    font-size: 17px;          /* daha kiçik font */
     font-weight: 500;
     text-transform: uppercase;
-    letter-spacing: 1px;
+    letter-spacing: 0.5px;    /* aralıq azaldıldı */
     color: var(--bs-dark);
 }
+
 
 .navbar .navbar-nav .nav-link:hover,
 .navbar .navbar-nav .nav-link.active {
@@ -554,3 +554,21 @@
     object-fit: cover;
     display: block;
 }
+.btn-brown {
+    background-color: #b48a60; /* qəhvəyi ton */
+    border: none;
+    color: #fff;
+    font-weight: 500;
+}
+
+.btn-brown:hover {
+    background-color: #9c744a; /* hover daha tünd qəhvəyi */
+    color: #fff;
+}
+.login-btn {
+    margin-right: 15px;  /* Facebookdan əvvəl boşluq */
+    padding: 6px 10px;   /* içində yazı daha balanslı olsun */
+    font-size: 12px;     /* balaca düymə kimi qalsın */
+}
+
+
