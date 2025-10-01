@@ -1,9 +1,47 @@
 <!DOCTYPE html>
-<html lang="az"
-      xmlns:th="http://www.thymeleaf.org"
+<html lang="az" xmlns:th="http://www.thymeleaf.org"
       xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
-      layout:decorate="~{layout}"
-      xmlns:sec="http://www.w3.org/1999/xhtml">
+      layout:decorate="~{layout}">
+
+<head>
+    <meta charset="UTF-8">
+    <title>Əlaqə</title>
+
+    <style>
+        /* Kartların default rəngi (krem) */
+        .contact-card {
+            background-color: #f8f5f0;
+            transition: all 0.3s ease-in-out;
+            border-radius: 10px;
+        }
+
+        /* Hover zamanı qızılı olsun */
+        .contact-card:hover {
+            background-color: #C49B63;
+            color: #fff !important;
+        }
+
+        /* Hover olanda linklər də ağ olsun */
+        .contact-card:hover a {
+            color: #fff !important;
+        }
+
+        /* Iconlar default qızılıdır, hoverdə isə ağ olur */
+        .contact-icon {
+            color: #C49B63;
+            transition: all 0.3s ease-in-out;
+        }
+
+        .contact-card:hover .contact-icon {
+            color: #fff;
+        }
+
+        iframe {
+            border: none;
+            border-radius: 10px;
+        }
+    </style>
+</head>
 
 <body>
 <main layout:fragment="content">
@@ -22,124 +60,81 @@
     </div>
     <!-- Hero End -->
 
-    <!-- Contact Start -->
-    <div class="container-fluid py-5">
-        <div class="container">
-            <div class="row g-5">
-                <div class="col-lg-6 wow fadeIn" data-wow-delay="0.1s">
-                    <h1 class="mb-4">Bizimlə əlaqə saxlayın</h1>
-                    <p class="mb-4">Sizə xidmət etməkdən məmnun olarıq. Zəhmət olmasa mesajınızı buradan göndərin.</p>
 
-                    <form action="/contact" method="post">
-                        <div class="row g-3">
-                            <!-- Ad -->
-                            <div class="col-md-6">
-                                <input type="text" class="form-control" name="name" placeholder="Adınız" required sec:authorize="isAuthenticated()">
-                                <input type="text" class="form-control" placeholder="Adınız" required onfocus="showLoginModal()" sec:authorize="isAnonymous()">
-                            </div>
+    <!-- Contact Info Start -->
+    <div class="container py-5">
+        <div class="row g-4">
 
-                            <!-- Mövzu -->
-                            <div class="col-md-6">
-                                <input type="text" class="form-control" name="subject" placeholder="Mövzu" required sec:authorize="isAuthenticated()">
-                                <input type="text" class="form-control" placeholder="Mövzu" required onfocus="showLoginModal()" sec:authorize="isAnonymous()">
-                            </div>
-
-                            <!-- Mesaj -->
-                            <div class="col-12">
-                                <textarea class="form-control" name="message" rows="5" placeholder="Mesajınız" required sec:authorize="isAuthenticated()"></textarea>
-                                <textarea class="form-control" rows="5" placeholder="Mesajınız" required onfocus="showLoginModal()" sec:authorize="isAnonymous()"></textarea>
-                            </div>
-
-                            <!-- Submit -->
-                            <div class="col-12">
-                                <button class="btn btn-primary w-100 py-3" type="submit">Göndər</button>
-                            </div>
+            <!-- Address -->
+            <div class="col-lg-4 col-md-6" th:each="loc : ${locations}">
+                <div class="card contact-card shadow-sm text-center h-100">
+                    <div class="card-body p-4">
+                        <div class="mb-3 fs-1 contact-icon">
+                            <i class="fa fa-map-marker-alt"></i>
                         </div>
-                    </form>
-
-                    <!-- Login Modal -->
-                    <div class="modal fade" id="loginModal" tabindex="-1" aria-hidden="true">
-                        <div class="modal-dialog modal-dialog-centered">
-                            <div class="modal-content">
-                                <div class="modal-header bg-light">
-                                    <h5 class="modal-title">Daxil ol</h5>
-                                    <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
-                                </div>
-                                <div class="modal-body">
-                                    <form th:action="@{/perform_login}" method="post">
-                                        <div class="mb-3">
-                                            <input type="text" class="form-control" name="username" placeholder="E-Poçt" required>
-                                        </div>
-                                        <div class="mb-3">
-                                            <input type="password" class="form-control" name="password" placeholder="Şifrə" required>
-                                        </div>
-                                        <button type="submit" class="btn btn-primary w-100">Daxil ol</button>
-                                    </form>
-                                </div>
-                            </div>
-                        </div>
+                        <h5 class="mb-3">Ünvan</h5>
+                        <p class="mb-0">
+                            <a th:href="'https://www.google.com/maps?q=' + ${loc.address}"
+                               th:text="${loc.address}"
+                               class="text-dark text-decoration-none"
+                               target="_blank">
+                                123 Nizami küçəsi, Bakı, Azərbaycan
+                            </a>
+                        </p>
                     </div>
-
-                    <!-- Success Modal -->
-                    <div class="modal fade" id="successModal" tabindex="-1" aria-hidden="true">
-                        <div class="modal-dialog modal-dialog-centered">
-                            <div class="modal-content">
-                                <div class="modal-header bg-success text-white">
-                                    <h5 class="modal-title">Uğurlu əməliyyat</h5>
-                                    <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
-                                </div>
-                                <div class="modal-body">
-                                    Mesajınız uğurla göndərildi ✅
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-
-                    <!-- Error Modal -->
-                    <div class="modal fade" id="errorModal" tabindex="-1" aria-hidden="true">
-                        <div class="modal-dialog modal-dialog-centered">
-                            <div class="modal-content">
-                                <div class="modal-header bg-danger text-white">
-                                    <h5 class="modal-title">Xəta baş verdi</h5>
-                                    <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
-                                </div>
-                                <div class="modal-body">
-                                    Zəhmət olmasa yenidən cəhd edin ❌
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-
-                </div>
-                <div class="col-lg-6 wow fadeIn" data-wow-delay="0.5s">
-                    <iframe class="w-100 h-100"
-                            src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3038.847127735254!2d49.8516!3d40.3777!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x40307d0b0b0b0b0b%3A0x123456789abcdef!2sBaku!5e0!3m2!1sen!2saz!4v0000000000"
-                            frameborder="0" allowfullscreen="" aria-hidden="false" tabindex="0"></iframe>
                 </div>
             </div>
+
+
+            <!-- Phone -->
+            <div class="col-lg-4 col-md-6" th:each="loc : ${locations}">
+                <div class="card contact-card shadow-sm text-center h-100">
+                    <div class="card-body p-4">
+                        <div class="mb-3 fs-1 contact-icon">
+                            <i class="fa fa-phone-alt"></i>
+                        </div>
+                        <h5 class="mb-3">Telefon</h5>
+                        <p class="mb-0">
+                            <a th:href="'tel:' + ${loc.phone}"
+                               th:text="${loc.phone}"
+                               class="text-dark text-decoration-none">050 512 50 66</a>
+                        </p>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Email -->
+            <div class="col-lg-4 col-md-6" th:each="loc : ${locations}">
+                <div class="card contact-card shadow-sm text-center h-100">
+                    <div class="card-body p-4">
+                        <div class="mb-3 fs-1 contact-icon">
+                            <i class="fa fa-envelope"></i>
+                        </div>
+                        <h5 class="mb-3">Email</h5>
+                        <p class="mb-0">
+                            <a th:href="'mailto:' + ${loc.email}"
+                               th:text="${loc.email}"
+                               class="text-dark text-decoration-none">info@example.com</a>
+                        </p>
+                    </div>
+                </div>
+            </div>
+
         </div>
     </div>
-    <!-- Contact End -->
+    <!-- Contact Info End -->
 
-    <script th:inline="javascript">
-        let success = [[${param.success != null}]];
-        let error = [[${param.error != null}]];
 
-        if (success) {
-            var modal = new bootstrap.Modal(document.getElementById('successModal'));
-            modal.show();
-        }
-        if (error) {
-            var modal = new bootstrap.Modal(document.getElementById('errorModal'));
-            modal.show();
-        }
-    </script>
-    <script>
-        function showLoginModal() {
-            var modal = new bootstrap.Modal(document.getElementById('loginModal'));
-            modal.show();
-        }
-    </script>
+    <!-- Map Start -->
+    <div class="container-fluid py-5">
+        <div class="container">
+            <iframe class="w-100" height="450"
+                    src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3038.847127735254!2d49.8516!3d40.3777!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x40307d0b0b0b0b0b%3A0x123456789abcdef!2sBaku!5e0!3m2!1sen!2saz!4v0000000000"
+                    allowfullscreen="" loading="lazy"
+                    referrerpolicy="no-referrer-when-downgrade"></iframe>
+        </div>
+    </div>
+    <!-- Map End -->
 
 </main>
 </body>
