@@ -570,5 +570,21 @@
     padding: 6px 10px;   /* içində yazı daha balanslı olsun */
     font-size: 12px;     /* balaca düymə kimi qalsın */
 }
+@media (min-width: 992px) {
+    body.home .footer::after {
+        position: absolute;
+        content: "";
+        width: 1px;
+        height: 100%;
+        top: 0;
+        left: 50%;
+        background: var(--bs-secondary);
+    }
+}
+
+/* başqa səhifələrdə xətt görsənməsin */
+.footer::after {
+    display: none;
+}
 
 

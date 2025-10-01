@@ -34,7 +34,7 @@
     <link href="/front/css/style.css" rel="stylesheet">
 </head>
 
-<body>
+<body th:classappend="${activePage}">
 
 <!-- Navbar Start -->
 <div class="container-fluid bg-light sticky-top p-0">
@@ -111,55 +111,45 @@
 <!-- ==== /CONTENT SLOT ==== -->
 
 <!-- Footer Start -->
-<div class="container-fluid footer position-relative bg-dark text-white-50 py-5 wow fadeIn" data-wow-delay="0.2s">
+<div class="container-fluid bg-dark text-light footer mt-5 pt-5">
     <div class="container py-5">
         <div class="row g-5">
-            <div class="col-lg-6 pe-lg-5">
-                <a href="/" class="navbar-brand">
-                    <h1 class="display-5 text-primary mb-0"><i class="bi bi-scissors"></i>La Beauty</h1>
-                </a>
-                <p>Aliquyam sed elitr elitr erat sed diam ipsum eirmod eos lorem nonumy. Tempor sea ipsum diam sed
-                    clita dolore eos dolores magna erat dolore sed stet justo et dolor.</p>
-                <p class="mb-2"><i class="fa fa-map-marker-alt me-2"></i>123 Street, New York, USA</p>
-                <p class="mb-2"><i class="fa fa-phone-alt me-2"></i>+012 345 67890</p>
-                <p><i class="fa fa-envelope me-2"></i>info@example.com</p>
-                <div class="d-flex justify-content-start mt-4">
-                    <a class="btn btn-sm-square btn-primary me-3" href="#"><i class="fab fa-facebook-f"></i></a>
-                    <a class="btn btn-sm-square btn-primary me-3" href="#"><i class="fab fa-instagram"></i></a>
+
+            <!-- Footer info -->
+            <div class="col-lg-4 col-md-6">
+                <h4 class="text-white mb-3">
+                    <i class="fas fa-cut me-2"></i>La Beauty
+                </h4>
+                <p th:text="${footer.description}">La Beauty haqqında text</p>
+
+                <p>
+                    <i class="fa fa-map-marker-alt me-2"></i>
+                    <span th:text="${footer.address}">Ünvan burda çıxacaq</span>
+                </p>
+                <p>
+                    <i class="fa fa-phone-alt me-2"></i>
+                    <span th:text="${footer.phone}">Telefon burda çıxacaq</span>
+                </p>
+                <p>
+                    <i class="fa fa-envelope me-2"></i>
+                    <span th:text="${footer.email}">Email burda çıxacaq</span>
+                </p>
+
+                <div class="d-flex pt-2">
+                    <a class="btn btn-outline-light btn-social me-2" th:href="${footer.facebookUrl}">
+                        <i class="fab fa-facebook-f"></i>
+                    </a>
+                    <a class="btn btn-outline-light btn-social" th:href="${footer.instagramUrl}">
+                        <i class="fab fa-instagram"></i>
+                    </a>
                 </div>
             </div>
-            <div class="col-lg-6 ps-lg-5">
-                <div class="row g-4">
-                    <div class="col-sm-6">
-                        <h5 class="text-primary mb-4">Quick Links</h5>
-                        <a class="btn btn-link" href="/haqqimizda">Haqqımızda</a>
-                        <a class="btn btn-link" href="/elaqe">Əlaqə</a>
-                        <a class="btn btn-link" href="/xidmetler">Xidmətlər</a>
-                        <a class="btn btn-link" href="#">Şərtlər və Qaydalar</a>
-                    </div>
-                    <div class="col-sm-6">
-                        <h5 class="text-primary mb-4">Popular Links</h5>
-                        <a class="btn btn-link" href="">About Us</a>
-                        <a class="btn btn-link" href="">Contact Us</a>
-                        <a class="btn btn-link" href="">Our Services</a>
-                        <a class="btn btn-link" href="">Terms & Condition</a>
-                    </div>
-                    <div class="col-sm-12">
-                        <h5 class="text-primary mb-4">Newsletter</h5>
-                        <div class="position-relative w-100 mb-2">
-                            <input class="form-control bg-secondary border-0 w-100 ps-4 pe-5" type="text"
-                                   placeholder="Enter Your Email" style="height: 60px;">
-                            <button type="button" class="btn shadow-none position-absolute top-0 end-0 mt-2 me-2"><i
-                                    class="fa fa-paper-plane text-primary fs-4"></i></button>
-                        </div>
-                        <p class="mb-0">Diam sed sed dolor stet amet eirmod</p>
-                    </div>
-                </div>
-            </div>
+
         </div>
     </div>
 </div>
 <!-- Footer End -->
+
 
 <!-- JavaScript Libraries (main.js-dən ƏVVƏL gəlməlidir) -->
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.1/jquery.min.js"></script>
