@@ -55,15 +55,17 @@
                    th:classappend="${activePage == 'about'} ? ' active' : ''">Haqqımızda</a>
 
                 <div class="nav-item dropdown">
-                    <a href="#" class="nav-link dropdown-toggle" data-bs-toggle="dropdown">Xidmətlər</a>
-                    <div class="dropdown-menu bg-light mt-2">
-                        <a th:each="c : ${navCategories}"
-                           th:text="${c.name}"
-                           th:href="'/category/' + ${c.id}"
-                           class="dropdown-item">
-                        </a>
-                    </div>
+                    <a href="#" class="nav-link dropdown-toggle" id="servicesDropdown" role="button"
+                       data-bs-toggle="dropdown" aria-expanded="false">
+                        Xidmətlər
+                    </a>
+                    <ul class="dropdown-menu bg-light mt-2" aria-labelledby="servicesDropdown">
+                        <li th:each="c : ${navCategories}">
+                            <a class="dropdown-item" th:href="'/category/' + ${c.id}" th:text="${c.name}"></a>
+                        </li>
+                    </ul>
                 </div>
+
 
                 <a href="/price" class="nav-item nav-link"
                    th:classappend="${activePage == 'price'} ? ' active' : ''">Qiymətlər</a>
@@ -153,8 +155,6 @@
 
 <!-- JavaScript Libraries (main.js-dən ƏVVƏL gəlməlidir) -->
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.1/jquery.min.js"></script>
-<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0/dist/js/bootstrap.bundle.min.js"></script>
-
 <script src="/front/lib/wow/wow.min.js"></script>
 <script src="/front/lib/easing/easing.min.js"></script>
 <script src="/front/lib/waypoints/waypoints.min.js"></script>

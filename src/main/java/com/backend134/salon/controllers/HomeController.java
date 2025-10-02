@@ -34,7 +34,7 @@ public class HomeController {
         model.addAttribute("activePage", "about");
         model.addAttribute("about", aboutService.getAboutForPage()); // tam description
         model.addAttribute("hero", heroService.getHero());
-        model.addAttribute("navCategories", categoryService.getAllCategories()); // ✅ əlavə etdik
+        model.addAttribute("navCategories", categoryService.getAllCategories());
         return "about";
     }
 }

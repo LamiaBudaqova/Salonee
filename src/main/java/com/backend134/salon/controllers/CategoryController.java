@@ -27,6 +27,9 @@ public class CategoryController {
         model.addAttribute("category", category);
         model.addAttribute("services", services);
 
+        model.addAttribute("navCategories", categoryService.getAllCategories());
+
+
         return "category";
     }
 }

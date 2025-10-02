@@ -13,7 +13,7 @@ public class SalonServiceDto {
     private Long id;
     private String name;
     private String description;
-    private double price;
     private String image;
     private String categoryName;
+    private String extraInfo;
 }
