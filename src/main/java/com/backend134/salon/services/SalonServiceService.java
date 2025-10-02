@@ -6,8 +6,6 @@ import com.backend134.salon.models.SalonService;
 import java.util.List;
 
 public interface SalonServiceService {
-    List<SalonServiceDto> getAllServices();
     List<SalonServiceDto> getServicesByCategoryId(Long categoryId);
-
     SalonServiceDto getServiceById(Long id);
 }

@@ -6,6 +6,9 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
+import java.util.ArrayList;
+import java.util.List;
+
 @Getter
 @Setter
 @AllArgsConstructor
@@ -13,18 +16,15 @@ import lombok.Setter;
 @Entity
 @Table(name = "services")
 public class SalonService {
-
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    private String name;
-    private String description;
-    private double price;
-    private String image;
+    private String name;        // xidmət adı
+    private String description; // xidmət təsviri
+    private String image;       // xidmət şəkili
 
     @ManyToOne
     @JoinColumn(name = "category_id")
     private Category category;
-
 }

@@ -18,6 +18,7 @@ public class Price {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    private String serviceName;
-    private Double amount;
+    private String serviceName; // xidmətin adı
+    private Double amount;      // qiymət
+
 }
