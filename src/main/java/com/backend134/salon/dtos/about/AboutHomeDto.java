@@ -17,4 +17,6 @@ public class AboutHomeDto {
     private String imagePath;
     private Integer experienceYears;
     private Integer clientsCount;
+    private String phoneNumber;
+    private String phoneLabel;   //bize zeng edin
 }

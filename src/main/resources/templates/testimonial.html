@@ -17,8 +17,8 @@
             <h1 class="display-1 animated slideInLeft" th:text="${testimonialText.title}">Rəylər</h1>
             <nav aria-label="breadcrumb">
                 <ol class="breadcrumb justify-content-center animated slideInLeft mb-0">
-                    <li class="breadcrumb-item"><a class="text-primary" href="#">Ana Səhifə</a></li>
-                    <li class="breadcrumb-item"><a class="text-primary" href="#">Səhifələr</a></li>
+                    <li class="breadcrumb-item"><a class="text-primary" href="/">Ana Səhifə</a></li>
+                    <li class="breadcrumb-item"><a class="text-primary" href="/testimonial">Rəylər</a></li>
                     <li class="breadcrumb-item active" aria-current="page" th:text="${testimonialText.title}"></li>
                 </ol>
             </nav>
@@ -37,9 +37,9 @@
             <div class="owl-carousel testimonial-carousel wow fadeIn" data-wow-delay="0.3s">
                 <div class="text-center bg-light p-4" th:each="t : ${testimonials}">
                     <i class="fa fa-quote-left fa-3x mb-3"></i>
-                    <p th:text="${t.text}"></p>
+                    <p th:text="${t.feedback}"></p>
                     <img class="img-fluid mx-auto border p-1 mb-3" th:src="${t.imageUrl}" alt="">
-                    <h4 class="mb-1" th:text="${t.name}"></h4>
+                    <h4 class="mb-1" th:text="${t.clientName}"></h4>
                     <span th:text="${t.profession}"></span>
                 </div>
             </div>

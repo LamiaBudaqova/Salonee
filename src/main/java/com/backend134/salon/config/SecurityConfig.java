@@ -30,7 +30,10 @@ public class SecurityConfig {
                         .requestMatchers("/css/**", "/js/**", "/img/**", "/front/**").permitAll()
                         .requestMatchers("/", "/about", "/service/**", "/services/**",
                                 "/category/**", "/price", "/gallery/**", "/team",
-                                "/blog/**", "/contact").permitAll()
+                                "/blog/**", "/contact",
+                                "/testimonial", "/testimonial/**"
+                        ).permitAll()
+
                         .requestMatchers("/register", "/login", "/perform_login").permitAll()
                         .requestMatchers(HttpMethod.GET, "/contact").permitAll()
                         .requestMatchers(HttpMethod.POST, "/contact").authenticated()

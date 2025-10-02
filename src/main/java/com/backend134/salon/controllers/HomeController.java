@@ -22,7 +22,7 @@ public class HomeController {
         model.addAttribute("activePage", "home");
         model.addAttribute("categories", categoryService.getHomeFeaturedCategories());
         model.addAttribute("about", aboutService.getAboutForHome()); // ana səhifə üçün qısaldılmış
-        model.addAttribute("navCategories", categoryService.getAllCategories()); // ✅ əlavə etdik
+        model.addAttribute("navCategories", categoryService.getAllCategories());
         model.addAttribute("blogs", blogService.getLatestPosts());
         model.addAttribute("hero", heroService.getHero());
 

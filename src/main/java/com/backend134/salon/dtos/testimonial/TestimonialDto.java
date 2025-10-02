@@ -10,8 +10,8 @@ import lombok.Setter;
 @AllArgsConstructor
 @NoArgsConstructor
 public class TestimonialDto {
-    private String text;
-    private String name;
+    private String feedback;
+    private String clientName;
     private String profession;
     private String imageUrl;
 }
