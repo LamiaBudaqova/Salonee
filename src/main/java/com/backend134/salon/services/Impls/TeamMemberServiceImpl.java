@@ -33,4 +33,23 @@ public class TeamMemberServiceImpl implements TeamMemberService {
         }
         return dtos;
     }
+
+    @Override
+    public List<TeamMemberDto> getFirstFourMembers() {
+        List<TeamMember> members = teamMemberRepository.findAll();
+        List<TeamMemberDto> dtos = new ArrayList<>();
+
+        // yalnız ilk 4-ü götürək
+        for (int i = 0; i < members.size() && i < 4; i++) {
+            TeamMember member = members.get(i);
+            TeamMemberDto dto = new TeamMemberDto();
+            dto.setName(member.getName());
+            dto.setPosition(member.getPosition());
+            dto.setImageUrl(member.getImageUrl());
+            dto.setFacebook(member.getFacebook());
+            dto.setInstagram(member.getInstagram());
+            dtos.add(dto);
+        }
+        return dtos;
+    }
 }

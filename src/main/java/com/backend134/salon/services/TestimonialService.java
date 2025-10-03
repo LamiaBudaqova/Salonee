@@ -7,5 +7,6 @@ import java.util.List;
 
 public interface TestimonialService {
     List<TestimonialDto> getAllTestimonials();
+    List<TestimonialDto> getLatestFiveTestimonials();
     void createTestimonial(TestimonialCreateDto dto);
 }

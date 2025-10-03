@@ -85,8 +85,9 @@
                             <i class="fa fa-phone fa-2x text-dark"></i>
                         </div>
                         <div class="px-3">
-                            <h3>+0123456789</h3>
-                            <span>Pulsuz konsultasiya üçün 24/7 zəng edin</span>
+                            <h3 th:text="${about.phoneNumber}">+0123456789</h3>
+                            <span th:text="${about.phoneLabel}">Pulsuz konsultasiya üçün 24/7 zəng edin</span>
+
                         </div>
                     </div>
                 </div>
@@ -150,77 +151,32 @@
     <!-- Pricing Start -->
     <div class="container-fluid price px-0 py-5">
         <div class="row g-0">
-            <div class="col-md-6">
-                <div class="d-flex align-items-center h-100 bg-primary p-5">
-                    <div class="wow fadeIn" data-wow-delay="0.3s">
-                        <h1 class="font-dancing-script text-white">Qiymətlər</h1>
-                        <h1 class="mb-0">Salon Xidmətləri</h1>
-                        <h1 class="display-1 text-uppercase mb-5" style="letter-spacing: 10px;">Qiymətlər</h1>
-                        <div class="row g-4 align-items-center">
-                            <div class="col-lg-6">
-                                <div class="text-center bg-dark p-5">
-                                    <h4 class="text-white">Enjoy</h4>
-                                    <h1 class="display-1 font-work-sans text-white">20%</h1>
-                                    <p class="fs-2 text-white mb-0">Off</p>
-                                </div>
-                            </div>
-                            <div class="col-lg-6">
-                                <p>İlk rezervasiyada 20% endirim fürsətindən yararlanın.</p>
-                                <a class="btn btn-dark" href="">20% Endirim Qazan</a>
-                            </div>
+            <div class="col-md-12">
+                <div class="h-100 bg-dark p-5 text-center">
+
+                    <!-- Başlıq qəhvəyi qutuda -->
+                    <div class="d-inline-block bg-primary px-5 py-3 mb-5">
+                        <h1 class="text-uppercase text-white m-0">Qiymətlər</h1>
+                    </div>
+
+                    <!-- Qiymət siyahısı -->
+                    <div th:each="price : ${prices}" class="price-item mb-3 wow fadeIn">
+                        <div class="d-flex justify-content-between align-items-center px-4">
+                            <h6 class="text-uppercase text-primary mb-0" th:text="${price.serviceName}">Xidmət adı</h6>
+                            <h3 class="text-white font-work-sans mb-0" th:text="${price.amount + ' AZN'}">50 AZN</h3>
                         </div>
                     </div>
-                </div>
-            </div>
-            <div class="col-md-6">
-                <div class="h-100 bg-dark p-5">
-                    <div class="price-item mb-3 wow fadeIn" data-wow-delay="0.1s">
-                        <img class="img-fluid flex-shrink-0" src="/front/img/price-1.jpg" alt="">
-                        <div class="text-end px-4">
-                            <h6 class="text-uppercase text-primary">Saç kəsimi</h6>
-                            <h3 class="text-white font-work-sans mb-0">70 AZN</h3>
-                        </div>
-                    </div>
-                    <div class="price-item mb-3 wow fadeIn" data-wow-delay="0.2s">
-                        <img class="img-fluid flex-shrink-0" src="/front/img/price-2.jpg" alt="">
-                        <div class="text-end px-4">
-                            <h6 class="text-uppercase text-primary">Makiyaj</h6>
-                            <h3 class="text-white font-work-sans mb-0">80 AZN</h3>
-                        </div>
-                    </div>
-                    <div class="price-item mb-3 wow fadeIn" data-wow-delay="0.3s">
-                        <img class="img-fluid flex-shrink-0" src="/front/img/price-3.jpg" alt="">
-                        <div class="text-end px-4">
-                            <h6 class="text-uppercase text-primary">Manikür</h6>
-                            <h3 class="text-white font-work-sans mb-0">50 AZN</h3>
-                        </div>
-                    </div>
-                    <div class="price-item mb-3 wow fadeIn" data-wow-delay="0.4s">
-                        <img class="img-fluid flex-shrink-0" src="/front/img/price-4.jpg" alt="">
-                        <div class="text-end px-4">
-                            <h6 class="text-uppercase text-primary">Pedikür</h6>
-                            <h3 class="text-white font-work-sans mb-0">50 AZN</h3>
-                        </div>
-                    </div>
-                    <div class="price-item mb-3 wow fadeIn" data-wow-delay="0.5s">
-                        <img class="img-fluid flex-shrink-0" src="/front/img/price-5.jpg" alt="">
-                        <div class="text-end px-4">
-                            <h6 class="text-uppercase text-primary">Masaj</h6>
-                            <h3 class="text-white font-work-sans mb-0">70 AZN</h3>
-                        </div>
-                    </div>
-                    <div class="price-item mb-3 wow fadeIn" data-wow-delay="0.6s">
-                        <img class="img-fluid flex-shrink-0" src="/front/img/price-6.jpg" alt="">
-                        <div class="text-end px-4">
-                            <h6 class="text-uppercase text-primary">Dəriyə qulluq</h6>
-                            <h3 class="text-white font-work-sans mb-0">100 AZN</h3>
-                        </div>
+
+                    <!-- Daha çox butonu -->
+                    <div class="text-center mt-4">
+                        <a class="btn btn-primary text-uppercase" href="/price">Daha çox</a>
                     </div>
                 </div>
             </div>
         </div>
     </div>
     <!-- Pricing End -->
+
 
 
     <!-- Gallery Start -->
@@ -295,140 +251,83 @@
     <div class="container-fluid overflow-hidden py-5">
         <div class="container">
             <div class="text-center wow fadeIn" data-wow-delay="0.2s">
-                <h1 class="font-dancing-script text-primary">Komandamız</h1>
-                <h1 class="mb-5">Təcrübəli mütəxəssislərimiz</h1>
+                <!-- Başlıqlar DB-dən -->
+                <h1 class="font-dancing-script text-primary" th:text="${teamText.subtitle}">Komandamız</h1>
+                <h1 class="mb-5" th:text="${teamText.title}">Təcrübəli mütəxəssislərimiz</h1>
             </div>
+
             <div class="row g-4 team">
-                <div class="col-md-6 col-lg-3 wow fadeIn" data-wow-delay="0.1s">
+                <!-- Yalnız ilk 4 üzv çıxacaq -->
+                <div class="col-md-6 col-lg-3 wow fadeIn"
+                     th:each="member, iterStat : ${teamMembers}"
+                     th:attr="data-wow-delay=${0.1 + (iterStat.index * 0.2)} + 's'">
+
                     <div class="team-item position-relative overflow-hidden">
-                        <img class="img-fluid w-100" src="/front/img/team-1.jpg" alt="">
+                        <!-- Şəkil DB-dən -->
+                        <img class="img-fluid w-100" th:src="${member.imageUrl}" alt="">
+
+                        <!-- Overlay -->
                         <div class="team-overlay">
-                            <p class="text-primary mb-1">Saç üzrə mütəxəssis</p>
-                            <h4>Lily Taylor</h4>
+                            <!-- Vəzifə və ad -->
+                            <p class="text-primary mb-1" th:text="${member.position}">Mütəxəssis</p>
+                            <h4 th:text="${member.name}">Ad Soyad</h4>
+
+                            <!-- Sosial şəbəkələr -->
                             <div class="d-flex justify-content-center">
-                                <a class="btn btn-dark btn-sm-square border-2 me-3" href="">
+                                <a class="btn btn-dark btn-sm-square border-2 me-3"
+                                   th:if="${member.facebook != null}" th:href="${member.facebook}">
                                     <i class="fab fa-facebook-f"></i>
                                 </a>
-                                <a class="btn btn-dark btn-sm-square border-2 me-3" href="">
+                                <a class="btn btn-dark btn-sm-square border-2"
+                                   th:if="${member.instagram != null}" th:href="${member.instagram}">
                                     <i class="fab fa-instagram"></i>
-                                </a>
-                                <a class="btn btn-dark btn-sm-square border-2" href="">
-                                    <i class="fab fa-linkedin-in"></i>
-                                </a>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-                <div class="col-md-6 col-lg-3 wow fadeIn" data-wow-delay="0.3s">
-                    <div class="team-item position-relative overflow-hidden">
-                        <img class="img-fluid w-100" src="/front/img/team-2.jpg" alt="">
-                        <div class="team-overlay">
-                            <p class="text-primary mb-1">Dırnaq dizayneri</p>
-                            <h4>Olivia Smith</h4>
-                            <div class="d-flex justify-content-center">
-                                <a class="btn btn-dark btn-sm-square border-2 me-3" href="">
-                                    <i class="fab fa-facebook-f"></i>
-                                </a>
-                                <a class="btn btn-dark btn-sm-square border-2 me-3" href="">
-                                    <i class="fab fa-instagram"></i>
-                                </a>
-                                <a class="btn btn-dark btn-sm-square border-2" href="">
-                                    <i class="fab fa-linkedin-in"></i>
-                                </a>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-                <div class="col-md-6 col-lg-3 wow fadeIn" data-wow-delay="0.5s">
-                    <div class="team-item position-relative overflow-hidden">
-                        <img class="img-fluid w-100" src="/front/img/team-3.jpg" alt="">
-                        <div class="team-overlay">
-                            <p class="text-primary mb-1">Gözəllik üzrə mütəxəssis</p>
-                            <h4>Ava Brown</h4>
-                            <div class="d-flex justify-content-center">
-                                <a class="btn btn-dark btn-sm-square border-2 me-3" href="">
-                                    <i class="fab fa-facebook-f"></i>
-                                </a>
-                                <a class="btn btn-dark btn-sm-square border-2 me-3" href="">
-                                    <i class="fab fa-instagram"></i>
-                                </a>
-                                <a class="btn btn-dark btn-sm-square border-2" href="">
-                                    <i class="fab fa-linkedin-in"></i>
-                                </a>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-                <div class="col-md-6 col-lg-3 wow fadeIn" data-wow-delay="0.7s">
-                    <div class="team-item position-relative overflow-hidden">
-                        <img class="img-fluid w-100" src="/front/img/team-4.jpg" alt="">
-                        <div class="team-overlay">
-                            <p class="text-primary mb-1">Spa üzrə mütəxəssis</p>
-                            <h4>Amelia Jones</h4>
-                            <div class="d-flex justify-content-center">
-                                <a class="btn btn-dark btn-sm-square border-2 me-3" href="">
-                                    <i class="fab fa-facebook-f"></i>
-                                </a>
-                                <a class="btn btn-dark btn-sm-square border-2 me-3" href="">
-                                    <i class="fab fa-instagram"></i>
-                                </a>
-                                <a class="btn btn-dark btn-sm-square border-2" href="">
-                                    <i class="fab fa-linkedin-in"></i>
                                 </a>
                             </div>
                         </div>
                     </div>
                 </div>
             </div>
+
+            <!-- Daha çox butonu -->
+            <div class="text-center mt-4">
+                <a class="btn btn-primary text-uppercase px-5 py-3" href="/team">
+                    Daha çox
+                </a>
+            </div>
+
         </div>
     </div>
     <!-- Team End -->
+
+
 
 
     <!-- Testimonial Start -->
     <div class="container-fluid py-5">
         <div class="container">
             <div class="text-center wow fadeIn" data-wow-delay="0.2s">
-                <h1 class="font-dancing-script text-primary">Rəylər</h1>
-                <h1 class="mb-5">Müştərilərimiz nə deyir?</h1>
+                <h1 class="font-dancing-script text-primary" th:text="${testimonialText.title}">Rəylər</h1>
+                <h1 class="mb-5" th:text="${testimonialText.subtitle}">Müştərilərimiz nə deyir?</h1>
             </div>
+
+            <!-- Son 5 testimonial göstər -->
             <div class="owl-carousel testimonial-carousel wow fadeIn" data-wow-delay="0.3s">
-                <div class="text-center bg-light p-4">
+                <div class="text-center bg-light p-4" th:each="t : ${testimonials}">
                     <i class="fa fa-quote-left fa-3x mb-3"></i>
-                    <p>Tempor erat elitr rebum at clita. Diam dolor diam ipsum sit diam amet diam et eos. Clita erat
-                        ipsum et lorem et sit.</p>
-                    <img class="img-fluid mx-auto border p-1 mb-3" src="/front/img/testimonial-1.jpg" alt="">
-                    <h4 class="mb-1">Müştərinin adı</h4>
-                    <span>Peşə</span>
+                    <p th:text="${t.feedback}">Rəy mətni</p>
+                    <h4 class="mb-1" th:text="${t.clientName}">Müştərinin adı</h4>
+                    <span th:text="${t.profession}">Peşə</span>
                 </div>
-                <div class="text-center bg-light p-4">
-                    <i class="fa fa-quote-left fa-3x mb-3"></i>
-                    <p>Tempor erat elitr rebum at clita. Diam dolor diam ipsum sit diam amet diam et eos. Clita erat
-                        ipsum et lorem et sit.</p>
-                    <img class="img-fluid mx-auto border p-1 mb-3" src="/front/img/testimonial-2.jpg" alt="">
-                    <h4 class="mb-1">Client Name</h4>
-                    <span>Profession</span>
-                </div>
-                <div class="text-center bg-light p-4">
-                    <i class="fa fa-quote-left fa-3x mb-3"></i>
-                    <p>Tempor erat elitr rebum at clita. Diam dolor diam ipsum sit diam amet diam et eos. Clita erat
-                        ipsum et lorem et sit.</p>
-                    <img class="img-fluid mx-auto border p-1 mb-3" src="/front/img/testimonial-3.jpg" alt="">
-                    <h4 class="mb-1">Client Name</h4>
-                    <span>Profession</span>
-                </div>
-                <div class="text-center bg-light p-4">
-                    <i class="fa fa-quote-left fa-3x mb-3"></i>
-                    <p>Tempor erat elitr rebum at clita. Diam dolor diam ipsum sit diam amet diam et eos. Clita erat
-                        ipsum et lorem et sit.</p>
-                    <img class="img-fluid mx-auto border p-1 mb-3" src="/front/img/testimonial-4.jpg" alt="">
-                    <h4 class="mb-1">Client Name</h4>
-                    <span>Profession</span>
-                </div>
+            </div>
+
+            <!-- Daha çox butonu -->
+            <div class="text-center mt-4">
+                <a class="btn btn-primary text-uppercase px-5 py-3" href="/testimonial">Daha çox</a>
             </div>
         </div>
     </div>
     <!-- Testimonial End -->
+
 
 
     <!-- Blog Start -->
@@ -439,7 +338,7 @@
                 <h2 class="mb-0">Ən son paylaşılan yazılar</h2>
             </div>
             <div class="row g-4">
-                <!-- Yalnız 2 blog cıxacaq -->
+                <!-- Yalnız 2 blog çıxacaq -->
                 <div class="col-md-6" th:each="post, iterStat : ${blogs}" th:if="${iterStat.index < 2}">
                     <div class="card h-100">
                         <img class="card-img-top" th:src="${post.imagePath}" alt="Blog şəkli"
@@ -454,8 +353,9 @@
                             <p class="card-text" th:text="${#strings.abbreviate(post.content, 200)}">
                                 Bloq məzmununun qısa hissəsi burda olacaq.
                             </p>
-                            <a class="btn btn-dark text-uppercase" th:href="'/blog/' + ${post.id}">
-                                Daha çox oxu <i class="bi bi-arrow-right"></i>
+                            <!-- Artıq hər kart blog səhifəsinə aparır -->
+                            <a class="btn btn-dark text-uppercase" href="/blog">
+                                Daha çox <i class="bi bi-arrow-right"></i>
                             </a>
                         </div>
                     </div>
@@ -464,6 +364,7 @@
         </div>
     </div>
     <!-- Blog End -->
+
 
 
     <!-- Back to Top -->

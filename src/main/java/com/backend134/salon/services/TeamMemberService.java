@@ -7,4 +7,6 @@ import java.util.List;
 
 public interface TeamMemberService {
     List<TeamMemberDto> getAllTeamMembers();
+    List<TeamMemberDto> getFirstFourMembers(); // yalnız ilk 4 nəfər
+
 }

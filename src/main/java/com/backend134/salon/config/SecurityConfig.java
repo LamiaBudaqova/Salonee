@@ -10,6 +10,8 @@ import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.SecurityFilterChain;
+import org.springframework.security.web.savedrequest.HttpSessionRequestCache;
+import org.springframework.security.web.savedrequest.SavedRequest;
 
 @Configuration
 @RequiredArgsConstructor
@@ -31,37 +33,49 @@ public class SecurityConfig {
                         .requestMatchers("/", "/about", "/service/**", "/services/**",
                                 "/category/**", "/price", "/gallery/**", "/team",
                                 "/blog/**", "/contact",
-                                "/testimonial", "/testimonial/**"
-                        ).permitAll()
-
-                        .requestMatchers("/register", "/login", "/perform_login").permitAll()
+                                "/testimonial", "/testimonial/**",
+                                "/register", "/login").permitAll()
                         .requestMatchers(HttpMethod.GET, "/contact").permitAll()
-                        .requestMatchers(HttpMethod.POST, "/contact").authenticated()
+                        .requestMatchers(HttpMethod.POST, "/contact").permitAll()
                         .requestMatchers(HttpMethod.POST, "/testimonial").permitAll()
-                        .requestMatchers(HttpMethod.POST, "/testimonial").authenticated()
                         .anyRequest().authenticated()
                 )
                 .formLogin(form -> form
                         .loginPage("/login")
                         .loginProcessingUrl("/login")
-                        .usernameParameter("email")   // <---- username əvəzinə email
-                        .passwordParameter("password") // <---- password olduğu kimi qalır
+                        .usernameParameter("email")
+                        .passwordParameter("password")
                         .successHandler((request, response, authentication) -> {
+                            // 1. URL-də continue param varsa
+                            String continueParam = request.getParameter("continue");
+                            if (continueParam != null && !continueParam.isBlank()) {
+                                response.sendRedirect(continueParam);
+                                return;
+                            }
+
+                            // 2. Spring-in saxladığı request varsa
+                            HttpSessionRequestCache cache = new HttpSessionRequestCache();
+                            SavedRequest savedRequest = cache.getRequest(request, response);
+                            if (savedRequest != null) {
+                                response.sendRedirect(savedRequest.getRedirectUrl());
+                                return;
+                            }
+
+                            // 3. Referer başlığına bax
                             String referer = request.getHeader("Referer");
-                            if (referer != null && !referer.contains("/login")) {
+                            if (referer != null && !referer.contains("/login") && !referer.contains("/register")) {
                                 response.sendRedirect(referer);
                             } else {
+                                // fallback
                                 response.sendRedirect("/");
                             }
                         })
                         .failureUrl("/login?error")
                         .permitAll()
                 )
-
-
                 .logout(logout -> logout
                         .logoutUrl("/logout")
-                        .logoutSuccessUrl("/contact?logout")
+                        .logoutSuccessUrl("/")
                         .permitAll()
                 );
 

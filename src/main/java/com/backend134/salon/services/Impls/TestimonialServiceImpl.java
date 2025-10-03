@@ -29,6 +29,16 @@ public class TestimonialServiceImpl implements TestimonialService {
     }
 
     @Override
+    public List<TestimonialDto> getLatestFiveTestimonials() {
+        return testimonialRepository.findAll()
+                .stream()
+                .sorted((a, b) -> Long.compare(b.getId(), a.getId())) // sonuncuları gətir
+                .limit(5)
+                .map(t -> modelMapper.map(t, TestimonialDto.class))
+                .toList();
+    }
+
+    @Override
     public void createTestimonial(TestimonialCreateDto dto) {
         Testimonial testimonial = modelMapper.map(dto, Testimonial.class);
         testimonialRepository.save(testimonial);

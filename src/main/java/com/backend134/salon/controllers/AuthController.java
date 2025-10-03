@@ -8,6 +8,8 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
 
+import jakarta.servlet.http.HttpServletRequest;
+
 @Controller
 @RequiredArgsConstructor
 public class AuthController {
@@ -25,13 +27,22 @@ public class AuthController {
     }
 
     @PostMapping("/register")
-    public String register(@ModelAttribute UserRegisterDto registerDto) {
+    public String register(@ModelAttribute UserRegisterDto registerDto,
+                           HttpServletRequest request) {
         boolean result = userService.register(registerDto);
 
         if (result) {
-            return "redirect:/login?success"; // qeydiyyatdan sonra login səhifəsinə yönləndir
+            String continueParam = request.getParameter("continue");
+            if (continueParam != null && !continueParam.isBlank()) {
+                return "redirect:/login?success&continue=" + continueParam;
+            }
+            return "redirect:/login?success";
         } else {
-            return "redirect:/register?error"; // problem olsa yenidən register səhifəsinə
+            String continueParam = request.getParameter("continue");
+            if (continueParam != null && !continueParam.isBlank()) {
+                return "redirect:/register?error&continue=" + continueParam;
+            }
+            return "redirect:/register?error";
         }
     }
 }

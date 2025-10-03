@@ -19,6 +19,15 @@ public class PriceServiceImpl implements PriceService {
     private final PriceRepository priceRepository;
 
     @Override
+    public List<Price> getHomePrices() {
+        return priceRepository.findAll()
+                .stream()
+                .limit(5) // yalnız 5 dənə gətir
+                .toList();
+    }
+
+
+    @Override
     public List<PriceResponse> getAllPrices() {
         return priceRepository.findAll().stream()
                 .map(p -> new PriceResponse(p.getId(), p.getServiceName(), p.getAmount()))
