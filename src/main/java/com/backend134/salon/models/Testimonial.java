@@ -20,5 +20,4 @@ public class Testimonial {
     private String feedback;
     private String clientName;
     private String profession;
-    private String imageUrl;
 }

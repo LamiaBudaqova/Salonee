@@ -37,6 +37,8 @@ public class SecurityConfig {
                         .requestMatchers("/register", "/login", "/perform_login").permitAll()
                         .requestMatchers(HttpMethod.GET, "/contact").permitAll()
                         .requestMatchers(HttpMethod.POST, "/contact").authenticated()
+                        .requestMatchers(HttpMethod.POST, "/testimonial").permitAll()
+                        .requestMatchers(HttpMethod.POST, "/testimonial").authenticated()
                         .anyRequest().authenticated()
                 )
                 .formLogin(form -> form

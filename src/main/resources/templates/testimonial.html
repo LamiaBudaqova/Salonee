@@ -1,11 +1,11 @@
 <!DOCTYPE html>
-<html lang="en"
+<html lang="az"
       xmlns:th="http://www.thymeleaf.org"
       xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
-      layout:decorate="~{layout}">
+      layout:decorate="~{layout}" xmlns:sec="http://www.w3.org/1999/xhtml">
 
 <head>
-    <title>Testimonial</title>
+    <title>Rəylər</title>
 </head>
 
 <body>
@@ -18,7 +18,6 @@
             <nav aria-label="breadcrumb">
                 <ol class="breadcrumb justify-content-center animated slideInLeft mb-0">
                     <li class="breadcrumb-item"><a class="text-primary" href="/">Ana Səhifə</a></li>
-                    <li class="breadcrumb-item"><a class="text-primary" href="/testimonial">Rəylər</a></li>
                     <li class="breadcrumb-item active" aria-current="page" th:text="${testimonialText.title}"></li>
                 </ol>
             </nav>
@@ -27,27 +26,75 @@
     <!-- Hero End -->
 
 
-    <!-- Testimonial Start -->
+    <!-- Testimonials List -->
     <div class="container-fluid py-5">
         <div class="container">
             <div class="text-center wow fadeIn" data-wow-delay="0.2s">
-                <h1 class="font-dancing-script text-primary" th:text="${testimonialText.title}"></h1>
-                <h1 class="mb-5" th:text="${testimonialText.subtitle}"></h1>
+                <h1 class="font-dancing-script text-primary" th:text="${testimonialText.title}">Rəylər</h1>
+                <h1 class="mb-5" th:text="${testimonialText.subtitle}">Müştərilərimiz nə deyir?</h1>
             </div>
-            <div class="owl-carousel testimonial-carousel wow fadeIn" data-wow-delay="0.3s">
-                <div class="text-center bg-light p-4" th:each="t : ${testimonials}">
-                    <i class="fa fa-quote-left fa-3x mb-3"></i>
-                    <p th:text="${t.feedback}"></p>
-                    <img class="img-fluid mx-auto border p-1 mb-3" th:src="${t.imageUrl}" alt="">
-                    <h4 class="mb-1" th:text="${t.clientName}"></h4>
-                    <span th:text="${t.profession}"></span>
+            <div class="row">
+                <div class="col-md-4 mb-4" th:each="t : ${testimonials}">
+                    <div class="text-center bg-light p-4">
+                        <i class="fa fa-quote-left fa-3x mb-3"></i>
+                        <p th:text="${t.feedback}"></p>
+                        <h4 class="mb-1" th:text="${t.clientName}"></h4>
+                        <span th:text="${t.profession}"></span>
+                    </div>
                 </div>
             </div>
         </div>
     </div>
-    <!-- Testimonial End -->
+    <!-- Testimonials End -->
+
+    <!-- Add Testimonial Form -->
+    <div class="container py-5">
+        <h3 class="mb-4">Siz də rəyinizi yazın</h3>
+
+        <!-- Əgər user login olubsa -->
+        <div sec:authorize="isAuthenticated()">
+            <form action="/testimonial" method="post" th:object="${testimonialForm}">
+                <div class="mb-3">
+                    <label>Ad Soyad</label>
+                    <input type="text" th:field="*{clientName}" class="form-control" placeholder="Adınızı daxil edin" required>
+                </div>
+                <div class="mb-3">
+                    <label>Peşə</label>
+                    <input type="text" th:field="*{profession}" class="form-control" placeholder="Məs: Müəllim, İT mütəxəssis" required>
+                </div>
+                <div class="mb-3">
+                    <label>Rəyiniz</label>
+                    <textarea th:field="*{feedback}" class="form-control" placeholder="Rəyinizi yazın..." rows="4" required></textarea>
+                </div>
+                <button type="submit" class="btn btn-primary">Göndər</button>
+            </form>
+        </div>
+
+        <!-- Əgər user login olmayıbsa -->
+        <div sec:authorize="!isAuthenticated()">
+            <form>
+                <div class="mb-3">
+                    <label>Ad Soyad</label>
+                    <input type="text" class="form-control" placeholder="Daxil olmaq üçün klikləyin"
+                           onclick="window.location.href='/login';" readonly>
+                </div>
+                <div class="mb-3">
+                    <label>Peşə</label>
+                    <input type="text" class="form-control" placeholder="Daxil olmaq üçün klikləyin"
+                           onclick="window.location.href='/login';" readonly>
+                </div>
+                <div class="mb-3">
+                    <label>Rəyiniz</label>
+                    <textarea class="form-control" rows="4" placeholder="Daxil olmaq üçün klikləyin"
+                              onclick="window.location.href='/login';" readonly></textarea>
+                </div>
+                <button type="button" class="btn btn-primary" onclick="window.location.href='/login';">Daxil ol</button>
+            </form>
+        </div>
+    </div>
+    <!-- Form End -->
+
 
 </div>
 </body>
-
 </html>

@@ -9,8 +9,8 @@ import lombok.Setter;
 @Setter
 @AllArgsConstructor
 @NoArgsConstructor
-public class TestimonialDto {
-    private String feedback;
+public class TestimonialCreateDto {
     private String clientName;
     private String profession;
+    private String feedback;
 }

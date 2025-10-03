@@ -1,6 +1,8 @@
 package com.backend134.salon.services.Impls;
 
+import com.backend134.salon.dtos.testimonial.TestimonialCreateDto;
 import com.backend134.salon.dtos.testimonial.TestimonialDto;
+import com.backend134.salon.models.Testimonial;
 import com.backend134.salon.repositories.TestimonialRepository;
 import com.backend134.salon.services.TeamMemberService;
 import com.backend134.salon.services.TestimonialService;
@@ -24,5 +26,11 @@ public class TestimonialServiceImpl implements TestimonialService {
                 .map(t -> modelMapper.map(t, TestimonialDto.class))
                 .toList();
 
+    }
+
+    @Override
+    public void createTestimonial(TestimonialCreateDto dto) {
+        Testimonial testimonial = modelMapper.map(dto, Testimonial.class);
+        testimonialRepository.save(testimonial);
     }
 }
