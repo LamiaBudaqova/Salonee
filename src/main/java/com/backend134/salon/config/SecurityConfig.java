@@ -30,6 +30,8 @@ public class SecurityConfig {
                 .csrf(csrf -> csrf.disable())
                 .authorizeHttpRequests(auth -> auth
                         .requestMatchers("/css/**", "/js/**", "/img/**", "/front/**").permitAll()
+                        .requestMatchers("/admin/css/**", "/admin/js/**", "/admin/images/**", "/admin/vendors/**", "/front/**").permitAll()
+
                         .requestMatchers("/", "/about", "/service/**", "/services/**",
                                 "/category/**", "/price", "/gallery/**", "/team",
                                 "/blog/**", "/contact",
@@ -38,6 +40,10 @@ public class SecurityConfig {
                         .requestMatchers(HttpMethod.GET, "/contact").permitAll()
                         .requestMatchers(HttpMethod.POST, "/contact").permitAll()
                         .requestMatchers(HttpMethod.POST, "/testimonial").permitAll()
+
+                        // ADMIN panel - yalnız ADMIN görə bilər
+                        .requestMatchers("/admin/**").hasRole("ADMIN")
+
                         .anyRequest().authenticated()
                 )
                 .formLogin(form -> form

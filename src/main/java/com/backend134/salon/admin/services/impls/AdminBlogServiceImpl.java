@@ -1,9 +1,11 @@
-package com.backend134.salon.services.Impls;
+package com.backend134.salon.admin.services.impls;
 
-import com.backend134.salon.dtos.blog.BlogDto;
+import com.backend134.salon.admin.dtos.AdminBlogCreateDto;
+import com.backend134.salon.admin.dtos.AdminBlogResponseDto;
+import com.backend134.salon.admin.dtos.AdminBlogUpdateDto;
 import com.backend134.salon.models.Blog;
 import com.backend134.salon.repositories.BlogRepository;
-import com.backend134.salon.services.BlogService;
+import com.backend134.salon.admin.services.AdminBlogService;
 import lombok.RequiredArgsConstructor;
 import org.modelmapper.ModelMapper;
 import org.springframework.stereotype.Service;
@@ -13,48 +15,41 @@ import java.util.List;
 
 @Service
 @RequiredArgsConstructor
-public class BlogServiceImpl implements BlogService {
-
+public class AdminBlogServiceImpl implements AdminBlogService {
     private final BlogRepository blogRepository;
     private final ModelMapper modelMapper;
 
     @Override
-    public List<BlogDto> getLatestPosts() {
-        return blogRepository.findTop2ByOrderByCreatedAtDesc()
-                .stream()
-                .map(blog -> modelMapper.map(blog, BlogDto.class))
-                .toList();
-    }
-
-    @Override
-    public List<BlogDto> getAllBlogs() {
+    public List<AdminBlogResponseDto> getAll() {
         return blogRepository.findAllByOrderByCreatedAtDesc()
                 .stream()
-                .map(blog -> modelMapper.map(blog, BlogDto.class))
+                .map(blog -> modelMapper.map(blog, AdminBlogResponseDto.class))
                 .toList();
     }
 
     @Override
-    public BlogDto getById(Long id) {
+    public AdminBlogResponseDto getById(Long id) {
         Blog blog = blogRepository.findById(id)
-                .orElseThrow(() -> new RuntimeException("Bloq tapılmadı"));
-        return modelMapper.map(blog, BlogDto.class);
+                .orElseThrow(() -> new RuntimeException("Blog tapılmadı"));
+        return modelMapper.map(blog, AdminBlogResponseDto.class);
     }
 
     @Override
-    public void create(BlogDto dto) {
+    public void create(AdminBlogCreateDto dto) {
         Blog blog = modelMapper.map(dto, Blog.class);
-        blog.setCreatedAt(LocalDate.now()); // əlavə ediləndə bugünkü tarix
+        blog.setCreatedAt(LocalDate.now());
         blogRepository.save(blog);
     }
 
     @Override
-    public void update(Long id, BlogDto dto) {
+    public void update(Long id, AdminBlogUpdateDto dto) {
         Blog blog = blogRepository.findById(id)
-                .orElseThrow(() -> new RuntimeException("Bloq tapılmadı"));
+                .orElseThrow(() -> new RuntimeException("Blog tapılmadı"));
+
         blog.setTitle(dto.getTitle());
         blog.setContent(dto.getContent());
         blog.setImagePath(dto.getImagePath());
+
         blogRepository.save(blog);
     }
 
@@ -63,3 +58,4 @@ public class BlogServiceImpl implements BlogService {
         blogRepository.deleteById(id);
     }
 }
+
