@@ -52,30 +52,18 @@ public class SecurityConfig {
                         .usernameParameter("email")
                         .passwordParameter("password")
                         .successHandler((request, response, authentication) -> {
-                            // 1. URL-də continue param varsa
-                            String continueParam = request.getParameter("continue");
-                            if (continueParam != null && !continueParam.isBlank()) {
-                                response.sendRedirect(continueParam);
-                                return;
-                            }
+                            // Giriş etmiş istifadəçinin rollarını yoxlayaq
+                            var authorities = authentication.getAuthorities();
+                            boolean isAdmin = authorities.stream()
+                                    .anyMatch(a -> a.getAuthority().equals("ROLE_ADMIN"));
 
-                            // 2. Spring-in saxladığı request varsa
-                            HttpSessionRequestCache cache = new HttpSessionRequestCache();
-                            SavedRequest savedRequest = cache.getRequest(request, response);
-                            if (savedRequest != null) {
-                                response.sendRedirect(savedRequest.getRedirectUrl());
-                                return;
-                            }
-
-                            // 3. Referer başlığına bax
-                            String referer = request.getHeader("Referer");
-                            if (referer != null && !referer.contains("/login") && !referer.contains("/register")) {
-                                response.sendRedirect(referer);
+                            if (isAdmin) {
+                                response.sendRedirect("/admin"); // Admin panelə yönləndir
                             } else {
-                                // fallback
-                                response.sendRedirect("/");
+                                response.sendRedirect("/"); // Adi user ana səhifəyə
                             }
                         })
+
                         .failureUrl("/login?error")
                         .permitAll()
                 )

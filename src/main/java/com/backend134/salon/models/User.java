@@ -6,6 +6,7 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
+import com.backend134.salon.models.Role;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -25,14 +26,6 @@ public class User {
     private String email;
     private String password;
 
-    // User → Role əlaqəsi (çox-çox əlaqə)
-    @ManyToMany(fetch = FetchType.EAGER)
-    @JoinTable(
-            name = "users_roles",
-            joinColumns = {@JoinColumn(name = "user_id", referencedColumnName = "id")},
-            inverseJoinColumns = {@JoinColumn(name = "role_id", referencedColumnName = "id")}
-    )
-    private List<Role> roles = new ArrayList<>();
-
-
+    @Enumerated(EnumType.STRING)
+    private Role role; // enum kimi sadə sahə
 }
