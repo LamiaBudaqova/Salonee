@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" xmlns:layout="http://www.w3.org/1999/xhtml" layout:decorate="~{admin/layout}">
+<body>
+<main layout:fragment="content">
+
+    <div class="page-heading mb-4">
+        <h2>Şəkili Redaktə Et</h2>
+        <a th:href="@{/admin/gallery}" class="btn btn-secondary">
+            <i class="bi bi-arrow-left"></i> Geri
+        </a>
+    </div>
+
+    <div class="card">
+        <div class="card-body">
+            <form th:action="@{'/admin/gallery/edit/' + ${image.id}}" method="post" th:object="${image}">
+                <div class="mb-3">
+                    <label class="form-label">Şəkil URL (imagePath)</label>
+                    <input type="text" th:field="*{imagePath}" class="form-control">
+                </div>
+
+                <div class="mb-3">
+                    <label class="form-label">Sıra (sortOrder)</label>
+                    <input type="number" th:field="*{sortOrder}" class="form-control">
+                </div>
+
+                <div class="mb-3">
+                    <label class="form-label">Kolon Ölçüsü (columnSize)</label>
+                    <input type="text" th:field="*{columnSize}" class="form-control">
+                </div>
+
+                <button type="submit" class="btn btn-warning">
+                    <i class="bi bi-pencil"></i> Yadda Saxla
+                </button>
+            </form>
+        </div>
+    </div>
+
+</main>
+</body>
+</html>

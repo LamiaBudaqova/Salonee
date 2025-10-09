@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html lang="az" xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="~{admin/layout}">
+<main layout:fragment="content">
+    <div class="page-heading">
+        <h3>Kateqoriyanı Dəyiş</h3>
+    </div>
+
+    <form th:action="@{/admin/categories/edit}" method="post">
+        <input type="hidden" name="id" th:value="${category.id}">
+        <div class="mb-3">
+            <label>Ad:</label>
+            <input type="text" name="name" class="form-control" th:value="${category.name}" required>
+        </div>
+        <div class="mb-3">
+            <label>İkon:</label>
+            <input type="text" name="icon" class="form-control" th:value="${category.icon}">
+        </div>
+        <div class="form-check mb-3">
+            <input class="form-check-input" type="checkbox" name="featured" id="featured"
+                   th:checked="${category.featured}">
+            <label class="form-check-label" for="featured">Əsas səhifədə göstər</label>
+        </div>
+        <button type="submit" class="btn btn-warning">Yenilə</button>
+        <a th:href="@{/admin/categories}" class="btn btn-secondary">Geri</a>
+    </form>
+</main>
+</html>

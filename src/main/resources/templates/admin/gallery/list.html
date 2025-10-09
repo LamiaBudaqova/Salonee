@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" xmlns:layout="http://www.w3.org/1999/xhtml" layout:decorate="~{admin/layout}">
+<body>
+<main layout:fragment="content">
+
+    <div class="page-heading mb-4">
+        <h2>Qalereya</h2>
+        <a th:href="@{/admin/gallery/create}" class="btn btn-primary mb-3">
+            <i class="bi bi-plus-circle"></i> Yeni Şəkil Əlavə Et
+        </a>
+    </div>
+
+    <div class="card">
+        <div class="card-body">
+            <h5 class="card-title">Mövcud Qalereya Şəkilləri</h5>
+
+            <table class="table table-striped align-middle">
+                <thead class="table-primary">
+                <tr>
+                    <th>#</th>
+                    <th>Şəkil</th>
+                    <th>Sıra</th>
+                    <th>Kolon Ölçüsü</th>
+                    <th>Əməliyyatlar</th>
+                </tr>
+                </thead>
+                <tbody>
+                <tr th:each="img, iter : ${images}">
+                    <td th:text="${iter.index + 1}"></td>
+                    <td>
+                        <img th:src="${img.imagePath}" alt="gallery"
+                             style="width:90px;height:90px;object-fit:cover;border-radius:8px;">
+                    </td>
+                    <td th:text="${img.sortOrder}"></td>
+                    <td th:text="${img.columnSize}"></td>
+                    <td>
+                        <a th:href="@{'/admin/gallery/edit/' + ${img.id}}" class="btn btn-sm btn-warning">
+                            <i class="bi bi-pencil"></i>
+                        </a>
+                        <a th:href="@{'/admin/gallery/delete/' + ${img.id}}"
+                           onclick="return confirm('Silmək istədiyinə əminsən?')"
+                           class="btn btn-sm btn-danger">
+                            <i class="bi bi-trash"></i>
+                        </a>
+                    </td>
+                </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+
+</main>
+</body>
+</html>

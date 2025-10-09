@@ -30,7 +30,7 @@ public class GalleryImageServiceImpl implements GalleryImageService {
     public List<GalleryImageDto> getLimitedImages(int limit) {
         return galleryImageRepository.findAll()
                 .stream()
-                .limit(limit) // 🔹 yalnız limit qədər
+                .limit(limit) // yalnız limit qədər
                 .map(img -> modelMapper.map(img, GalleryImageDto.class))
                 .collect(Collectors.toList());
     }

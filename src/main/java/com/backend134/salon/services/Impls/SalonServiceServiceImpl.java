@@ -24,7 +24,6 @@ public class SalonServiceServiceImpl implements SalonServiceService {
         dto.setId(service.getId());
         dto.setName(service.getName());
         dto.setDescription(service.getDescription());
-        dto.setImage(service.getImage());
         dto.setCategoryName(service.getCategory() != null ? service.getCategory().getName() : null);
         dto.setExtraInfo(service.getExtraInfo());
         return dto;

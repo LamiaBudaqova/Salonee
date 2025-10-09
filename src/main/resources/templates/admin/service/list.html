@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="az" xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="~{admin/layout}">
+<main layout:fragment="content">
+    <div class="page-heading mb-4">
+        <h3>Xidmətlər</h3>
+    </div>
+
+    <a th:href="@{/admin/services/create}" class="btn btn-primary mb-3">
+        <i class="bi bi-plus-circle"></i> Yeni Xidmət Əlavə Et
+    </a>
+
+    <table class="table table-striped">
+        <thead class="table-primary">
+        <tr>
+            <th>#</th>
+            <th>Ad</th>
+            <th>Kateqoriya</th>
+            <th>Əlavə Məlumat</th>
+            <th>Əməliyyatlar</th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr th:each="s, iter : ${services}">
+            <td th:text="${iter.index + 1}"></td>
+            <td th:text="${s.name}"></td>
+            <td th:text="${s.categoryName}"></td>
+            <td th:text="${s.extraInfo}"></td>
+            <td>
+                <a th:href="@{'/admin/services/edit/' + ${s.id}}" class="btn btn-sm btn-warning">Redaktə</a>
+                <a th:href="@{'/admin/services/delete/' + ${s.id}}" class="btn btn-sm btn-danger"
+                   onclick="return confirm('Silmək istədiyinə əminsən?')">Sil</a>
+            </td>
+        </tr>
+        </tbody>
+    </table>
+</main>
+</html>

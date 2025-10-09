@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="az" xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="~{admin/layout}">
+<main layout:fragment="content">
+    <div class="page-heading">
+        <h3>Kateqoriyalar</h3>
+    </div>
+
+    <div class="page-content">
+        <a th:href="@{/admin/categories/create}" class="btn btn-primary mb-3">
+            <i class="bi bi-plus-circle"></i> Yeni Kateqoriya
+        </a>
+
+        <table class="table table-bordered">
+            <thead>
+            <tr>
+                <th>ID</th>
+                <th>Ad</th>
+                <th>İkon</th>
+                <th>Əsas səhifədə?</th>
+                <th>Əməliyyatlar</th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr th:each="cat : ${categories}">
+                <td th:text="${cat.id}"></td>
+                <td th:text="${cat.name}"></td>
+                <td th:text="${cat.icon}"></td>
+                <td>
+                    <span th:text="${cat.featured ? 'Bəli' : 'Xeyr'}"></span>
+                </td>
+                <td>
+                    <a th:href="@{'/admin/categories/edit/' + ${cat.id}}" class="btn btn-sm btn-warning">Dəyiş</a>
+                    <a th:href="@{'/admin/categories/delete/' + ${cat.id}}" class="btn btn-sm btn-danger"
+                       onclick="return confirm('Silmək istədiyinə əminsən?')">Sil</a>
+                </td>
+            </tr>
+            </tbody>
+        </table>
+    </div>
+</main>
+</html>

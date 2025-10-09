@@ -7,6 +7,6 @@ import java.util.List;
 
 public interface GalleryImageService {
     List<GalleryImageDto> getAllImages();
-    // 🔹 Yalnız 6 şəkillik limitli metod
+    // Yalnız 6 şəkillik limitli metod
     List<GalleryImageDto> getLimitedImages(int limit);
 }

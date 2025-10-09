@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="az" xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="~{admin/layout}">
+<main layout:fragment="content">
+    <div class="page-heading mb-4">
+        <h3>Xidməti Redaktə Et</h3>
+    </div>
+
+    <form th:action="@{/admin/services/edit}" method="post">
+        <input type="hidden" name="id" th:value="${service.id}">
+        <div class="mb-3">
+            <label>Ad:</label>
+            <input type="text" name="name" class="form-control" th:value="${service.name}" required>
+        </div>
+        <div class="mb-3">
+            <label>Təsvir:</label>
+            <textarea name="description" class="form-control" rows="3" th:text="${service.description}"></textarea>
+        </div>
+        <div class="mb-3">
+            <label>Şəkil URL:</label>
+            <input type="text" name="image" class="form-control" th:value="${service.image}">
+        </div>
+        <div class="mb-3">
+            <label>Əlavə məlumat:</label>
+            <input type="text" name="extraInfo" class="form-control" th:value="${service.extraInfo}">
+        </div>
+        <div class="mb-3">
+            <label>Kateqoriya:</label>
+            <select name="categoryId" class="form-select">
+                <option th:each="c : ${categories}"
+                        th:value="${c.id}"
+                        th:text="${c.name}"
+                        th:selected="${c.id == service.categoryId}">
+                </option>
+            </select>
+        </div>
+        <button type="submit" class="btn btn-warning">Yenilə</button>
+        <a th:href="@{/admin/services}" class="btn btn-secondary">Geri</a>
+    </form>
+</main>
+</html>

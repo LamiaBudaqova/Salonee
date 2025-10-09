@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html lang="az" xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="~{admin/layout}">
+<main layout:fragment="content">
+    <div class="page-heading mb-4">
+        <h3>Yeni Xidmət Əlavə Et</h3>
+    </div>
+
+    <form th:action="@{/admin/services/create}" method="post">
+        <div class="mb-3">
+            <label>Ad:</label>
+            <input type="text" name="name" class="form-control" required>
+        </div>
+        <div class="mb-3">
+            <label>Təsvir:</label>
+            <textarea name="description" class="form-control" rows="3"></textarea>
+        </div>
+        <div class="mb-3">
+            <label>Şəkil URL:</label>
+            <input type="text" name="image" class="form-control">
+        </div>
+        <div class="mb-3">
+            <label>Əlavə məlumat:</label>
+            <input type="text" name="extraInfo" class="form-control">
+        </div>
+        <div class="mb-3">
+            <label>Kateqoriya:</label>
+            <select name="categoryId" class="form-select">
+                <option th:each="c : ${categories}" th:value="${c.id}" th:text="${c.name}"></option>
+            </select>
+        </div>
+        <button type="submit" class="btn btn-success">Yadda saxla</button>
+        <a th:href="@{/admin/services}" class="btn btn-secondary">Geri</a>
+    </form>
+</main>
+</html>

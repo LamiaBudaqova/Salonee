@@ -28,11 +28,10 @@ public class PagesController {
     @GetMapping("/price")
     public String price(Model model) {
         model.addAttribute("activePage", "price");
-        model.addAttribute("prices", priceService.getAllPrices()); // bütün qiymətlər
-        model.addAttribute("navCategories", categoryService.getAllCategories());
-        return "price"; // price.html və ya templates/price/list.html
+        model.addAttribute("prices", priceService.getAllPrices());
+        model.addAttribute("navCategories", categoryService.getAllCategories()); // menyu üçün
+        return "price";
     }
-
 
     @GetMapping("/gallery")
     public String gallery(Model model){
