@@ -1,34 +1,74 @@
 <!DOCTYPE html>
-<html xmlns:th="http://www.thymeleaf.org" xmlns:layout="http://www.w3.org/1999/xhtml"
-      layout:decorate="~{layout}">
-<head>
-    <title>Blog Redaktə</title>
-</head>
+<html lang="en"
+      xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="~{admin/layout}">
+
 <body>
 <main layout:fragment="content">
-    <div class="container my-5">
-        <h1 class="mb-4">Blog Redaktə</h1>
 
-        <form th:action="@{'/admin/blogs/edit/' + ${blogId}}" th:object="${blog}" method="post">
-            <div class="mb-3">
-                <label class="form-label">Başlıq:</label>
-                <input type="text" th:field="*{title}" class="form-control" required/>
+    <div class="page-heading">
+        <div class="page-title">
+            <div class="row align-items-center">
+                <div class="col-12 col-md-6">
+                    <h3>Blog Redaktəsi</h3>
+                    <p class="text-subtitle text-muted">Mövcud blog yazısının məlumatlarını redaktə edin.</p>
+                </div>
+                <div class="col-12 col-md-6 text-end">
+                    <a th:href="@{/admin/blogs}" class="btn btn-secondary">
+                        <i class="bi bi-arrow-left"></i> Geri qayıt
+                    </a>
+                </div>
             </div>
+        </div>
 
-            <div class="mb-3">
-                <label class="form-label">Məzmun:</label>
-                <textarea th:field="*{content}" rows="5" class="form-control" required></textarea>
+        <section class="section mt-4">
+            <div class="card">
+                <div class="card-header">
+                    <h5>Blog redaktə formu</h5>
+                </div>
+                <div class="card-body">
+                    <form th:action="@{'/admin/blogs/edit/' + ${blogId}}" method="post" th:object="${blog}">
+                        <div class="row">
+
+                            <!-- Başlıq -->
+                            <div class="col-md-12 mb-3">
+                                <label class="form-label fw-bold">Başlıq</label>
+                                <input type="text" th:field="*{title}" class="form-control" placeholder="Blog başlığı" required>
+                            </div>
+
+                            <!-- Şəkil URL -->
+                            <div class="col-md-12 mb-3">
+                                <label class="form-label fw-bold">Şəkil URL</label>
+                                <input type="text" th:field="*{imagePath}" class="form-control" placeholder="Şəklin linki" required>
+                            </div>
+
+                            <!-- Məzmun -->
+                            <div class="col-md-12 mb-3">
+                                <label class="form-label fw-bold">Məzmun</label>
+                                <textarea th:field="*{content}" id="editor" class="form-control" rows="10"></textarea>
+                            </div>
+
+                            <!-- Yenilə düyməsi -->
+                            <div class="col-md-12 text-end mt-3">
+                                <button type="submit" class="btn btn-primary">
+                                    <i class="bi bi-save"></i> Dəyişiklikləri yadda saxla
+                                </button>
+                                <a th:href="@{/admin/blogs}" class="btn btn-light">Ləğv et</a>
+                            </div>
+                        </div>
+                    </form>
+                </div>
             </div>
-
-            <div class="mb-3">
-                <label class="form-label">Şəkil yolu (URL):</label>
-                <input type="text" th:field="*{imagePath}" class="form-control"/>
-            </div>
-
-            <button type="submit" class="btn btn-primary">Yadda Saxla</button>
-            <a th:href="@{/admin/blogs}" class="btn btn-secondary ms-2">⬅ Geri Qayıt</a>
-        </form>
+        </section>
     </div>
+
+    <!-- CKEditor JS -->
+    <script src="https://cdn.ckeditor.com/4.22.1/standard/ckeditor.js"></script>
+    <script>
+        CKEDITOR.replace('editor');
+    </script>
+
 </main>
 </body>
 </html>
