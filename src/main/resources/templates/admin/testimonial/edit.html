@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" xmlns:layout="http://www.w3.org/1999/xhtml" layout:decorate="~{admin/layout}">
+<head>
+    <title>Rəyi Redaktə Et</title>
+</head>
+
+<body>
+<main layout:fragment="content">
+    <div class="page-heading">
+        <h3>Rəyi Redaktə Et</h3>
+    </div>
+
+    <section class="section">
+        <div class="card">
+            <div class="card-header">
+                <h4 class="card-title">Rəy Məlumatları</h4>
+            </div>
+            <div class="card-body">
+                <form th:action="@{'/admin/testimonials/edit/' + ${testimonial.id}}" th:object="${testimonial}" method="post">
+                    <input type="hidden" th:field="*{id}">
+
+                    <div class="mb-3">
+                        <label class="form-label">Ad Soyad</label>
+                        <input type="text" th:field="*{clientName}" class="form-control" required>
+                    </div>
+
+                    <div class="mb-3">
+                        <label class="form-label">Peşə</label>
+                        <input type="text" th:field="*{profession}" class="form-control" required>
+                    </div>
+
+                    <div class="mb-3">
+                        <label class="form-label">Rəy</label>
+                        <textarea th:field="*{feedback}" class="form-control" rows="4" required></textarea>
+                    </div>
+
+                    <div class="text-end">
+                        <a th:href="@{/admin/testimonials}" class="btn btn-secondary me-2">
+                            <i class="bi bi-arrow-left"></i> Ləğv Et
+                        </a>
+                        <button type="submit" class="btn btn-warning">
+                            <i class="bi bi-save"></i> Yadda Saxla
+                        </button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </section>
+</main>
+</body>
+</html>

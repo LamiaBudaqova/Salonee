@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" xmlns:layout="http://www.w3.org/1999/xhtml" layout:decorate="~{admin/layout}">
+<head>
+    <title>Rəylər Başlığı Redaktə Et</title>
+</head>
+
+<body>
+<main layout:fragment="content">
+    <div class="page-heading">
+        <h3>Rəylər Bölməsi Başlığı</h3>
+    </div>
+
+    <section class="section">
+        <div class="card">
+            <div class="card-header">
+                <h4 class="card-title">Başlıq və Alt Başlıq</h4>
+            </div>
+            <div class="card-body">
+                <form th:action="@{/admin/testimonial-text}" th:object="${text}" method="post">
+                    <input type="hidden" th:field="*{id}"/>
+
+                    <div class="mb-3">
+                        <label class="form-label">Başlıq</label>
+                        <input type="text" th:field="*{title}" class="form-control"
+                               placeholder="Məs: Müştəri Rəyləri" required>
+                    </div>
+
+                    <div class="mb-3">
+                        <label class="form-label">Alt Başlıq</label>
+                        <input type="text" th:field="*{subtitle}" class="form-control"
+                               placeholder="Məs: Xidmətlərimizdən məmnun qalan müştərilərimiz" required>
+                    </div>
+
+                    <div class="text-end">
+                        <button type="submit" class="btn btn-warning">
+                            <i class="bi bi-save"></i> Yadda Saxla
+                        </button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </section>
+</main>
+</body>
+</html>

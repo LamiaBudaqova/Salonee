@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" xmlns:layout="http://www.w3.org/1999/xhtml" layout:decorate="~{admin/layout}">
+<head>
+    <title>Rəylər Siyahısı</title>
+</head>
+
+<body>
+<main layout:fragment="content">
+    <div class="page-heading">
+        <h3>Rəylər</h3>
+    </div>
+
+    <section class="section">
+        <div class="card">
+            <div class="card-header d-flex justify-content-between align-items-center">
+                <h4 class="card-title mb-0">Bütün Rəylər</h4>
+                <a th:href="@{/admin/testimonials/create}" class="btn btn-primary">
+                    <i class="bi bi-plus-circle me-1"></i> Yeni Rəy Əlavə Et
+                </a>
+            </div>
+
+            <div class="card-body">
+                <div class="table-responsive">
+                    <table class="table table-striped mb-0">
+                        <thead>
+                        <tr>
+                            <th>ID</th>
+                            <th>Ad Soyad</th>
+                            <th>Peşə</th>
+                            <th>Rəy</th>
+                            <th>Əməliyyatlar</th>
+                        </tr>
+                        </thead>
+                        <tbody>
+                        <tr th:each="review : ${testimonials}">
+                            <td th:text="${review.id}"></td>
+                            <td th:text="${review.clientName}"></td>
+                            <td th:text="${review.profession}"></td>
+                            <td th:text="${review.feedback}"></td>
+                            <td>
+                                <a th:href="@{'/admin/testimonials/edit/' + ${review.id}}" class="btn btn-sm btn-warning">
+                                    <i class="bi bi-pencil"></i>
+                                </a>
+                                <a th:href="@{'/admin/testimonials/delete/' + ${review.id}}"
+                                   onclick="return confirm('Rəyi silmək istədiyinizə əminsiniz?')"
+                                   class="btn btn-sm btn-danger">
+                                    <i class="bi bi-trash"></i>
+                                </a>
+                            </td>
+                        </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </section>
+</main>
+</body>
+</html>
