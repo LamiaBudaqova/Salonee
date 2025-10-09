@@ -1,4 +1,4 @@
-package com.backend134.salon.controllers;
+package com.backend134.salon.admin.controllers;
 
 import com.backend134.salon.dtos.location.LocationCreateDto;
 import com.backend134.salon.dtos.location.LocationUpdateDto;

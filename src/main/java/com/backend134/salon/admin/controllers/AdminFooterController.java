@@ -1,4 +1,4 @@
-package com.backend134.salon.controllers;
+package com.backend134.salon.admin.controllers;
 
 import com.backend134.salon.dtos.footer.FooterCreateDto;
 import com.backend134.salon.dtos.footer.FooterUpdateDto;

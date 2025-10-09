@@ -1,4 +1,4 @@
-package com.backend134.salon.controllers;
+package com.backend134.salon.admin.controllers;
 
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;

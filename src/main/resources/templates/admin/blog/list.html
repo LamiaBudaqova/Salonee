@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html lang="en"
+      xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="~{admin/layout}">
+
+<body>
+<main layout:fragment="content">
+
+    <div class="page-heading">
+        <div class="page-title">
+            <div class="row">
+                <div class="col-12 col-md-6 order-md-1 order-last">
+                    <h3>Blog Siyahısı</h3>
+                    <p class="text-subtitle text-muted">Admin paneldə yaradılmış bütün blog yazıları.</p>
+                </div>
+                <div class="col-12 col-md-6 order-md-2 order-first text-end">
+                    <a th:href="@{/admin/blogs/create}" class="btn btn-primary">
+                        <i class="bi bi-plus-circle me-1"></i> Yeni Blog Əlavə Et
+                    </a>
+                </div>
+            </div>
+        </div>
+
+        <section class="section mt-4">
+            <div class="card">
+                <div class="card-header">
+                    <h5>Bloglar Cədvəli</h5>
+                </div>
+                <div class="card-body">
+                    <div class="table-responsive">
+                        <table class="table table-striped" id="table1">
+                            <thead>
+                            <tr>
+                                <th>ID</th>
+                                <th>Şəkil</th>
+                                <th>Başlıq</th>
+                                <th>Yaradılma tarixi</th>
+                                <th>Əməliyyatlar</th>
+                            </tr>
+                            </thead>
+                            <tbody>
+                            <tr th:each="blog : ${blogs}">
+                                <td th:text="${blog.id}"></td>
+                                <td>
+                                    <img th:src="${blog.imagePath}" alt="Blog şəkli" style="width: 80px; height: 60px; object-fit: cover;">
+                                </td>
+                                <td th:text="${blog.title}"></td>
+                                <td th:text="${#dates.format(blog.createdAt, 'dd.MM.yyyy')}"></td>
+                                <td>
+                                    <a th:href="@{'/admin/blogs/edit/' + ${blog.id}}" class="btn btn-sm btn-outline-primary">
+                                        <i class="bi bi-pencil"></i>
+                                    </a>
+                                    <a th:href="@{'/admin/blogs/delete/' + ${blog.id}}" class="btn btn-sm btn-outline-danger"
+                                       onclick="return confirm('Bu blogu silmək istədiyinizə əminsiniz?')">
+                                        <i class="bi bi-trash"></i>
+                                    </a>
+                                </td>
+                            </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </div>
+
+</main>
+</body>
+</html>
