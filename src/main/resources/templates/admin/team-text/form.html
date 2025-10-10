@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="~{admin/layout}">
+
+<main layout:fragment="content">
+    <div class="container mt-4">
+        <h3 class="text-primary mb-4">
+            <i class="bi bi-type me-2"></i> Komanda Başlığı
+        </h3>
+
+        <div th:if="${param.success}" class="alert alert-success">Uğurla yeniləndi ✅</div>
+
+        <form th:action="@{'/admin/team-text/update/' + ${teamText.id}}" th:object="${teamText}" method="post">
+            <div class="mb-3">
+                <label class="form-label">Alt başlıq</label>
+                <input type="text" th:field="*{subtitle}" class="form-control" placeholder="Məsələn: Gözəllik komandamız"/>
+            </div>
+
+            <div class="mb-3">
+                <label class="form-label">Başlıq</label>
+                <input type="text" th:field="*{title}" class="form-control" placeholder="Məsələn: Təcrübəli və Peşəkar Heyət"/>
+            </div>
+
+            <button class="btn btn-primary mt-3">
+                <i class="bi bi-save"></i> Yadda Saxla
+            </button>
+        </form>
+    </div>
+</main>
+</html>
