@@ -1,4 +1,4 @@
-package com.backend134.salon.dtos.location;
+package com.backend134.salon.admin.dtos;
 
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -9,7 +9,7 @@ import lombok.Setter;
 @Setter
 @AllArgsConstructor
 @NoArgsConstructor
-public class LocationUpdateDto {
+public class AdminContactResponseDto {
     private Long id;
     private String address;
     private String phone;

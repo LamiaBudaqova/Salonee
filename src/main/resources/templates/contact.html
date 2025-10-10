@@ -1,5 +1,6 @@
 <!DOCTYPE html>
-<html lang="az" xmlns:th="http://www.thymeleaf.org"
+<html lang="az"
+      xmlns:th="http://www.thymeleaf.org"
       xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
       layout:decorate="~{layout}">
 
@@ -15,7 +16,7 @@
             border-radius: 10px;
         }
 
-        /* Hover zamanı qızılı olsun */
+        /* Hover zamanı qızılı rəng */
         .contact-card:hover {
             background-color: #C49B63;
             color: #fff !important;
@@ -26,7 +27,7 @@
             color: #fff !important;
         }
 
-        /* Iconlar default qızılıdır, hoverdə isə ağ olur */
+        /* Iconların rəngi */
         .contact-icon {
             color: #C49B63;
             transition: all 0.3s ease-in-out;
@@ -62,11 +63,11 @@
 
 
     <!-- Contact Info Start -->
-    <div class="container py-5">
+    <div class="container py-5" th:each="contact : ${contacts}">
         <div class="row g-4">
 
-            <!-- Address -->
-            <div class="col-lg-4 col-md-6" th:each="loc : ${locations}">
+            <!-- Ünvan -->
+            <div class="col-lg-4 col-md-6">
                 <div class="card contact-card shadow-sm text-center h-100">
                     <div class="card-body p-4">
                         <div class="mb-3 fs-1 contact-icon">
@@ -74,20 +75,17 @@
                         </div>
                         <h5 class="mb-3">Ünvan</h5>
                         <p class="mb-0">
-                            <a th:href="'https://www.google.com/maps?q=' + ${loc.address}"
-                               th:text="${loc.address}"
+                            <a th:href="'https://www.google.com/maps?q=' + ${contact.address}"
+                               th:text="${contact.address}"
                                class="text-dark text-decoration-none"
-                               target="_blank">
-                                123 Nizami küçəsi, Bakı, Azərbaycan
-                            </a>
+                               target="_blank">Ünvan burda çıxacaq</a>
                         </p>
                     </div>
                 </div>
             </div>
 
-
-            <!-- Phone -->
-            <div class="col-lg-4 col-md-6" th:each="loc : ${locations}">
+            <!-- Telefon -->
+            <div class="col-lg-4 col-md-6">
                 <div class="card contact-card shadow-sm text-center h-100">
                     <div class="card-body p-4">
                         <div class="mb-3 fs-1 contact-icon">
@@ -95,8 +93,8 @@
                         </div>
                         <h5 class="mb-3">Telefon</h5>
                         <p class="mb-0">
-                            <a th:href="'tel:' + ${loc.phone}"
-                               th:text="${loc.phone}"
+                            <a th:href="'tel:' + ${contact.phone}"
+                               th:text="${contact.phone}"
                                class="text-dark text-decoration-none">050 512 50 66</a>
                         </p>
                     </div>
@@ -104,7 +102,7 @@
             </div>
 
             <!-- Email -->
-            <div class="col-lg-4 col-md-6" th:each="loc : ${locations}">
+            <div class="col-lg-4 col-md-6">
                 <div class="card contact-card shadow-sm text-center h-100">
                     <div class="card-body p-4">
                         <div class="mb-3 fs-1 contact-icon">
@@ -112,8 +110,8 @@
                         </div>
                         <h5 class="mb-3">Email</h5>
                         <p class="mb-0">
-                            <a th:href="'mailto:' + ${loc.email}"
-                               th:text="${loc.email}"
+                            <a th:href="'mailto:' + ${contact.email}"
+                               th:text="${contact.email}"
                                class="text-dark text-decoration-none">info@example.com</a>
                         </p>
                     </div>
@@ -121,20 +119,20 @@
             </div>
 
         </div>
+
+        <!-- Map Start -->
+        <div class="row mt-5 px-0">
+            <div class="col-12">
+                <iframe class="w-100" height="450"
+                        th:src="${contact.mapLink}"
+                        allowfullscreen=""
+                        loading="lazy"
+                        referrerpolicy="no-referrer-when-downgrade"></iframe>
+            </div>
+        </div>
+        <!-- Map End -->
     </div>
     <!-- Contact Info End -->
-
-
-    <!-- Map Start -->
-    <div class="container-fluid py-5">
-        <div class="container">
-            <iframe class="w-100" height="450"
-                    src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3038.847127735254!2d49.8516!3d40.3777!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x40307d0b0b0b0b0b%3A0x123456789abcdef!2sBaku!5e0!3m2!1sen!2saz!4v0000000000"
-                    allowfullscreen="" loading="lazy"
-                    referrerpolicy="no-referrer-when-downgrade"></iframe>
-        </div>
-    </div>
-    <!-- Map End -->
 
 </main>
 </body>

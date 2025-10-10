@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="az"
+      xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="~{admin/layout}">
+
+<main layout:fragment="content">
+    <div class="container mt-4">
+        <div class="d-flex justify-content-between mb-3">
+            <h3 class="text-primary">Əlaqə Məlumatları</h3>
+            <a th:href="@{/admin/contacts/create}" class="btn btn-primary">Yeni Əlaqə Əlavə Et</a>
+        </div>
+
+        <table class="table table-striped align-middle">
+            <thead>
+            <tr>
+                <th>#</th>
+                <th>Ünvan</th>
+                <th>Telefon</th>
+                <th>Email</th>
+                <th>Aktiv</th>
+                <th>Əməliyyatlar</th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr th:each="c : ${contacts}">
+                <td th:text="${c.id}"></td>
+                <td th:text="${c.address}"></td>
+                <td th:text="${c.phone}"></td>
+                <td th:text="${c.email}"></td>
+                <td><span th:text="${c.active} ? 'Bəli' : 'Xeyr'"></span></td>
+                <td>
+                    <a th:href="@{'/admin/contacts/edit/' + ${c.id}}" class="btn btn-warning btn-sm">Dəyiş</a>
+                    <a th:href="@{'/admin/contacts/delete/' + ${c.id}}" class="btn btn-danger btn-sm"
+                       onclick="return confirm('Silmək istədiyinə əminsənmi?')">Sil</a>
+                </td>
+            </tr>
+            </tbody>
+        </table>
+    </div>
+</main>
+</html>
