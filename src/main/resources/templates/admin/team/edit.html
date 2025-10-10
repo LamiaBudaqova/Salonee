@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="~{admin/layout}">
+
+<main layout:fragment="content">
+    <div class="container mt-4">
+        <h3 class="text-primary mb-4">
+            <i class="bi bi-person-plus-fill me-2"></i> Komanda üzvü əlavə et
+        </h3>
+
+        <form th:action="@{/admin/team-members/create}" th:object="${member}" method="post">
+            <div class="row">
+                <div class="col-md-6 mb-3">
+                    <label>Ad Soyad</label>
+                    <input type="text" th:field="*{name}" class="form-control" required/>
+                </div>
+                <div class="col-md-6 mb-3">
+                    <label>Vəzifə</label>
+                    <input type="text" th:field="*{position}" class="form-control" required/>
+                </div>
+                <div class="col-md-6 mb-3">
+                    <label>Şəkil URL</label>
+                    <input type="text" th:field="*{imageUrl}" class="form-control"/>
+                </div>
+                <div class="col-md-6 mb-3">
+                    <label>Facebook</label>
+                    <input type="text" th:field="*{facebook}" class="form-control"/>
+                </div>
+                <div class="col-md-6 mb-3">
+                    <label>Instagram</label>
+                    <input type="text" th:field="*{instagram}" class="form-control"/>
+                </div>
+            </div>
+            <button class="btn btn-primary"><i class="bi bi-save"></i> Yadda Saxla</button>
+        </form>
+    </div>
+</main>
+</html>
