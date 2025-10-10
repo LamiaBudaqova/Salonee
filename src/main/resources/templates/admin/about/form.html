@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="~{admin/layout}">
+
+<main layout:fragment="content">
+    <div class="container mt-4">
+        <h3 class="mb-4 text-primary">
+            <i class="bi bi-info-circle me-2"></i> Haqqımızda Məlumatı
+        </h3>
+
+        <div th:if="${param.success}" class="alert alert-success">Uğurla yeniləndi ✅</div>
+
+        <form th:action="@{'/admin/about/update/' + ${about.id}}" th:object="${about}" method="post">
+
+            <div class="row">
+                <div class="col-md-6 mb-3">
+                    <label class="form-label">Başlıq</label>
+                    <input type="text" th:field="*{title}" class="form-control"/>
+                </div>
+
+                <div class="col-md-6 mb-3">
+                    <label class="form-label">Alt Başlıq</label>
+                    <input type="text" th:field="*{subtitle}" class="form-control"/>
+                </div>
+
+                <div class="col-md-12 mb-3">
+                    <label class="form-label">Açıqlama</label>
+                    <textarea th:field="*{description}" class="form-control" rows="5"></textarea>
+                </div>
+
+                <div class="col-md-6 mb-3">
+                    <label class="form-label">Şəkil Yolu</label>
+                    <input type="text" th:field="*{imagePath}" class="form-control"/>
+                </div>
+
+                <div class="col-md-3 mb-3">
+                    <label class="form-label">Təcrübə ili</label>
+                    <input type="number" th:field="*{experienceYears}" class="form-control"/>
+                </div>
+
+                <div class="col-md-3 mb-3">
+                    <label class="form-label">Müştəri sayı</label>
+                    <input type="number" th:field="*{clientsCount}" class="form-control"/>
+                </div>
+
+                <div class="col-md-6 mb-3">
+                    <label class="form-label">Telefon nömrəsi</label>
+                    <input type="text" th:field="*{phoneNumber}" class="form-control"/>
+                </div>
+
+                <div class="col-md-6 mb-3">
+                    <label class="form-label">Telefon etiketi</label>
+                    <input type="text" th:field="*{phoneLabel}" class="form-control"/>
+                </div>
+            </div>
+
+            <button class="btn btn-primary mt-3">
+                <i class="bi bi-save"></i> Yadda Saxla
+            </button>
+        </form>
+    </div>
+</main>
+</html>

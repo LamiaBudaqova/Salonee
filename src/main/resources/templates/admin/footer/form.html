@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html lang="az"
+      xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="~{admin/layout}">
+
+<head>
+    <meta charset="UTF-8">
+    <title>Footer Məlumatları</title>
+</head>
+
+<body>
+<main layout:fragment="content">
+
+    <div class="container mt-4">
+        <h2 class="text-primary mb-4">Footer Məlumatları</h2>
+
+        <!-- Uğurlu yadda saxlanma mesajı -->
+        <div th:if="${param.success}" class="alert alert-success alert-dismissible fade show" role="alert">
+            <i class="bi bi-check-circle me-2"></i>
+            Məlumatlar uğurla yadda saxlanıldı!
+            <button type="button" class="btn-close" data-bs-dismiss="alert"></button>
+        </div>
+
+        <!-- Footer form -->
+        <div class="card p-4 shadow-sm">
+            <form th:action="@{/admin/footer}" th:object="${footer}" method="post">
+
+                <!-- ID gizli -->
+                <input type="hidden" th:field="*{id}"/>
+
+                <!-- Ünvan -->
+                <div class="mb-3">
+                    <label class="form-label fw-bold">Ünvan</label>
+                    <input type="text" class="form-control" th:field="*{address}" placeholder="Ünvan daxil edin">
+                </div>
+
+                <!-- Telefon -->
+                <div class="mb-3">
+                    <label class="form-label fw-bold">Telefon</label>
+                    <input type="text" class="form-control" th:field="*{phone}" placeholder="Telefon nömrəsi daxil edin">
+                </div>
+
+                <!-- Email -->
+                <div class="mb-3">
+                    <label class="form-label fw-bold">Email</label>
+                    <input type="email" class="form-control" th:field="*{email}" placeholder="Email ünvanı daxil edin">
+                </div>
+
+                <!-- Facebook URL -->
+                <div class="mb-3">
+                    <label class="form-label fw-bold">Facebook URL</label>
+                    <input type="text" class="form-control" th:field="*{facebookUrl}" placeholder="Facebook linki daxil edin">
+                </div>
+
+                <!-- Instagram URL -->
+                <div class="mb-3">
+                    <label class="form-label fw-bold">Instagram URL</label>
+                    <input type="text" class="form-control" th:field="*{instagramUrl}" placeholder="Instagram linki daxil edin">
+                </div>
+
+                <!-- Qısa Məlumat -->
+                <div class="mb-3">
+                    <label class="form-label fw-bold">Haqqında Qısa Məlumat</label>
+                    <textarea class="form-control" th:field="*{description}" rows="3"
+                              placeholder="La Beauty haqqında qısa məlumat yazın"></textarea>
+                </div>
+
+                <!-- Submit button -->
+                <button type="submit" class="btn btn-primary">
+                    <i class="bi bi-save me-1"></i> Yadda Saxla
+                </button>
+
+                <a th:href="@{/admin}" class="btn btn-secondary ms-2">
+                    <i class="bi bi-arrow-left"></i> Geri Qayıt
+                </a>
+            </form>
+        </div>
+    </div>
+
+</main>
+</body>
+</html>

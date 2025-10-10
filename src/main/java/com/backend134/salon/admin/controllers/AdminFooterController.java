@@ -1,5 +1,9 @@
 package com.backend134.salon.admin.controllers;
 
+import com.backend134.salon.admin.dtos.AdminFooterCreateDto;
+import com.backend134.salon.admin.dtos.AdminFooterResponseDto;
+import com.backend134.salon.admin.dtos.AdminFooterUpdateDto;
+import com.backend134.salon.admin.services.AdminFooterService;
 import com.backend134.salon.dtos.footer.FooterCreateDto;
 import com.backend134.salon.dtos.footer.FooterUpdateDto;
 import com.backend134.salon.services.FooterService;
@@ -12,40 +16,34 @@ import org.springframework.web.bind.annotation.*;
 @RequestMapping("/admin/footer")
 @RequiredArgsConstructor
 public class AdminFooterController {
-    private final FooterService footerService;
 
-    // Footer detalları (əsas səhifə)
+    private final AdminFooterService adminFooterService;
+
     @GetMapping
-    public String footerDetails(Model model) {
-        model.addAttribute("footer", footerService.getFooter());
-        return "admin/footer/details"; // Thymeleaf template: admin/footer/details.html
+    public String getFooter(Model model) {
+        AdminFooterResponseDto footer = adminFooterService.getFooter();
+        if (footer == null) footer = new AdminFooterResponseDto();
+        model.addAttribute("footer", footer);
+        return "admin/footer/form";
     }
 
-    // Yeni footer yaratmaq (normalda yalnız bir dəfə istifadə ediləcək)
-    @GetMapping("/create")
-    public String createForm(Model model) {
-        model.addAttribute("footer", new FooterCreateDto());
-        return "admin/footer/create";
-    }
+    @PostMapping
+    public String saveFooter(@ModelAttribute("footer") AdminFooterUpdateDto dto) {
+        AdminFooterResponseDto existing = adminFooterService.getFooter();
 
-    @PostMapping("/create")
-    public String create(@ModelAttribute FooterCreateDto dto) {
-        footerService.createFooter(dto);
-        return "redirect:/admin/footer";
-    }
+        if (existing == null) {
+            adminFooterService.createFooter(new AdminFooterCreateDto(
+                    dto.getAddress(),
+                    dto.getPhone(),
+                    dto.getEmail(),
+                    dto.getFacebookUrl(),
+                    dto.getInstagramUrl(),
+                    dto.getDescription()
+            ));
+        } else {
+            adminFooterService.updateFooter(existing.getId(), dto);
+        }
 
-    // Edit formu
-    @GetMapping("/edit/{id}")
-    public String editForm(@PathVariable Long id, Model model) {
-        model.addAttribute("footerId", id);
-        model.addAttribute("footer", new FooterUpdateDto());
-        return "admin/footer/edit";
-    }
-
-    @PostMapping("/edit/{id}")
-    public String update(@PathVariable Long id, @ModelAttribute FooterUpdateDto dto) {
-        footerService.updateFooter(id, dto);
-        return "redirect:/admin/footer";
+        return "redirect:/admin/footer?success";
     }
 }
-

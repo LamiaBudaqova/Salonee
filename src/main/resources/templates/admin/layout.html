@@ -38,6 +38,13 @@
           </li>
 
           <li class="sidebar-item">
+            <a th:href="@{/admin/about}" class="sidebar-link">
+              <i class="bi bi-info-circle fs-5 me-2"></i>
+              <span>Haqqımızda</span>
+            </a>
+          </li>
+
+          <li class="sidebar-item">
             <a th:href="@{/admin/blogs}" class="sidebar-link">
               <i class="bi bi-journal-text"></i>
               <span>Bloglar</span>
@@ -87,10 +94,12 @@
           </li>
 
           <li class="sidebar-item">
-            <a href="/admin/footer" class="sidebar-link">
-              <i class="bi bi-pin-map"></i>
-              <span>Əlaqə və Footer</span>
+            <a th:href="@{/admin/footer}" class="sidebar-link">
+              <i class="bi bi-geo-alt fs-5 me-2"></i>
+              <span>Footer</span>
             </a>
+          </li>
+
 
         </ul>
       </div>
