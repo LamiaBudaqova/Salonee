@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html lang="az"
+      xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="~{admin/layout}">
+
+<main layout:fragment="content">
+    <div class="container mt-4">
+        <h2 class="text-primary mb-4">Salon Panelinə Xoş Gəlmisiniz 💅</h2>
+
+        <div class="row g-4">
+
+            <!-- Bloqlar -->
+            <div class="col-md-4 col-lg-3">
+                <div class="card shadow text-center p-3 border-0 bg-light">
+                    <i class="bi bi-journal-text fs-1 text-primary mb-2"></i>
+                    <h4 th:text="${stats.blogs}">0</h4>
+                    <p class="fw-bold mb-0">Bloqlar</p>
+                </div>
+            </div>
+
+            <!-- Xidmətlər -->
+            <div class="col-md-4 col-lg-3">
+                <div class="card shadow text-center p-3 border-0 bg-light">
+                    <i class="bi bi-scissors fs-1 text-danger mb-2"></i>
+                    <h4 th:text="${stats.services}">0</h4>
+                    <p class="fw-bold mb-0">Xidmətlər</p>
+                </div>
+            </div>
+
+            <!-- Qalereya -->
+            <div class="col-md-4 col-lg-3">
+                <div class="card shadow text-center p-3 border-0 bg-light">
+                    <i class="bi bi-images fs-1 text-success mb-2"></i>
+                    <h4 th:text="${stats.gallery}">0</h4>
+                    <p class="fw-bold mb-0">Qalereya şəkilləri</p>
+                </div>
+            </div>
+
+            <!-- Kateqoriyalar -->
+            <div class="col-md-4 col-lg-3">
+                <div class="card shadow text-center p-3 border-0 bg-light">
+                    <i class="bi bi-list-ul fs-1 text-warning mb-2"></i>
+                    <h4 th:text="${stats.categories}">0</h4>
+                    <p class="fw-bold mb-0">Kateqoriyalar</p>
+                </div>
+            </div>
+
+            <!-- Mesajlar -->
+            <div class="col-md-4 col-lg-3">
+                <div class="card shadow text-center p-3 border-0 bg-light">
+                    <i class="bi bi-envelope fs-1 text-info mb-2"></i>
+                    <h4 th:text="${stats.messages}">0</h4>
+                    <p class="fw-bold mb-0">Əlaqə Mesajları</p>
+                </div>
+            </div>
+        </div>
+
+        <hr class="my-5">
+
+        <div class="text-center">
+            <h5 class="text-secondary">Sistemdəki məlumatlar avtomatik yenilənir 🔄</h5>
+        </div>
+    </div>
+</main>
+</html>
