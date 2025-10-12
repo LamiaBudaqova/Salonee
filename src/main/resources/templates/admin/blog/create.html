@@ -33,13 +33,24 @@
                             <!-- Başlıq -->
                             <div class="col-md-12 mb-3">
                                 <label class="form-label fw-bold">Başlıq</label>
-                                <input type="text" th:field="*{title}" class="form-control" placeholder="Blog başlığını daxil edin" required>
+                                <input type="text" th:field="*{title}" class="form-control"
+                                       placeholder="Blog başlığını daxil edin" required>
                             </div>
 
                             <!-- Şəkil URL -->
                             <div class="col-md-12 mb-3">
                                 <label class="form-label fw-bold">Şəkil URL</label>
-                                <input type="text" th:field="*{imagePath}" class="form-control" placeholder="Şəklin linkini daxil edin" required>
+                                <input type="text" th:field="*{imagePath}" class="form-control"
+                                       placeholder="Şəklin linkini daxil edin"
+                                       oninput="document.getElementById('preview').src=this.value"
+                                       required>
+
+                                <!-- ✅ Şəkil önbaxış -->
+                                <div class="mt-3 text-center">
+                                    <img id="preview" th:attr="src=${blog.imagePath}"
+                                         style="max-width: 250px; max-height: 200px; border-radius: 8px;"
+                                         alt="Şəkil önbaxış">
+                                </div>
                             </div>
 
                             <!-- Məzmun -->

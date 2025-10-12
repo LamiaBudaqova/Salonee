@@ -36,10 +36,16 @@ public class AdminBlogServiceImpl implements AdminBlogService {
 
     @Override
     public void create(AdminBlogCreateDto dto) {
-        Blog blog = modelMapper.map(dto, Blog.class);
+        Blog blog = new Blog();
+
+        blog.setTitle(dto.getTitle());
+        blog.setContent(dto.getContent());
+        blog.setImagePath(dto.getImagePath());
         blog.setCreatedAt(LocalDate.now());
+
         blogRepository.save(blog);
     }
+
 
     @Override
     public void update(Long id, AdminBlogUpdateDto dto) {

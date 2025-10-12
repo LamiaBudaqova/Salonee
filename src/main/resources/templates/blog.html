@@ -33,13 +33,11 @@
                 <div class="blog-item h-100 d-flex flex-column">
 
                     <!-- sekil yuxarıda -->
-                    <div class="blog-img position-relative">
-                        <img class="img-fluid w-100"
-                             th:src="${blog.imagePath}"
-                             alt="Blog Image"
-                             style="object-fit: cover; min-height: 250px; max-height: 250px;">
+                    <img class="img-fluid w-100"
+                         th:attr="src=${blog.imagePath}"
+                         alt="Blog Image"
+                         style="object-fit: cover; min-height: 250px; max-height: 250px;">
 
-                    </div>
 
                     <!-- metn aşagıda -->
                     <div class="bg-primary py-5 px-4 flex-grow-1 d-flex flex-column justify-content-between">
@@ -49,7 +47,7 @@
                                 <span th:text="${#temporals.format(blog.createdAt, 'dd MMM yyyy')}"></span>
                             </p>
                             <h3 class="mb-3" th:text="${blog.title}">Blog Title</h3>
-                            <p th:text="${blog.content}">Blog full text...</p>
+                            <p th:utext="${blog.content}">Blog full text...</p>
                         </div>
                     </div>
 

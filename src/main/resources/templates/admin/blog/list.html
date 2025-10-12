@@ -32,18 +32,18 @@
                         <table class="table table-striped align-middle">
                             <thead class="table-primary">
                             <tr>
-                                <th scope="col">#</th>
-                                <th scope="col">Şəkil</th>
-                                <th scope="col">Başlıq</th>
-                                <th scope="col">Yaradılma tarixi</th>
-                                <th scope="col" class="text-center">Əməliyyatlar</th>
+                                <th>#</th>
+                                <th>Şəkil</th>
+                                <th>Başlıq</th>
+                                <th>Yaradılma tarixi</th>
+                                <th class="text-center">Əməliyyatlar</th>
                             </tr>
                             </thead>
                             <tbody>
                             <tr th:each="blog, iterStat : ${blogs}">
                                 <td th:text="${iterStat.count}"></td>
                                 <td>
-                                    <img th:src="${blog.imagePath}" alt="Blog şəkli"
+                                    <img th:attr="src=${blog.imagePath}" alt="Blog şəkli"
                                          style="width:80px; height:60px; object-fit:cover; border-radius:6px;">
                                 </td>
                                 <td th:text="${blog.title}"></td>
@@ -60,8 +60,6 @@
                                     </a>
                                 </td>
                             </tr>
-
-                            <!-- Əgər heç bir blog yoxdursa -->
                             <tr th:if="${#lists.isEmpty(blogs)}">
                                 <td colspan="5" class="text-center text-muted py-4">
                                     Heç bir blog yazısı tapılmadı.
