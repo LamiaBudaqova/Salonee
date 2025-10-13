@@ -41,4 +41,9 @@ public class SalonServiceServiceImpl implements SalonServiceService {
                 .map(this::mapToDto)
                 .orElseThrow(() -> new RuntimeException("Service not found"));
     }
+
+    @Override
+    public List<SalonService> getAll() {
+        return salonServiceRepository.findAll();
+    }
 }

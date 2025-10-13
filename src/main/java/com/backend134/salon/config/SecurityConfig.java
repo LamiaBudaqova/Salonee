@@ -10,8 +10,6 @@ import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.SecurityFilterChain;
-import org.springframework.security.web.savedrequest.HttpSessionRequestCache;
-import org.springframework.security.web.savedrequest.SavedRequest;
 
 @Configuration
 @RequiredArgsConstructor
@@ -29,21 +27,26 @@ public class SecurityConfig {
         http
                 .csrf(csrf -> csrf.disable())
                 .authorizeHttpRequests(auth -> auth
-                        .requestMatchers("/css/**", "/js/**", "/img/**", "/front/**").permitAll()
-                        .requestMatchers("/admin/css/**", "/admin/js/**", "/admin/images/**", "/admin/vendors/**", "/front/**").permitAll()
+                        // ✅ FRONT statik fayllar hamısı açıq olmalıdır
+                        .requestMatchers("/css/**", "/js/**", "/img/**", "/images/**", "/front/**", "/front/lib/**", "/front/css/**", "/front/js/**").permitAll()
 
+                        // ✅ Açıq (public) səhifələr
                         .requestMatchers("/", "/about", "/service/**", "/services/**",
                                 "/category/**", "/price", "/gallery/**", "/team",
-                                "/blog/**", "/contact",
+                                "/blog/**", "/contact", "/contact/**",
+                                "/booking", "/booking/**",
                                 "/testimonial", "/testimonial/**",
                                 "/register", "/login").permitAll()
-                        .requestMatchers(HttpMethod.GET, "/contact").permitAll()
+
+                        // ✅ Form POST əməliyyatları
                         .requestMatchers(HttpMethod.POST, "/contact").permitAll()
                         .requestMatchers(HttpMethod.POST, "/testimonial").permitAll()
+                        .requestMatchers(HttpMethod.POST, "/booking").permitAll()
 
-                        // ADMIN panel - yalnız ADMIN görə bilər
+                        // ✅ ADMIN panel – yalnız admin görə bilər
                         .requestMatchers("/admin/**").hasRole("ADMIN")
 
+                        // ✅ Qalan bütün URL-lər login tələb edir
                         .anyRequest().authenticated()
                 )
                 .formLogin(form -> form
@@ -52,18 +55,16 @@ public class SecurityConfig {
                         .usernameParameter("email")
                         .passwordParameter("password")
                         .successHandler((request, response, authentication) -> {
-                            // Giriş etmiş istifadəçinin rollarını yoxlayaq
                             var authorities = authentication.getAuthorities();
                             boolean isAdmin = authorities.stream()
-                                    .anyMatch(a -> a.getAuthority().equals("ROLE_ADMIN"));
+                                    .anyMatch(a -> a.getAuthority().contains("ADMIN"));
 
                             if (isAdmin) {
-                                response.sendRedirect("/admin"); // Admin panelə yönləndir
+                                response.sendRedirect("/admin");
                             } else {
-                                response.sendRedirect("/"); // Adi user ana səhifəyə
+                                response.sendRedirect("/");
                             }
                         })
-
                         .failureUrl("/login?error")
                         .permitAll()
                 )

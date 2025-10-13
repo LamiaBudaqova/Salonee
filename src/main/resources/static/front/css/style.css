@@ -632,6 +632,31 @@
     color: #fff;
     font-size: 20px;
 }
+<style>
+/* 🔸 Navbar'daki La Beauty logo üçün */
+.navbar-brand h1 {
+    font-size: 26px; /* Loqo yazısını kiçildir */
+    letter-spacing: 1px;
+}
+
+/* 🔸 Qayçı ikonunu bir az kiçilt və yaxınlaşdır */
+.navbar-brand i {
+    font-size: 26px;
+    margin-right: 6px;
+}
+
+/* 🔸 Arxa fon çox böyükdüsə bir az iç boşluğu azaldırıq */
+.navbar-brand {
+    padding: 10px 20px !important;
+}
+
+/* 🔸 Kiçik ekran üçün (mobil, tablet) */
+@media (max-width: 992px) {
+    .navbar-brand h1 {
+        font-size: 22px;
+    }
+}
+</style>
 
 
 

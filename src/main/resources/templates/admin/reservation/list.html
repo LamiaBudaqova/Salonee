@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html lang="az" xmlns:th="http://www.thymeleaf.org" layout:decorate="~{admin/layout}"
+      xmlns:layout="http://www.w3.org/1999/xhtml">
+<main layout:fragment="content" class="container-fluid py-4">
+
+  <div class="d-flex justify-content-between align-items-center mb-4">
+    <h4 class="mb-0">Rezervasiyalar</h4>
+    <div th:if="${success}" class="alert alert-success py-1 px-3" th:text="${success}"></div>
+  </div>
+
+  <div class="card">
+    <div class="card-body">
+      <table class="table table-bordered align-middle">
+        <thead>
+        <tr>
+          <th>ID</th>
+          <th>Xidmət</th>
+          <th>Usta</th>
+          <th>Tarix</th>
+          <th>Vaxt</th>
+          <th>Müştəri</th>
+          <th>Telefon</th>
+          <th>Status</th>
+          <th>Əməliyyat</th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr th:each="r : ${reservations}">
+          <td th:text="${r.id}"></td>
+          <td th:text="${r.service.name}"></td>
+          <td th:text="${r.staff != null ? r.staff.fullName : '—'}"></td>
+          <td th:text="${r.date}"></td>
+          <td th:text="${#temporals.format(r.startTime, 'HH:mm')}"></td>
+          <td th:text="${r.customerName}"></td>
+          <td th:text="${r.customerPhone}"></td>
+
+          <!-- status seçimi -->
+          <td>
+            <form th:action="@{/admin/reservations/update}" method="post" class="d-flex align-items-center">
+              <input type="hidden" name="id" th:value="${r.id}">
+              <select name="status" class="form-select form-select-sm me-2">
+                <option th:each="s : ${statuses}"
+                        th:value="${s}"
+                        th:text="${s}"
+                        th:selected="${s == r.status}"></option>
+              </select>
+              <button type="submit" class="btn btn-sm btn-primary">Yenilə</button>
+            </form>
+          </td>
+
+          <!-- Əlavə qeyd (istəsən görünməyə bilər) -->
+          <td th:text="${r.notes != null ? r.notes : ''}"></td>
+        </tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+
+</main>
+</html>

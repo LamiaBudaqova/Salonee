@@ -6,9 +6,7 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
-import com.backend134.salon.models.Role;
-import java.util.ArrayList;
-import java.util.List;
+import com.backend134.salon.enums.Role;
 
 @Getter
 @Setter

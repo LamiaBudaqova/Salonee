@@ -8,4 +8,5 @@ import java.util.List;
 public interface SalonServiceService {
     List<SalonServiceDto> getServicesByCategoryId(Long categoryId);
     SalonServiceDto getServiceById(Long id);
+    List<SalonService> getAll();
 }

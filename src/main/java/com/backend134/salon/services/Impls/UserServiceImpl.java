@@ -1,15 +1,13 @@
 package com.backend134.salon.services.Impls;
 
 import com.backend134.salon.dtos.user.UserRegisterDto;
-import com.backend134.salon.models.Role;
+import com.backend134.salon.enums.Role;
 import com.backend134.salon.models.User;
 import com.backend134.salon.repositories.UserRepository;
 import com.backend134.salon.services.UserService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
-
-import java.util.Collections;
 
 @Service
 @RequiredArgsConstructor
