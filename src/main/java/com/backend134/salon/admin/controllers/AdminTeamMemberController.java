@@ -3,6 +3,7 @@ package com.backend134.salon.admin.controllers;
 import com.backend134.salon.admin.dtos.AdminTeamMemberCreateDto;
 import com.backend134.salon.admin.dtos.AdminTeamMemberUpdateDto;
 import com.backend134.salon.admin.services.AdminTeamMemberService;
+import com.backend134.salon.services.BranchService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -14,6 +15,7 @@ import org.springframework.web.bind.annotation.*;
 public class AdminTeamMemberController {
 
     private final AdminTeamMemberService adminTeamMemberService;
+    private final BranchService branchService;
 
     @GetMapping
     public String list(Model model) {
@@ -24,6 +26,7 @@ public class AdminTeamMemberController {
     @GetMapping("/create")
     public String createForm(Model model) {
         model.addAttribute("member", new AdminTeamMemberCreateDto());
+        model.addAttribute("branches", branchService.getAllBranches()); // 🔹 filial siyahısı
         return "admin/team/create";
     }
 
@@ -41,10 +44,12 @@ public class AdminTeamMemberController {
                 existing.getPosition(),
                 existing.getImageUrl(),
                 existing.getFacebook(),
-                existing.getInstagram()
+                existing.getInstagram(),
+                null // 🔹 burda istəsən filial id-ni gətirə bilərik
         );
         model.addAttribute("memberId", id);
         model.addAttribute("member", dto);
+        model.addAttribute("branches", branchService.getAllBranches()); // 🔹 filial siyahısı
         return "admin/team/edit";
     }
 

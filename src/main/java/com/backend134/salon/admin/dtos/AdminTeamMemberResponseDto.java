@@ -16,4 +16,5 @@ public class AdminTeamMemberResponseDto {
     private String imageUrl;
     private String facebook;
     private String instagram;
+    private String branchName;
 }

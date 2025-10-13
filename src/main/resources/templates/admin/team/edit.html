@@ -30,6 +30,18 @@
                     <label>Instagram</label>
                     <input type="text" th:field="*{instagram}" class="form-control"/>
                 </div>
+                <div class="col-md-6 mb-3">
+                    <label>Filial</label>
+                    <select class="form-select" th:field="*{branchId}">
+                        <option value="">Filial seçin</option>
+                        <option th:each="b : ${branches}"
+                                th:value="${b.id}"
+                                th:text="${b.name}"
+                                th:selected="${member.branchId == b.id}">
+                        </option>
+                    </select>
+                </div>
+
             </div>
             <button class="btn btn-primary"><i class="bi bi-save"></i> Yadda Saxla</button>
         </form>

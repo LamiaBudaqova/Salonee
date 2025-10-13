@@ -15,4 +15,5 @@ public class AdminTeamMemberUpdateDto {
     private String imageUrl;
     private String facebook;
     private String instagram;
+    private Long branchId;
 }

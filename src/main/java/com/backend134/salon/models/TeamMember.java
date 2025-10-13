@@ -24,7 +24,7 @@ public class TeamMember {
     private String facebook;
     private String instagram;
     @ManyToOne
-    @JoinColumn(name = "branch_id")
+    @JoinColumn(name = "branch_id", nullable = false)
     private Branch branch;
 
 }

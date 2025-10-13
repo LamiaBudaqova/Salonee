@@ -17,6 +17,7 @@ public class AdminDashboardServiceImpl implements AdminDashboardService {
     private final ContactRepository contactRepository;
     private final CategoryRepository categoryRepository;
     private final GalleryImageRepository galleryImageRepository;
+    private final TeamMemberRepository teamMemberRepository;
 
     @Override
     public Map<String, Long> getStatistics() {
@@ -27,6 +28,7 @@ public class AdminDashboardServiceImpl implements AdminDashboardService {
         stats.put("messages", contactRepository.count());
         stats.put("categories", categoryRepository.count());
         stats.put("gallery", galleryImageRepository.count());
+        stats.put("teamMembers", teamMemberRepository.count());
 
         return stats;
     }

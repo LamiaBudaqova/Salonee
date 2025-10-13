@@ -18,15 +18,17 @@
                 <th>Şəkil</th>
                 <th>Ad Soyad</th>
                 <th>Vəzifə</th>
+                <th>Filial</th>
                 <th>Əməliyyatlar</th>
             </tr>
             </thead>
             <tbody>
-            <tr th:each="m : ${members}">
-                <td th:text="${m.id}"></td>
+            <tr th:each="m, iterStat : ${members}">
+                <td th:text="${iterStat.index + 1}"></td>
                 <td><img th:src="${m.imageUrl}" style="height:60px;width:60px;border-radius:50%;object-fit:cover;"></td>
                 <td th:text="${m.name}"></td>
                 <td th:text="${m.position}"></td>
+                <td th:text="${m.branchName}"></td>
                 <td>
                     <a th:href="@{'/admin/team-members/edit/' + ${m.id}}" class="btn btn-sm btn-warning">
                         <i class="bi bi-pencil"></i>

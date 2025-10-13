@@ -15,4 +15,5 @@ public class AdminTeamMemberCreateDto {
     private String imageUrl;
     private String facebook;
     private String instagram;
+    private Long branchId;
 }
