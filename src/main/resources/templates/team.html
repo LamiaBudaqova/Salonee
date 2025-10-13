@@ -1,11 +1,11 @@
 <!DOCTYPE html>
-<html lang="en"
+<html lang="az"
       xmlns:th="http://www.thymeleaf.org"
       xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
       layout:decorate="~{layout}">
 
 <head>
-    <title>Our Team</title>
+    <title>Komandamız</title>
 </head>
 
 <body>
@@ -17,8 +17,7 @@
             <h1 class="display-1 animated slideInLeft">Komandamız</h1>
             <nav aria-label="breadcrumb">
                 <ol class="breadcrumb justify-content-center animated slideInLeft mb-0">
-                    <li class="breadcrumb-item"><a class="text-primary" href="#">Ana Səhifə</a></li>
-                    <li class="breadcrumb-item"><a class="text-primary" href="#">Səhifələr</a></li>
+                    <li class="breadcrumb-item"><a class="text-primary" href="/">Ana Səhifə</a></li>
                     <li class="breadcrumb-item active" aria-current="page">Komandamız</li>
                 </ol>
             </nav>
@@ -26,15 +25,53 @@
     </div>
     <!-- Hero End -->
 
+
     <!-- Team Start -->
     <div class="container-fluid overflow-hidden py-5">
         <div class="container">
+
+            <!-- Başlıq -->
             <div class="text-center wow fadeIn" data-wow-delay="0.2s">
                 <h1 class="font-dancing-script text-primary" th:text="${teamText.subtitle}"></h1>
                 <h1 class="mb-5" th:text="${teamText.title}"></h1>
             </div>
+
+            <!-- 🔹 Filial seçimi -->
+            <form action="/team" method="get" class="text-center mb-5">
+                <label class="fw-bold me-2">Filial seç:</label>
+                <select name="branchId"
+                        class="form-select d-inline-block"
+                        style="width:auto;"
+                        onchange="this.form.submit()">
+                    <option value="" th:selected="${selectedBranchId == null}">Bütün filiallar</option>
+                    <option th:each="branch : ${branches}"
+                            th:value="${branch.id}"
+                            th:text="${branch.name}"
+                            th:selected="${selectedBranchId == branch.id}">
+                    </option>
+                </select>
+            </form>
+
+            <!-- 🔸 Filial məlumatı (seçiləndə çıxır) -->
+            <div class="text-center mb-4" th:if="${selectedBranchId != null}">
+                <div th:each="b : ${branches}" th:if="${b.id == selectedBranchId}">
+                    <h5 class="text-primary mb-1" th:text="${b.name}"></h5>
+                    <p class="mb-0">
+                        <i class="fa fa-map-marker-alt text-primary me-2"></i>
+                        <span th:text="${b.address}"></span>
+                    </p>
+                    <p class="mb-0">
+                        <i class="fa fa-phone-alt text-primary me-2"></i>
+                        <a th:href="'tel:' + ${b.phone}" th:text="${b.phone}" class="text-dark text-decoration-none"></a>
+                    </p>
+                </div>
+            </div>
+
+            <!-- Komanda kartları -->
             <div class="row g-4 team mb-4">
-                <div class="col-md-6 col-lg-3 wow fadeIn" data-wow-delay="0.1s" th:each="member : ${members}">
+                <div class="col-md-6 col-lg-3 wow fadeIn"
+                     data-wow-delay="0.1s"
+                     th:each="member : ${members}">
                     <div class="team-item position-relative overflow-hidden">
                         <img class="img-fluid w-100" th:src="${member.imageUrl}" alt="">
                         <div class="team-overlay">
@@ -46,7 +83,7 @@
                                    th:href="${member.facebook}">
                                     <i class="fab fa-facebook-f"></i>
                                 </a>
-                                <a class="btn btn-dark btn-sm-square border-2 me-3"
+                                <a class="btn btn-dark btn-sm-square border-2"
                                    th:if="${member.instagram != null}"
                                    th:href="${member.instagram}">
                                     <i class="fab fa-instagram"></i>
@@ -55,12 +92,17 @@
                         </div>
                     </div>
                 </div>
+
+                <!-- Əgər seçilmiş filialda usta yoxdursa -->
+                <div class="text-center mt-4" th:if="${#lists.isEmpty(members)}">
+                    <p class="text-muted">Bu filialda hələ usta əlavə olunmayıb.</p>
+                </div>
             </div>
+
         </div>
     </div>
     <!-- Team End -->
 
 </div>
 </body>
-
 </html>

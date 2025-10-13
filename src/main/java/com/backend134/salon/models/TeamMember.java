@@ -23,4 +23,8 @@ public class TeamMember {
     private String imageUrl;
     private String facebook;
     private String instagram;
+    @ManyToOne
+    @JoinColumn(name = "branch_id")
+    private Branch branch;
+
 }

@@ -5,6 +5,7 @@ import com.backend134.salon.models.TeamMember;
 import com.backend134.salon.repositories.TeamMemberRepository;
 import com.backend134.salon.services.TeamMemberService;
 import lombok.RequiredArgsConstructor;
+import org.modelmapper.ModelMapper;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
@@ -15,6 +16,7 @@ import java.util.List;
 public class TeamMemberServiceImpl implements TeamMemberService {
 
     private final TeamMemberRepository teamMemberRepository;
+    private final ModelMapper modelMapper;
 
     @Override
     public List<TeamMemberDto> getAllTeamMembers() {
@@ -51,5 +53,13 @@ public class TeamMemberServiceImpl implements TeamMemberService {
             dtos.add(dto);
         }
         return dtos;
+    }
+
+    @Override
+    public List<TeamMemberDto> getByBranch(Long branchId) {
+        return teamMemberRepository.findByBranchId(branchId)
+                .stream()
+                .map(member -> modelMapper.map(member, TeamMemberDto.class))
+                .toList();
     }
 }
