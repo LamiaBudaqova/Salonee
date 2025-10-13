@@ -36,4 +36,13 @@ public class Staff {
     private Role role = Role.ROLE_STAFF;
 
     private Boolean active = true;
+
+    // her ustanın bir nece xidmeti ola biler
+    @ManyToMany
+    @JoinTable(
+            name = "staff_services",
+            joinColumns = @JoinColumn(name = "staff_id"),
+            inverseJoinColumns = @JoinColumn(name = "service_id")
+    )
+    private Set<SalonService> services = new HashSet<>();
 }

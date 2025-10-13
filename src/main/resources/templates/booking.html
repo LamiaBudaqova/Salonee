@@ -3,25 +3,15 @@
       xmlns:th="http://www.thymeleaf.org"
       xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
       layout:decorate="~{layout}">
-
 <body>
 <main layout:fragment="content">
 
-  <!-- Hero Start -->
   <div class="container-fluid bg-light page-header py-5 mb-5">
     <div class="container text-center py-5">
-      <h1 class="display-1 animated slideInLeft">Rezervasiya</h1>
-      <nav aria-label="breadcrumb">
-        <ol class="breadcrumb justify-content-center animated slideInLeft mb-0">
-          <li class="breadcrumb-item"><a class="text-primary" href="/">Ana səhifə</a></li>
-          <li class="breadcrumb-item active" aria-current="page">Rezervasiya</li>
-        </ol>
-      </nav>
+      <h1 class="display-1">Rezervasiya</h1>
     </div>
   </div>
-  <!-- Hero End -->
 
-  <!-- Booking Start -->
   <div class="container py-5">
     <div class="text-center mb-5">
       <h4 class="text-primary font-dancing-script">Ziyarətinizi planlaşdırın</h4>
@@ -30,30 +20,32 @@
 
     <div class="row justify-content-center">
       <div class="col-lg-8">
-
-        <!-- Success message -->
         <div th:if="${success}" class="alert alert-success text-center mb-4" th:text="${success}"></div>
 
         <form th:action="@{/booking}" th:object="${reservation}" method="post"
               class="p-4 border rounded bg-light shadow-sm">
           <div class="row g-3">
-            <!-- Xidmət -->
+
+            <!-- Xidmət seç -->
             <div class="col-md-6">
               <label class="form-label fw-bold">Xidmət seçin</label>
-              <select th:field="*{serviceId}" class="form-select" required>
-                <option value="" disabled selected>Seçin...</option>
+              <select class="form-select"
+                      onchange="window.location.href='?serviceId=' + this.value"
+                      th:value="${selectedServiceId}">
+                <option value="">Seçin...</option>
                 <option th:each="s : ${services}"
                         th:value="${s.id}"
-                        th:text="${s.name}"></option>
+                        th:text="${s.name}"
+                        th:selected="${s.id == selectedServiceId}"></option>
               </select>
             </div>
 
-            <!-- Usta -->
+            <!-- Usta seç -->
             <div class="col-md-6">
               <label class="form-label fw-bold">Usta seçin</label>
               <select th:field="*{staffId}" class="form-select" required>
-                <option value="" disabled selected>Seçin...</option>
-                <option th:each="st : ${staff}"
+                <option value="">Seçin...</option>
+                <option th:each="st : ${staffList}"
                         th:value="${st.id}"
                         th:text="${st.fullName}"></option>
               </select>
@@ -62,55 +54,54 @@
             <!-- Tarix -->
             <div class="col-md-6">
               <label class="form-label fw-bold">Tarix</label>
-              <input type="date" th:field="*{date}" class="form-control" required>
+              <input type="date" id="dateInput" th:field="*{date}" class="form-control" required>
             </div>
 
-            <!-- Vaxt -->
+            <!-- Saat -->
             <div class="col-md-6">
               <label class="form-label fw-bold">Vaxt</label>
               <input type="time" th:field="*{startTime}" class="form-control" required>
             </div>
 
-            <!-- Müştəri adı -->
+            <!-- Müştəri məlumatları -->
             <div class="col-md-6">
               <label class="form-label fw-bold">Ad və Soyad</label>
               <input type="text" th:field="*{customerName}" class="form-control"
                      placeholder="Məs: Lamiyə Budaqova" required>
             </div>
 
-            <!-- Telefon -->
             <div class="col-md-6">
               <label class="form-label fw-bold">Telefon</label>
               <input type="text" th:field="*{customerPhone}" class="form-control"
                      placeholder="+994..." required>
             </div>
 
-            <!-- Email -->
-            <div class="col-md-6">
-              <label class="form-label fw-bold">Email</label>
-              <input type="email" th:field="*{customerEmail}" class="form-control"
-                     placeholder="example@mail.com">
-            </div>
-
-            <!-- Qeyd -->
             <div class="col-md-12">
               <label class="form-label fw-bold">Əlavə qeyd</label>
-              <textarea th:field="*{notes}" class="form-control"
-                        rows="3" placeholder="Əlavə istək və ya qeyd..."></textarea>
+              <textarea th:field="*{notes}" class="form-control" rows="3"
+                        placeholder="Əlavə istək və ya qeyd..."></textarea>
             </div>
 
-            <!-- Submit -->
             <div class="col-12 text-center mt-4">
               <button class="btn btn-primary px-5 py-2" type="submit">
                 <i class="bi bi-calendar-check me-2"></i>Rezerv et
               </button>
             </div>
+
           </div>
         </form>
       </div>
     </div>
   </div>
-  <!-- Booking End -->
+
+  <!-- JS: keçmiş tarixlər bloklansın -->
+  <script>
+    const dateInput = document.getElementById("dateInput");
+    if (dateInput) {
+      const today = new Date().toISOString().split("T")[0];
+      dateInput.min = today;
+    }
+  </script>
 
 </main>
 </body>

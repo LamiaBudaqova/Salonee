@@ -17,4 +17,5 @@ public class AdminTeamMemberResponseDto {
     private String facebook;
     private String instagram;
     private String branchName;
+    private Long branchId;
 }

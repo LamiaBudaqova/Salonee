@@ -8,9 +8,7 @@ import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.ModelAttribute;
-import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 @Controller
@@ -21,21 +19,30 @@ public class BookingController {
     private final SalonServiceService salonServiceService;
     private final StaffRepository staffRepository;
 
+    // əsas form (xidmət seçilibsə — uyğun ustaları göstər)
     @GetMapping("/booking")
-    public String form(Model model) {
+    public String form(@RequestParam(required = false) Long serviceId, Model model) {
         model.addAttribute("services", salonServiceService.getAll());
-        model.addAttribute("staff", staffRepository.findAll());
         model.addAttribute("reservation", new ReservationCreateDto());
+
+        if (serviceId != null) {
+            // yalnız seçilmiş xidməti görən ustalar
+            model.addAttribute("staffList", staffRepository.findByServices_Id(serviceId));
+        } else {
+            // əgər heç nə seçilməyibsə, hələ hamısını göstər (və ya boş)
+            model.addAttribute("staffList", staffRepository.findAll());
+        }
+
+        model.addAttribute("selectedServiceId", serviceId);
         return "booking";
     }
 
+    // rezervasiya yaratmaq
     @PostMapping("/booking")
     public String create(@ModelAttribute @Valid ReservationCreateDto dto,
                          RedirectAttributes ra) {
-        Long id = reservationService.create(dto);
+        reservationService.create(dto);
         ra.addFlashAttribute("success", "Rezervasiya uğurla yaradıldı!");
         return "redirect:/booking";
     }
 }
-
-
