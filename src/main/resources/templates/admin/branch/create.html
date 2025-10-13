@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" xmlns:layout="http://www.w3.org/1999/xhtml" lang="az"
+      layout:decorate="~{admin/layout}">
+<head>
+    <meta charset="UTF-8">
+    <title>Yeni Filial əlavə et</title>
+</head>
+
+<body>
+<main layout:fragment="content">
+    <div class="page-heading">
+        <h3>Yeni Filial əlavə et</h3>
+    </div>
+
+    <div class="page-content">
+        <div class="card">
+            <div class="card-body">
+                <form th:action="@{/admin/branches/create}" th:object="${branch}" method="post">
+                    <div class="form-group mb-3">
+                        <label>Filialın adı</label>
+                        <input type="text" class="form-control" th:field="*{name}" placeholder="Məs: Nizami filialı" required>
+                    </div>
+
+                    <div class="form-group mb-3">
+                        <label>Ünvan</label>
+                        <input type="text" class="form-control" th:field="*{address}" placeholder="Filialın ünvanı" required>
+                    </div>
+
+                    <div class="form-group mb-3">
+                        <label>Telefon</label>
+                        <input type="text" class="form-control" th:field="*{phone}" placeholder="+994 50 123 45 67" required>
+                    </div>
+
+                    <div class="form-group mb-3">
+                        <label>Email</label>
+                        <input type="email" class="form-control" th:field="*{email}" placeholder="info@labeauty.az">
+                    </div>
+
+                    <div class="form-group mb-3">
+                        <label>Xəritə linki</label>
+                        <textarea class="form-control" th:field="*{mapLink}" rows="2"
+                                  placeholder="Google Maps linkini buraya əlavə et"></textarea>
+                    </div>
+
+                    <button type="submit" class="btn btn-success">Yadda saxla</button>
+                    <a href="/admin/branches" class="btn btn-secondary">Geri qayıt</a>
+                </form>
+            </div>
+        </div>
+    </div>
+</main>
+</body>
+</html>

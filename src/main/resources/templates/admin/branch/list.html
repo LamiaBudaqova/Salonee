@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" xmlns:layout="http://www.w3.org/1999/xhtml" lang="az"
+      layout:decorate="~{admin/layout}">
+<head>
+    <meta charset="UTF-8">
+    <title>Filiallar siyahısı</title>
+</head>
+
+<body>
+<main layout:fragment="content">
+    <div class="page-heading">
+        <h3>Filiallar siyahısı</h3>
+    </div>
+
+    <div class="page-content">
+        <section class="row">
+            <div class="col-12">
+                <a href="/admin/branches/create" class="btn btn-primary mb-3">+ Yeni Filial əlavə et</a>
+                <div class="card">
+                    <div class="card-body">
+                        <table class="table table-striped">
+                            <thead>
+                            <tr>
+                                <th>#</th>
+                                <th>Ad</th>
+                                <th>Ünvan</th>
+                                <th>Telefon</th>
+                                <th>Əməliyyatlar</th>
+                            </tr>
+                            </thead>
+                            <tbody>
+                            <tr th:each="branch, iterStat : ${branches}">
+                                <td th:text="${iterStat.index + 1}"></td>
+                                <td th:text="${branch.name}"></td>
+                                <td th:text="${branch.address}"></td>
+                                <td th:text="${branch.phone}"></td>
+                                <td>
+                                    <a th:href="@{'/admin/branches/edit/' + ${branch.id}}" class="btn btn-warning btn-sm">Dəyiş</a>
+                                    <a th:href="@{'/admin/branches/delete/' + ${branch.id}}"
+                                       class="btn btn-danger btn-sm"
+                                       onclick="return confirm('Bu filialı silmək istədiyinizə əminsiniz?')">Sil</a>
+                                </td>
+                            </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </div>
+</main>
+</body>
+</html>

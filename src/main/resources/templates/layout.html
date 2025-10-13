@@ -117,33 +117,56 @@
     <div class="container py-5">
         <div class="row g-5">
 
-            <!-- Footer info -->
+            <!-- Sol tərəf – Brend məlumatı -->
             <div class="col-lg-4 col-md-6">
                 <h4 class="text-white mb-3">
                     <i class="fas fa-cut me-2"></i>La Beauty
                 </h4>
-                <p th:text="${footer.description}">La Beauty haqqında text</p>
-
-                <p>
-                    <i class="fa fa-map-marker-alt me-2"></i>
-                    <span th:text="${footer.address}">Ünvan burda çıxacaq</span>
-                </p>
-                <p>
-                    <i class="fa fa-phone-alt me-2"></i>
-                    <span th:text="${footer.phone}">Telefon burda çıxacaq</span>
-                </p>
-                <p>
-                    <i class="fa fa-envelope me-2"></i>
-                    <span th:text="${footer.email}">Email burda çıxacaq</span>
-                </p>
+                <p>La Beauty – gözəlliyiniz üçün mükəmməl seçim 💅</p>
 
                 <div class="d-flex pt-2">
-                    <a class="btn btn-outline-light btn-social me-2" th:href="${footer.facebookUrl}">
+                    <a class="btn btn-outline-light btn-social me-2" href="https://facebook.com/labeauty28may" target="_blank">
                         <i class="fab fa-facebook-f"></i>
                     </a>
-                    <a class="btn btn-outline-light btn-social" th:href="${footer.instagramUrl}">
+                    <a class="btn btn-outline-light btn-social" href="https://instagram.com/labeauty28may" target="_blank">
                         <i class="fab fa-instagram"></i>
                     </a>
+                </div>
+            </div>
+
+            <!-- Sağ tərəf – Filiallar -->
+            <div class="col-lg-8 col-md-6">
+                <h4 class="text-white mb-3">Filiallarımız</h4>
+                <div class="row">
+                    <div class="col-md-6 mb-3">
+                        <h6 class="text-light">28 May filialı</h6>
+                        <p class="mb-1">
+                            <i class="fa fa-map-marker-alt me-2"></i>28 May küçəsi, Bakı
+                        </p>
+                        <p class="mb-1">
+                            <i class="fa fa-phone-alt me-2"></i>
+                            <a href="tel:+994505125066" class="text-white text-decoration-none">+994 50 512 50 66</a>
+                        </p>
+                        <p>
+                            <i class="fa fa-envelope me-2"></i>
+                            <a href="mailto:info28may@labeauty.az" class="text-white text-decoration-none">info28may@labeauty.az</a>
+                        </p>
+                    </div>
+
+                    <div class="col-md-6 mb-3">
+                        <h6 class="text-light">Nizami filialı</h6>
+                        <p class="mb-1">
+                            <i class="fa fa-map-marker-alt me-2"></i>Nizami küçəsi, Bakı
+                        </p>
+                        <p class="mb-1">
+                            <i class="fa fa-phone-alt me-2"></i>
+                            <a href="tel:+994505554433" class="text-white text-decoration-none">+994 50 555 44 33</a>
+                        </p>
+                        <p>
+                            <i class="fa fa-envelope me-2"></i>
+                            <a href="mailto:infonizami@labeauty.az" class="text-white text-decoration-none">infonizami@labeauty.az</a>
+                        </p>
+                    </div>
                 </div>
             </div>
 
@@ -151,6 +174,7 @@
     </div>
 </div>
 <!-- Footer End -->
+
 
 
 <!-- JavaScript Libraries (main.js-dən ƏVVƏL gəlməlidir) -->

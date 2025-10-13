@@ -9,34 +9,25 @@
     <title>Əlaqə</title>
 
     <style>
-        /* Kartların default rəngi (krem) */
         .contact-card {
             background-color: #f8f5f0;
             transition: all 0.3s ease-in-out;
             border-radius: 10px;
         }
-
-        /* Hover zamanı qızılı rəng */
         .contact-card:hover {
             background-color: #C49B63;
             color: #fff !important;
         }
-
-        /* Hover olanda linklər də ağ olsun */
         .contact-card:hover a {
             color: #fff !important;
         }
-
-        /* Iconların rəngi */
         .contact-icon {
             color: #C49B63;
             transition: all 0.3s ease-in-out;
         }
-
         .contact-card:hover .contact-icon {
             color: #fff;
         }
-
         iframe {
             border: none;
             border-radius: 10px;
@@ -61,76 +52,80 @@
     </div>
     <!-- Hero End -->
 
-
     <!-- Contact Info Start -->
-    <div class="container py-5" th:each="contact : ${contacts}">
-        <div class="row g-4">
+    <div class="container py-5">
 
-            <!-- Ünvan -->
-            <div class="col-lg-4 col-md-6">
-                <div class="card contact-card shadow-sm text-center h-100">
-                    <div class="card-body p-4">
-                        <div class="mb-3 fs-1 contact-icon">
-                            <i class="fa fa-map-marker-alt"></i>
+        <!-- 🔹 Bütün filiallar üçün dövr -->
+        <div th:each="contact, iterStat : ${contacts}" class="mb-5">
+
+            <!-- Filial Başlığı -->
+            <div class="text-center mb-4">
+                <h2 class="text-primary font-dancing-script"
+                    th:text="${iterStat.index == 0 ? '28 May Filialı' : 'Nizami Filialı'}"></h2>
+            </div>
+
+            <div class="row g-4">
+                <!-- Ünvan -->
+                <div class="col-lg-4 col-md-6">
+                    <div class="card contact-card shadow-sm text-center h-100">
+                        <div class="card-body p-4">
+                            <div class="mb-3 fs-1 contact-icon"><i class="fa fa-map-marker-alt"></i></div>
+                            <h5 class="mb-3">Ünvan</h5>
+                            <p class="mb-0">
+                                <a th:href="'https://www.google.com/maps?q=' + ${contact.address}"
+                                   th:text="${contact.address}"
+                                   class="text-dark text-decoration-none"
+                                   target="_blank"></a>
+                            </p>
                         </div>
-                        <h5 class="mb-3">Ünvan</h5>
-                        <p class="mb-0">
-                            <a th:href="'https://www.google.com/maps?q=' + ${contact.address}"
-                               th:text="${contact.address}"
-                               class="text-dark text-decoration-none"
-                               target="_blank">Ünvan burda çıxacaq</a>
-                        </p>
+                    </div>
+                </div>
+
+                <!-- Telefon -->
+                <div class="col-lg-4 col-md-6">
+                    <div class="card contact-card shadow-sm text-center h-100">
+                        <div class="card-body p-4">
+                            <div class="mb-3 fs-1 contact-icon"><i class="fa fa-phone-alt"></i></div>
+                            <h5 class="mb-3">Telefon</h5>
+                            <p class="mb-0">
+                                <a th:href="'tel:' + ${contact.phone}"
+                                   th:text="${contact.phone}"
+                                   class="text-dark text-decoration-none"></a>
+                            </p>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Email -->
+                <div class="col-lg-4 col-md-6">
+                    <div class="card contact-card shadow-sm text-center h-100">
+                        <div class="card-body p-4">
+                            <div class="mb-3 fs-1 contact-icon"><i class="fa fa-envelope"></i></div>
+                            <h5 class="mb-3">Email</h5>
+                            <p class="mb-0">
+                                <a th:href="'mailto:' + ${contact.email}"
+                                   th:text="${contact.email}"
+                                   class="text-dark text-decoration-none"></a>
+                            </p>
+                        </div>
                     </div>
                 </div>
             </div>
 
-            <!-- Telefon -->
-            <div class="col-lg-4 col-md-6">
-                <div class="card contact-card shadow-sm text-center h-100">
-                    <div class="card-body p-4">
-                        <div class="mb-3 fs-1 contact-icon">
-                            <i class="fa fa-phone-alt"></i>
-                        </div>
-                        <h5 class="mb-3">Telefon</h5>
-                        <p class="mb-0">
-                            <a th:href="'tel:' + ${contact.phone}"
-                               th:text="${contact.phone}"
-                               class="text-dark text-decoration-none">050 512 50 66</a>
-                        </p>
-                    </div>
+            <!-- Xəritə -->
+            <div class="row mt-5 px-0">
+                <div class="col-12">
+                    <iframe class="w-100" height="450"
+                            th:src="${contact.mapLink}"
+                            allowfullscreen=""
+                            loading="lazy"
+                            referrerpolicy="no-referrer-when-downgrade"></iframe>
                 </div>
             </div>
 
-            <!-- Email -->
-            <div class="col-lg-4 col-md-6">
-                <div class="card contact-card shadow-sm text-center h-100">
-                    <div class="card-body p-4">
-                        <div class="mb-3 fs-1 contact-icon">
-                            <i class="fa fa-envelope"></i>
-                        </div>
-                        <h5 class="mb-3">Email</h5>
-                        <p class="mb-0">
-                            <a th:href="'mailto:' + ${contact.email}"
-                               th:text="${contact.email}"
-                               class="text-dark text-decoration-none">info@example.com</a>
-                        </p>
-                    </div>
-                </div>
-            </div>
-
+            <!-- Filiallar arasında boşluq -->
+            <hr class="my-5">
         </div>
-
-        <!-- Map Start -->
-        <div class="row mt-5 px-0">
-            <div class="col-12">
-                <iframe class="w-100" height="450"
-                        th:src="${contact.mapLink}"
-                        allowfullscreen=""
-                        loading="lazy"
-                        referrerpolicy="no-referrer-when-downgrade"></iframe>
-            </div>
-        </div>
-        <!-- Map End -->
     </div>
     <!-- Contact Info End -->
 

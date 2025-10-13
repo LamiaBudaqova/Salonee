@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" xmlns:layout="http://www.w3.org/1999/xhtml" lang="az"
+      layout:decorate="~{admin/layout}">
+<head>
+  <meta charset="UTF-8">
+  <title>Filialı dəyiş</title>
+</head>
+
+<body>
+<main layout:fragment="content">
+  <div class="page-heading">
+    <h3>Filial məlumatlarını dəyiş</h3>
+  </div>
+
+  <div class="page-content">
+    <div class="card">
+      <div class="card-body">
+        <form th:action="@{'/admin/branches/edit/' + ${branch.id}}" th:object="${branch}" method="post">
+          <div class="form-group mb-3">
+            <label>Filialın adı</label>
+            <input type="text" class="form-control" th:field="*{name}" required>
+          </div>
+
+          <div class="form-group mb-3">
+            <label>Ünvan</label>
+            <input type="text" class="form-control" th:field="*{address}" required>
+          </div>
+
+          <div class="form-group mb-3">
+            <label>Telefon</label>
+            <input type="text" class="form-control" th:field="*{phone}" required>
+          </div>
+
+          <div class="form-group mb-3">
+            <label>Email</label>
+            <input type="email" class="form-control" th:field="*{email}">
+          </div>
+
+          <div class="form-group mb-3">
+            <label>Xəritə linki</label>
+            <textarea class="form-control" th:field="*{mapLink}" rows="2"></textarea>
+          </div>
+
+          <button type="submit" class="btn btn-warning">Dəyişiklikləri yadda saxla</button>
+          <a href="/admin/branches" class="btn btn-secondary">Geri qayıt</a>
+        </form>
+      </div>
+    </div>
+  </div>
+</main>
+</body>
+</html>
