@@ -38,7 +38,6 @@ public class Reservation {
 
     private String customerName;
     private String customerPhone;
-    private String customerEmail;
 
     @Column(columnDefinition = "TEXT")
     private String notes;

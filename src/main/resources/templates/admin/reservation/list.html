@@ -1,17 +1,22 @@
 <!DOCTYPE html>
-<html lang="az" xmlns:th="http://www.thymeleaf.org" layout:decorate="~{admin/layout}"
-      xmlns:layout="http://www.w3.org/1999/xhtml">
+<html lang="az"
+      xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="~{admin/layout}">
+
 <main layout:fragment="content" class="container-fluid py-4">
 
+  <!-- Başlıq və mesaj -->
   <div class="d-flex justify-content-between align-items-center mb-4">
     <h4 class="mb-0">Rezervasiyalar</h4>
-    <div th:if="${success}" class="alert alert-success py-1 px-3" th:text="${success}"></div>
+    <div th:if="${success}" class="alert alert-success py-1 px-3 mb-0" th:text="${success}"></div>
   </div>
 
-  <div class="card">
-    <div class="card-body">
-      <table class="table table-bordered align-middle">
-        <thead>
+  <!-- Kart -->
+  <div class="card shadow-sm">
+    <div class="card-body table-responsive">
+      <table class="table table-bordered table-hover align-middle text-center mb-0">
+        <thead class="table-light">
         <tr>
           <th>ID</th>
           <th>Xidmət</th>
@@ -21,6 +26,7 @@
           <th>Müştəri</th>
           <th>Telefon</th>
           <th>Status</th>
+          <th>Qeyd</th>
           <th>Əməliyyat</th>
         </tr>
         </thead>
@@ -34,7 +40,22 @@
           <td th:text="${r.customerName}"></td>
           <td th:text="${r.customerPhone}"></td>
 
-          <!-- status seçimi -->
+          <!-- Status və qeyd formu -->
+          <td>
+            <span th:switch="${r.status}">
+              <span th:case="'PENDING'" class="badge bg-warning text-dark">Gözləmədə</span>
+              <span th:case="'APPROVED'" class="badge bg-success">Təsdiqlənib</span>
+              <span th:case="'REJECTED'" class="badge bg-danger">Rədd edilib</span>
+              <span th:case="'DONE'" class="badge bg-primary">Tamamlanıb</span>
+              <span th:case="'CANCELLED'" class="badge bg-secondary">Ləğv edilib</span>
+              <span th:case="*"
+                    class="badge bg-light text-dark"
+                    th:text="${r.status}"></span>
+            </span>
+          </td>
+
+          <td th:text="${r.notes != null ? r.notes : '-'}"></td>
+
           <td>
             <form th:action="@{/admin/reservations/update}" method="post" class="d-flex align-items-center">
               <input type="hidden" name="id" th:value="${r.id}">
@@ -44,12 +65,10 @@
                         th:text="${s}"
                         th:selected="${s == r.status}"></option>
               </select>
+              <input type="text" name="notes" placeholder="Qeyd (istəyə görə)" class="form-control form-control-sm me-2" style="width: 150px;">
               <button type="submit" class="btn btn-sm btn-primary">Yenilə</button>
             </form>
           </td>
-
-          <!-- Əlavə qeyd (istəsən görünməyə bilər) -->
-          <td th:text="${r.notes != null ? r.notes : ''}"></td>
         </tr>
         </tbody>
       </table>

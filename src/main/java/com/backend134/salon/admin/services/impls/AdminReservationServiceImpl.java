@@ -25,7 +25,9 @@ public class AdminReservationServiceImpl implements AdminReservationService {
     public void updateStatus(AdminReservationUpdateDto dto) {
         Reservation reservation = reservationRepository.findById(dto.getId())
                 .orElseThrow(() -> new IllegalArgumentException("Rezerv tapılmadı"));
+
         reservation.setStatus(dto.getStatus());
         reservation.setNotes(dto.getNotes());
+        reservationRepository.save(reservation);
     }
 }

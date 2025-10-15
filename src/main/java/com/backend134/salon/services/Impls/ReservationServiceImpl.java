@@ -48,7 +48,6 @@ public class ReservationServiceImpl implements ReservationService {
         r.setStatus(ReservationStatus.PENDING);
         r.setCustomerName(dto.getCustomerName());
         r.setCustomerPhone(dto.getCustomerPhone());
-        r.setCustomerEmail(dto.getCustomerEmail());
         r.setNotes(dto.getNotes());
 
         reservationRepository.save(r);
