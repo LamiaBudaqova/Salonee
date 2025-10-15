@@ -31,6 +31,7 @@ public class ReservationServiceImpl implements ReservationService {
 
         LocalTime end = dto.getStartTime().plusMinutes(30);
 
+        // ✅ Burada artıq findConflicts mövcuddur
         var conflicts = reservationRepository.findConflicts(
                 dto.getDate(), dto.getStartTime(), end, staff != null ? staff.getId() : null
         );

@@ -1,10 +1,9 @@
-package com.backend134.salon.services.Impls;
+package com.backend134.salon.services.impls;
 
 import com.backend134.salon.dtos.testimonial.TestimonialCreateDto;
 import com.backend134.salon.dtos.testimonial.TestimonialDto;
 import com.backend134.salon.models.Testimonial;
 import com.backend134.salon.repositories.TestimonialRepository;
-import com.backend134.salon.services.TeamMemberService;
 import com.backend134.salon.services.TestimonialService;
 import lombok.RequiredArgsConstructor;
 import org.modelmapper.ModelMapper;

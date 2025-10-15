@@ -27,7 +27,7 @@ public class SecurityConfig {
         http
                 .csrf(csrf -> csrf.disable())
                 .authorizeHttpRequests(auth -> auth
-                        // ✅ FRONT statik fayllar hamısı açıq olmalıdır
+                        // ✅ FRONT statik fayllar açıq olmalıdır
                         .requestMatchers("/css/**", "/js/**", "/img/**", "/images/**", "/front/**", "/front/lib/**", "/front/css/**", "/front/js/**").permitAll()
 
                         // ✅ Açıq (public) səhifələr
@@ -45,6 +45,8 @@ public class SecurityConfig {
 
                         // ✅ ADMIN panel – yalnız admin görə bilər
                         .requestMatchers("/admin/**").hasRole("ADMIN")
+                        // ✅ STAFF (usta) panel – həm STAFF, həm ADMIN görə bilər
+                        .requestMatchers("/staff/**").hasAnyRole("STAFF", "ADMIN")
 
                         // ✅ Qalan bütün URL-lər login tələb edir
                         .anyRequest().authenticated()
@@ -56,11 +58,28 @@ public class SecurityConfig {
                         .passwordParameter("password")
                         .successHandler((request, response, authentication) -> {
                             var authorities = authentication.getAuthorities();
+
                             boolean isAdmin = authorities.stream()
-                                    .anyMatch(a -> a.getAuthority().contains("ADMIN"));
+                                    .anyMatch(a -> a.getAuthority().equals("ROLE_ADMIN"));
+                            boolean isStaff = authorities.stream()
+                                    .anyMatch(a -> a.getAuthority().equals("ROLE_STAFF"));
+
+                            // Login olan istifadəçinin username (email və ya username)
+                            var principal = (org.springframework.security.core.userdetails.User) authentication.getPrincipal();
+                            String username = principal.getUsername();
 
                             if (isAdmin) {
                                 response.sendRedirect("/admin");
+                            } else if (isStaff) {
+                                // 🔹 Staff ID-ni DB-dən tapırıq
+                                var staffOpt = userDetailsService.findStaffByUsername(username);
+
+                                if (staffOpt.isPresent()) {
+                                    var staff = staffOpt.get();
+                                    response.sendRedirect("/staff/dashboard/" + staff.getId());
+                                } else {
+                                    response.sendRedirect("/");
+                                }
                             } else {
                                 response.sendRedirect("/");
                             }

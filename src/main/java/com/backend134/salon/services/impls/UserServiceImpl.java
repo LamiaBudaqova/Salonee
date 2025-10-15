@@ -1,4 +1,4 @@
-package com.backend134.salon.services.Impls;
+package com.backend134.salon.services.impls;
 
 import com.backend134.salon.dtos.user.UserRegisterDto;
 import com.backend134.salon.enums.Role;

@@ -4,6 +4,7 @@ import com.backend134.salon.dtos.reservation.ReservationCreateDto;
 import com.backend134.salon.repositories.StaffRepository;
 import com.backend134.salon.services.ReservationService;
 import com.backend134.salon.services.SalonServiceService;
+import com.backend134.salon.services.StaffService;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Controller;
@@ -17,8 +18,7 @@ public class BookingController {
 
     private final ReservationService reservationService;
     private final SalonServiceService salonServiceService;
-    private final StaffRepository staffRepository;
-
+    private final StaffService staffService;
     // əsas form (xidmət seçilibsə — uyğun ustaları göstər)
     @GetMapping("/booking")
     public String form(@RequestParam(required = false) Long serviceId, Model model) {
@@ -26,16 +26,15 @@ public class BookingController {
         model.addAttribute("reservation", new ReservationCreateDto());
 
         if (serviceId != null) {
-            // yalnız seçilmiş xidməti görən ustalar
-            model.addAttribute("staffList", staffRepository.findByServices_Id(serviceId));
+            model.addAttribute("staffList", staffService.getByServiceId(serviceId));
         } else {
-            // əgər heç nə seçilməyibsə, hələ hamısını göstər (və ya boş)
-            model.addAttribute("staffList", staffRepository.findAll());
+            model.addAttribute("staffList", staffService.getAll());
         }
 
         model.addAttribute("selectedServiceId", serviceId);
         return "booking";
     }
+
 
     // rezervasiya yaratmaq
     @PostMapping("/booking")

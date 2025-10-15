@@ -1,7 +1,6 @@
-package com.backend134.salon.services.Impls;
+package com.backend134.salon.services.impls;
 
 import com.backend134.salon.dtos.hero.HeroDto;
-import com.backend134.salon.models.Hero;
 import com.backend134.salon.repositories.HeroRepository;
 import com.backend134.salon.services.HeroService;
 import lombok.RequiredArgsConstructor;

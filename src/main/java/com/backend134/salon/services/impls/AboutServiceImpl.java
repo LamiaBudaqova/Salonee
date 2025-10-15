@@ -1,7 +1,6 @@
-package com.backend134.salon.services.Impls;
+package com.backend134.salon.services.impls;
 
 import com.backend134.salon.dtos.about.AboutHomeDto;
-import com.backend134.salon.models.About;
 import com.backend134.salon.repositories.AboutRepository;
 import com.backend134.salon.services.AboutService;
 import lombok.RequiredArgsConstructor;

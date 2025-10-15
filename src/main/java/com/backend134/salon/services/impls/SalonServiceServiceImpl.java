@@ -1,15 +1,12 @@
-package com.backend134.salon.services.Impls;
+package com.backend134.salon.services.impls;
 
-import com.backend134.salon.dtos.price.PriceResponse;
 import com.backend134.salon.dtos.salonservice.SalonServiceDto;
-import com.backend134.salon.models.Price;
 import com.backend134.salon.models.SalonService;
 import com.backend134.salon.repositories.SalonServiceRepository;
 import com.backend134.salon.services.SalonServiceService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
-import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
 

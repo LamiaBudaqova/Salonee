@@ -1,7 +1,6 @@
-package com.backend134.salon.services.Impls;
+package com.backend134.salon.services.impls;
 
 import com.backend134.salon.dtos.gallery.GalleryImageDto;
-import com.backend134.salon.models.GalleryImage;
 import com.backend134.salon.repositories.GalleryImageRepository;
 import com.backend134.salon.services.GalleryImageService;
 import lombok.RequiredArgsConstructor;

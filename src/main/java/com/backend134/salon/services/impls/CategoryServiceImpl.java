@@ -1,4 +1,4 @@
-package com.backend134.salon.services.Impls;
+package com.backend134.salon.services.impls;
 
 import com.backend134.salon.dtos.category.CategoryHomeFeaturedDto;
 import com.backend134.salon.models.Category;
