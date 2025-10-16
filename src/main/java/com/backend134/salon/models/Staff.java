@@ -26,18 +26,26 @@ public class Staff {
     private String username;
 
     @Column(nullable = false)
-    private String password; // login üçün
+    private String password;
 
     private String fullName;
     private String phone;
     private String email;
+    private String position; // 🔹 əlavə etdik — profil üçün görünəcək
+    @Column(name = "image_url")
+    private String imageUrl;
 
     @Enumerated(EnumType.STRING)
     private Role role = Role.ROLE_STAFF;
 
     private Boolean active = true;
 
-    // her ustanın bir nece xidmeti ola biler
+    // 🔹 Hər usta bir filialda işləyir
+    @ManyToOne
+    @JoinColumn(name = "branch_id")
+    private Branch branch;
+
+    // 🔹 Hər ustanın bir neçə xidməti ola bilər
     @ManyToMany
     @JoinTable(
             name = "staff_services",

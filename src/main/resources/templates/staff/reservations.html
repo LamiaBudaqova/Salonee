@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="az"
+      xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="~{staff/layout}">
+<body>
+<main layout:fragment="content">
+    <div class="card shadow-sm mt-4">
+        <div class="card-header bg-primary text-white">
+            <h5>Rezervasiyalarım</h5>
+        </div>
+        <div class="card-body">
+            <table class="table table-striped">
+                <thead>
+                <tr>
+                    <th>ID</th>
+                    <th>Xidmət</th>
+                    <th>Tarix</th>
+                    <th>Vaxt</th>
+                    <th>Müştəri</th>
+                    <th>Telefon</th>
+                    <th>Status</th>
+                </tr>
+                </thead>
+                <tbody>
+                <tr th:each="r : ${reservations}">
+                    <td th:text="${r.id}"></td>
+                    <td th:text="${r.serviceName}"></td>
+                    <td th:text="${r.date}"></td>
+                    <td th:text="${#temporals.format(r.startTime, 'HH:mm')}"></td>
+                    <td th:text="${r.customerName}"></td>
+                    <td th:text="${r.customerPhone}"></td>
+                    <td>
+                        <span th:text="${r.status}" class="badge bg-secondary"></span>
+                    </td>
+                </tr>
+
+                <tr th:if="${#lists.isEmpty(reservations)}">
+                    <td colspan="7" class="text-center text-muted py-3">
+                        Rezervasiya yoxdur
+                    </td>
+                </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+</main>
+</body>
+</html>
