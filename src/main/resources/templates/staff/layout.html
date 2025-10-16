@@ -1,0 +1,90 @@
+<!DOCTYPE html>
+<html lang="az" xmlns:th="http://www.thymeleaf.org" xmlns:layout="http://www.w3.org/1999/xhtml">
+<head>
+  <meta charset="UTF-8">
+  <title>Usta Paneli - La Beauty</title>
+
+  <!-- ✅ Doğru yollar -->
+  <link rel="stylesheet" th:href="@{/admin/css/bootstrap.css}">
+  <link rel="stylesheet" th:href="@{/admin/css/app.css}">
+  <link rel="stylesheet" th:href="@{/admin/vendors/bootstrap-icons/bootstrap-icons.css}">
+</head>
+
+<body>
+<div id="app">
+  <!-- 🔹 Sidebar -->
+  <div id="sidebar" class="active">
+    <div class="sidebar-wrapper active">
+      <div class="sidebar-header">
+        <div class="d-flex justify-content-between">
+          <div class="logo">
+            <a href="/staff/dashboard" class="text-primary fw-bold">
+              ✂️ La Beauty
+            </a>
+          </div>
+        </div>
+      </div>
+
+      <div class="sidebar-menu">
+        <ul class="menu">
+          <li class="sidebar-title">Menyu</li>
+
+          <li class="sidebar-item">
+            <a href="/staff/dashboard" class="sidebar-link">
+              <i class="bi bi-speedometer2"></i>
+              <span>Panel</span>
+            </a>
+          </li>
+
+          <li class="sidebar-item">
+            <a href="/staff/reservations" class="sidebar-link">
+              <i class="bi bi-calendar-check"></i>
+              <span>Rezervasiyalarım</span>
+            </a>
+          </li>
+
+          <li class="sidebar-item">
+            <a href="/staff/profile" class="sidebar-link">
+              <i class="bi bi-person-circle"></i>
+              <span>Profilim</span>
+            </a>
+          </li>
+
+          <li class="sidebar-item">
+            <a href="/logout" class="sidebar-link text-danger">
+              <i class="bi bi-box-arrow-right"></i>
+              <span>Çıxış</span>
+            </a>
+          </li>
+        </ul>
+      </div>
+    </div>
+  </div>
+
+  <!-- 🔹 Main Content -->
+  <div id="main">
+    <header class="mb-4">
+      <nav class="navbar navbar-expand navbar-light">
+        <div class="container-fluid">
+          <a href="#" class="burger-btn d-block">
+            <i class="bi bi-justify fs-3"></i>
+          </a>
+        </div>
+      </nav>
+    </header>
+
+    <div class="page-heading">
+      <h3 th:text="${pageTitle} ?: 'Usta Paneli'"></h3>
+    </div>
+
+    <div class="page-content" layout:fragment="content">
+      <!-- Burada content olacaq -->
+    </div>
+  </div>
+</div>
+
+<!-- ✅ JS -->
+<script th:src="@{/admin/js/bootstrap.bundle.min.js}"></script>
+<script th:src="@{/admin/js/main.js}"></script>
+</body>
+</html>

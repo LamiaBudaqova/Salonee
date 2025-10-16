@@ -4,6 +4,7 @@ import com.backend134.salon.dtos.staff.StaffReservationDto;
 import com.backend134.salon.enums.ReservationStatus;
 import com.backend134.salon.models.Reservation;
 import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.data.jpa.repository.Modifying;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
 
@@ -30,4 +31,9 @@ public interface ReservationRepository extends JpaRepository<Reservation, Long> 
                                     @Param("startTime") LocalTime startTime,
                                     @Param("endTime") LocalTime endTime,
                                     @Param("staffId") Long staffId);
+
+    @Modifying
+    @Query("UPDATE Reservation r SET r.status = :status WHERE r.id = :id")
+    void updateStatus(@Param("id") Long id, @Param("status") ReservationStatus status);
+
 }

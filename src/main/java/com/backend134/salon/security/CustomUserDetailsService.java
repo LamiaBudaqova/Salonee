@@ -20,12 +20,12 @@ import java.util.Optional;
 public class CustomUserDetailsService implements UserDetailsService {
 
     private final UserRepository userRepository;
-    private final StaffRepository staffRepository; // ✅ əlavə etdik
+    private final StaffRepository staffRepository;
 
     @Override
     @Transactional
     public UserDetails loadUserByUsername(String email) throws UsernameNotFoundException {
-        // 🔹 Əvvəlcə adi user-lərdə axtar
+        // 🔹 Əvvəlcə adi istifadəçilərdə (admin və ya user) axtar
         Optional<User> userOpt = userRepository.findByEmail(email);
         if (userOpt.isPresent()) {
             User user = userOpt.get();
@@ -36,12 +36,12 @@ public class CustomUserDetailsService implements UserDetailsService {
             );
         }
 
-        // 🔹 Tapılmadısa, ustalarda (staff-larda) axtar
-        Optional<Staff> staffOpt = staffRepository.findByUsername(email);
+        // 🔹 Tapılmadısa, ustalarda (staff) axtar — EMAIL ilə
+        Optional<Staff> staffOpt = staffRepository.findByEmail(email);
         if (staffOpt.isPresent()) {
             Staff staff = staffOpt.get();
             return new org.springframework.security.core.userdetails.User(
-                    staff.getUsername(),
+                    staff.getEmail(), // login üçün email istifadə olunur
                     staff.getPassword(),
                     List.of(new SimpleGrantedAuthority(staff.getRole().name()))
             );
@@ -51,8 +51,8 @@ public class CustomUserDetailsService implements UserDetailsService {
         throw new UsernameNotFoundException("User or Staff not found with email: " + email);
     }
 
-    // 🔹 Bu metodu security üçün əlavə etdik (successHandler istifadə edir)
+    // 🔹 Bu metodu SecurityConfig-də redirect üçün istifadə edəcəyik
     public Optional<Staff> findStaffByUsername(String username) {
-        return staffRepository.findByUsername(username);
+        return staffRepository.findByEmail(username);
     }
 }

@@ -28,7 +28,7 @@ public class SecurityConfig {
                 .csrf(csrf -> csrf.disable())
                 .authorizeHttpRequests(auth -> auth
                         // ✅ FRONT statik fayllar açıq olmalıdır
-                        .requestMatchers("/css/**", "/js/**", "/img/**", "/images/**", "/front/**", "/front/lib/**", "/front/css/**", "/front/js/**").permitAll()
+                        .requestMatchers("/admin/**", "/css/**", "/js/**", "/img/**", "/images/**", "/front/**", "/front/lib/**", "/front/css/**", "/front/js/**").permitAll()
 
                         // ✅ Açıq (public) səhifələr
                         .requestMatchers("/", "/about", "/service/**", "/services/**",
@@ -43,6 +43,7 @@ public class SecurityConfig {
                         .requestMatchers(HttpMethod.POST, "/testimonial").permitAll()
                         .requestMatchers(HttpMethod.POST, "/booking").permitAll()
 
+                        .requestMatchers(HttpMethod.POST, "/staff/update-status").hasAnyRole("STAFF", "ADMIN")
                         // ✅ ADMIN panel – yalnız admin görə bilər
                         .requestMatchers("/admin/**").hasRole("ADMIN")
                         // ✅ STAFF (usta) panel – həm STAFF, həm ADMIN görə bilər

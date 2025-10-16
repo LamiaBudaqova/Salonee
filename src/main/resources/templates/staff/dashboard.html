@@ -1,33 +1,17 @@
 <!DOCTYPE html>
-<html lang="az" xmlns:th="http://www.thymeleaf.org">
+<html lang="az"
+      xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="~{staff/layout}">
 
-<head>
-    <meta charset="UTF-8">
-    <title>Usta Paneli - La Beauty</title>
-    <link th:href="@{/admin/css/bootstrap.css}" rel="stylesheet"/>
-    <link th:href="@{/admin/vendors/bootstrap-icons/bootstrap-icons.css}" rel="stylesheet"/>
-</head>
+<body>
+<main layout:fragment="content">
 
-<body class="bg-light">
-
-<div class="container mt-4">
-
-    <!-- 🔹 Başlıq -->
-    <div class="d-flex justify-content-between align-items-center mb-4">
-        <h2 class="text-primary mb-0">Usta Paneli</h2>
-        <a href="/" class="btn btn-outline-secondary btn-sm">
-            <i class="bi bi-house-door"></i> Ana səhifə
-        </a>
-    </div>
-
-    <!-- 🔹 Əgər səhv varsa -->
-    <div th:if="${error}" class="alert alert-danger" th:text="${error}"></div>
-
-    <!-- 🔹 Statistik göstəricilər -->
-    <div class="row text-center mb-4">
+    <div class="row">
+        <!-- Statistikalar -->
         <div class="col-md-4">
             <div class="card shadow-sm">
-                <div class="card-body">
+                <div class="card-body text-center">
                     <h5 class="text-warning">Gözləmədə</h5>
                     <h2 th:text="${stats.pendingCount}">0</h2>
                 </div>
@@ -36,7 +20,7 @@
 
         <div class="col-md-4">
             <div class="card shadow-sm">
-                <div class="card-body">
+                <div class="card-body text-center">
                     <h5 class="text-success">Təsdiqlənmiş</h5>
                     <h2 th:text="${stats.approvedCount}">0</h2>
                 </div>
@@ -45,7 +29,7 @@
 
         <div class="col-md-4">
             <div class="card shadow-sm">
-                <div class="card-body">
+                <div class="card-body text-center">
                     <h5 class="text-secondary">Tamamlanmış</h5>
                     <h2 th:text="${stats.doneCount}">0</h2>
                 </div>
@@ -53,14 +37,13 @@
         </div>
     </div>
 
-    <!-- 🔹 Rezervasiyalar Cədvəli -->
-    <div class="card shadow-sm">
+    <div class="card mt-4 shadow-sm">
         <div class="card-header bg-primary text-white">
-            <h5 class="mb-0">Rezervasiyalar</h5>
+            <h5>Rezervasiyalar</h5>
         </div>
-        <div class="card-body p-0">
-            <table class="table table-hover align-middle mb-0">
-                <thead class="table-light">
+        <div class="card-body">
+            <table class="table table-striped">
+                <thead>
                 <tr>
                     <th>ID</th>
                     <th>Xidmət</th>
@@ -80,22 +63,42 @@
                     <td th:text="${r.customerName}"></td>
                     <td th:text="${r.customerPhone}"></td>
                     <td>
-                        <span th:text="${r.status}"
-                              th:classappend="${r.status == 'PENDING'} ? 'badge bg-warning text-dark' :
-                                              ${r.status == 'APPROVED'} ? 'badge bg-success' :
-                                              ${r.status == 'DONE'} ? 'badge bg-secondary' :
-                                              'badge bg-light text-dark'"></span>
+                        <div th:switch="${r.status}">
+                            <span th:case="'PENDING'">
+                                <form th:action="@{/staff/update-status}" method="post" class="d-inline">
+                                    <input type="hidden" name="reservationId" th:value="${r.id}">
+                                    <input type="hidden" name="staffId" th:value="${staffId}">
+                                    <button type="submit" name="status" value="APPROVED"
+                                            class="btn btn-success btn-sm">Təsdiqlə</button>
+                                    <button type="submit" name="status" value="REJECTED"
+                                            class="btn btn-danger btn-sm">Rədd et</button>
+                                </form>
+                            </span>
+                            <span th:case="'APPROVED'">
+                                <form th:action="@{/staff/update-status}" method="post" class="d-inline">
+                                    <input type="hidden" name="reservationId" th:value="${r.id}">
+                                    <input type="hidden" name="staffId" th:value="${staffId}">
+                                    <button type="submit" name="status" value="DONE"
+                                            class="btn btn-secondary btn-sm">Bitdi</button>
+                                </form>
+                            </span>
+                            <span th:case="*">
+                                <span th:text="${r.status}" class="badge bg-secondary"></span>
+                            </span>
+                        </div>
                     </td>
                 </tr>
+
                 <tr th:if="${#lists.isEmpty(reservations)}">
-                    <td colspan="7" class="text-center text-muted py-3">Rezervasiya yoxdur</td>
+                    <td colspan="7" class="text-center text-muted py-3">
+                        Rezervasiya yoxdur
+                    </td>
                 </tr>
                 </tbody>
             </table>
         </div>
     </div>
 
-</div>
-
+</main>
 </body>
 </html>

@@ -5,6 +5,7 @@ import com.backend134.salon.dtos.staff.StaffReservationDto;
 import com.backend134.salon.enums.ReservationStatus;
 import com.backend134.salon.repositories.ReservationRepository;
 import com.backend134.salon.services.StaffDashboardService;
+import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
 import org.modelmapper.ModelMapper;
 import org.springframework.stereotype.Service;
@@ -34,5 +35,11 @@ public class StaffDashboardServiceImpl implements StaffDashboardService {
                 .stream()
                 .map(r -> modelMapper.map(r, StaffReservationDto.class))
                 .collect(Collectors.toList());
+    }
+
+    @Override
+    @Transactional
+    public void updateReservationStatus(Long reservationId, ReservationStatus status) {
+        reservationRepository.updateStatus(reservationId, status);
     }
 }
