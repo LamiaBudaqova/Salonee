@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html lang="az" xmlns:th="http://www.thymeleaf.org" layout:decorate="~{admin/layout}"
+      xmlns:layout="http://www.w3.org/1999/xhtml">
+      xmlns:layout="http://www.w3.org/1999/xhtml">
+<body>
+<main layout:fragment="content">
+
+  <div class="page-heading">
+    <h3>Usta məlumatlarını redaktə et</h3>
+  </div>
+
+  <section class="section">
+    <div class="card">
+      <div class="card-body">
+        <form th:action="@{/admin/staff/edit}" method="post" th:object="${staff}">
+          <input type="hidden" th:field="*{id}">
+          <div class="row g-3">
+            <div class="col-md-6">
+              <label class="form-label">Ad Soyad</label>
+              <input type="text" th:field="*{fullName}" class="form-control">
+            </div>
+            <div class="col-md-6">
+              <label class="form-label">Telefon</label>
+              <input type="text" th:field="*{phone}" class="form-control">
+            </div>
+            <div class="col-md-6">
+              <label class="form-label">Email</label>
+              <input type="email" th:field="*{email}" class="form-control">
+            </div>
+            <div class="col-md-6">
+              <label class="form-label">Vəzifə</label>
+              <input type="text" th:field="*{position}" class="form-control">
+            </div>
+            <div class="col-md-6">
+              <label class="form-label">Filial</label>
+              <select th:field="*{branchId}" class="form-select">
+                <option th:each="b : ${branches}" th:value="${b.id}" th:text="${b.name}"></option>
+              </select>
+            </div>
+            <div class="col-md-6">
+              <label class="form-label">Profil şəkli (URL)</label>
+              <input type="text" th:field="*{imageUrl}" class="form-control">
+            </div>
+            <div class="col-md-6">
+              <label class="form-label">Status</label>
+              <select th:field="*{active}" class="form-select">
+                <option value="true">Aktiv</option>
+                <option value="false">Deaktiv</option>
+              </select>
+            </div>
+          </div>
+
+          <div class="mt-4">
+            <button class="btn btn-primary">Yadda saxla</button>
+            <a th:href="@{/admin/staff}" class="btn btn-secondary">Geri</a>
+          </div>
+        </form>
+      </div>
+    </div>
+  </section>
+
+</main>
+</body>
+</html>

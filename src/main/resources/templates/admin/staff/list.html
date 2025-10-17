@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html lang="az" xmlns:th="http://www.thymeleaf.org" layout:decorate="~{admin/layout}"
+      xmlns:layout="http://www.w3.org/1999/xhtml">
+      xmlns:layout="http://www.w3.org/1999/xhtml">
+<body>
+<main layout:fragment="content">
+
+    <div class="page-heading">
+        <h3>Ustalar siyahısı</h3>
+    </div>
+
+    <section class="section">
+        <div class="card">
+            <div class="card-header d-flex justify-content-between align-items-center">
+                <h4>Ustalar</h4>
+                <a th:href="@{/admin/staff/create}" class="btn btn-primary">+ Yeni usta əlavə et</a>
+            </div>
+            <div class="card-body">
+                <table class="table table-striped">
+                    <thead>
+                    <tr>
+                        <th>#</th>
+                        <th>Ad Soyad</th>
+                        <th>Telefon</th>
+                        <th>Email</th>
+                        <th>Vəzifə</th>
+                        <th>Filial</th>
+                        <th>Status</th>
+                        <th>Əməliyyatlar</th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    <tr th:each="staff, iStat : ${staffList}">
+                        <td th:text="${iStat.index + 1}"></td>
+                        <td th:text="${staff.fullName}"></td>
+                        <td th:text="${staff.phone}"></td>
+                        <td th:text="${staff.email}"></td>
+                        <td th:text="${staff.position}"></td>
+                        <td th:text="${staff.branchName}"></td>
+                        <td>
+                            <span th:classappend="${staff.active} ? 'badge bg-success' : 'badge bg-danger'"
+                                  th:text="${staff.active} ? 'Aktiv' : 'Deaktiv'"></span>
+                        </td>
+                        <td>
+                            <a th:href="@{'/admin/staff/edit/' + ${staff.id}}" class="btn btn-sm btn-warning">Düzəliş et</a>
+                            <a th:href="@{'/admin/staff/delete/' + ${staff.id}}"
+                               onclick="return confirm('Silmək istədiyinizə əminsinizmi?')"
+                               class="btn btn-sm btn-danger">Sil</a>
+                        </td>
+                    </tr>
+                    <tr th:if="${#lists.isEmpty(staffList)}">
+                        <td colspan="8" class="text-center text-muted">Usta tapılmadı</td>
+                    </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </section>
+
+</main>
+</body>
+</html>

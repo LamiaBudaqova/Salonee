@@ -1,11 +1,9 @@
 package com.backend134.salon.services.impls;
 
-import com.backend134.salon.dtos.staff.StaffDashboardStatsDto;
-import com.backend134.salon.dtos.staff.StaffProfileUpdateDto;
-import com.backend134.salon.dtos.staff.StaffReservationDto;
-import com.backend134.salon.dtos.staff.StaffProfileDto;
+import com.backend134.salon.dtos.staff.*;
 import com.backend134.salon.enums.ReservationStatus;
 import com.backend134.salon.models.Branch;
+import com.backend134.salon.models.Reservation;
 import com.backend134.salon.models.Staff;
 import com.backend134.salon.repositories.ReservationRepository;
 import com.backend134.salon.repositories.StaffRepository;
@@ -121,6 +119,29 @@ import java.util.stream.Collectors;
         }
 
         staffRepository.save(staff);
+    }
+
+    @Override
+    public List<StaffReservationDto> getFilteredReservations(Long staffId, StaffReservationFilterDto filter) {
+        List<Reservation> list;
+
+        boolean hasDateRange = filter.getStartDate() != null && filter.getEndDate() != null;
+        boolean hasStatus = filter.getStatus() != null;
+
+        if (hasStatus && hasDateRange) {
+            list = reservationRepository.findByStaff_IdAndStatusAndDateBetween(
+                    staffId, filter.getStatus(), filter.getStartDate(), filter.getEndDate());
+        } else if (hasStatus) {
+            list = reservationRepository.findByStaff_IdAndStatus(staffId, filter.getStatus());
+        } else if (hasDateRange) {
+            list = reservationRepository.findByStaff_IdAndDateBetween(staffId, filter.getStartDate(), filter.getEndDate());
+        } else {
+            list = reservationRepository.findByStaff_Id(staffId);
+        }
+
+        return list.stream()
+                .map(r -> modelMapper.map(r, StaffReservationDto.class))
+                .collect(Collectors.toList());
     }
 
 }

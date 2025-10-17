@@ -10,6 +10,30 @@
             <h5>Rezervasiyalarım</h5>
         </div>
         <div class="card-body">
+
+            <!-- 🔍 Filtr formu -->
+            <form th:action="@{/staff/reservations/filter}" method="post" class="row g-3 mb-4">
+                <div class="col-md-3">
+                    <label class="form-label">Status</label>
+                    <select name="status" class="form-select">
+                        <option value="">Hamısı</option>
+                        <option th:each="s : ${statuses}" th:value="${s}" th:text="${s}"></option>
+                    </select>
+                </div>
+                <div class="col-md-3">
+                    <label class="form-label">Başlama tarixi</label>
+                    <input type="date" name="startDate" class="form-control">
+                </div>
+                <div class="col-md-3">
+                    <label class="form-label">Bitmə tarixi</label>
+                    <input type="date" name="endDate" class="form-control">
+                </div>
+                <div class="col-md-3 d-flex align-items-end">
+                    <button type="submit" class="btn btn-primary w-100">Filtrlə</button>
+                </div>
+            </form>
+
+            <!-- Mövcud cədvəl -->
             <table class="table table-striped">
                 <thead>
                 <tr>

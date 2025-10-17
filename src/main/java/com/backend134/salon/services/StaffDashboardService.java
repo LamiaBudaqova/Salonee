@@ -1,9 +1,6 @@
 package com.backend134.salon.services;
 
-import com.backend134.salon.dtos.staff.StaffDashboardStatsDto;
-import com.backend134.salon.dtos.staff.StaffProfileUpdateDto;
-import com.backend134.salon.dtos.staff.StaffReservationDto;
-import com.backend134.salon.dtos.staff.StaffProfileDto;
+import com.backend134.salon.dtos.staff.*;
 import com.backend134.salon.enums.ReservationStatus;
 
 import java.util.List;
@@ -16,5 +13,6 @@ public interface StaffDashboardService {
     Optional<StaffProfileDto> getProfileByUsername(String username);
     StaffProfileDto getStaffProfile(String username);
     void updateProfile(String username, StaffProfileUpdateDto dto);
+    List<StaffReservationDto> getFilteredReservations(Long staffId, StaffReservationFilterDto filter);
 
 }

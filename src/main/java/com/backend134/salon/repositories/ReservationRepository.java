@@ -13,6 +13,7 @@ import java.time.LocalTime;
 import java.util.List;
 
 public interface ReservationRepository extends JpaRepository<Reservation, Long> {
+
     // 🔹 Ustanın rezervlərini tapmaq
     List<Reservation> findByStaff_Id(Long staffId);
 
@@ -35,5 +36,9 @@ public interface ReservationRepository extends JpaRepository<Reservation, Long> 
     @Modifying
     @Query("UPDATE Reservation r SET r.status = :status WHERE r.id = :id")
     void updateStatus(@Param("id") Long id, @Param("status") ReservationStatus status);
+
+    List<Reservation> findByStaff_IdAndDateBetween(Long staffId, LocalDate start, LocalDate end);
+    List<Reservation> findByStaff_IdAndStatus(Long staffId, ReservationStatus status);
+    List<Reservation> findByStaff_IdAndStatusAndDateBetween(Long staffId, ReservationStatus status, LocalDate start, LocalDate end);
 
 }

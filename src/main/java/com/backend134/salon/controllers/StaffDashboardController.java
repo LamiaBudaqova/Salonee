@@ -1,6 +1,7 @@
 package com.backend134.salon.controllers;
 
 import com.backend134.salon.dtos.staff.StaffProfileUpdateDto;
+import com.backend134.salon.dtos.staff.StaffReservationFilterDto;
 import com.backend134.salon.enums.ReservationStatus;
 import com.backend134.salon.services.BranchService;
 import com.backend134.salon.services.StaffDashboardService;
@@ -81,6 +82,27 @@ public class StaffDashboardController {
 
         return "redirect:/";
     }
+
+    @PostMapping("/reservations/filter")
+    public String filterReservations(@ModelAttribute StaffReservationFilterDto filter,
+                                     org.springframework.security.core.Authentication authentication,
+                                     Model model) {
+        String username = authentication.getName();
+        var staffOpt = staffDashboardService.getProfileByUsername(username);
+
+        if (staffOpt.isPresent()) {
+            var staff = staffOpt.get();
+            model.addAttribute("reservations", staffDashboardService.getFilteredReservations(staff.getId(), filter));
+            model.addAttribute("staffId", staff.getId());
+            model.addAttribute("statuses", ReservationStatus.values());
+            model.addAttribute("filter", filter);
+            model.addAttribute("pageTitle", "Rezervasiyalarım");
+            return "staff/reservations";
+        }
+
+        return "redirect:/";
+    }
+
 
     @GetMapping("/profile/edit")
     public String editProfile(org.springframework.security.core.Authentication authentication, Model model) {

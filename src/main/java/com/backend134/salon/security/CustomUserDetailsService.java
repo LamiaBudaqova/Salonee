@@ -25,7 +25,7 @@ public class CustomUserDetailsService implements UserDetailsService {
     @Override
     @Transactional
     public UserDetails loadUserByUsername(String email) throws UsernameNotFoundException {
-        // 🔹 Əvvəlcə adi istifadəçilərdə (admin və ya user) axtar
+        // 🔹 Əvvəlcə User (admin və ya normal user) cədvəlində axtar
         Optional<User> userOpt = userRepository.findByEmail(email);
         if (userOpt.isPresent()) {
             User user = userOpt.get();
@@ -36,22 +36,28 @@ public class CustomUserDetailsService implements UserDetailsService {
             );
         }
 
-        // 🔹 Tapılmadısa, ustalarda (staff) axtar — EMAIL ilə
+        // 🔹 Tapılmadısa, Staff (usta) cədvəlində axtar
         Optional<Staff> staffOpt = staffRepository.findByEmail(email);
         if (staffOpt.isPresent()) {
             Staff staff = staffOpt.get();
+
+            // 🔹 Yalnız aktiv ustalar login ola bilsin
+            if (staff.getActive() != null && !staff.getActive()) {
+                throw new UsernameNotFoundException("Staff is inactive");
+            }
+
             return new org.springframework.security.core.userdetails.User(
-                    staff.getEmail(), // login üçün email istifadə olunur
+                    staff.getEmail(),
                     staff.getPassword(),
                     List.of(new SimpleGrantedAuthority(staff.getRole().name()))
             );
         }
 
-        // 🔹 Heç kim tapılmadısa:
+        // 🔹 Heç kim tapılmadı
         throw new UsernameNotFoundException("User or Staff not found with email: " + email);
     }
 
-    // 🔹 Bu metodu SecurityConfig-də redirect üçün istifadə edəcəyik
+    // 🔹 Staff redirect üçün köməkçi metod
     public Optional<Staff> findStaffByUsername(String username) {
         return staffRepository.findByEmail(username);
     }

@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html lang="az" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>403 - İcazə yoxdur</title>
+
+    <link rel="stylesheet" th:href="@{/admin/css/bootstrap.css}">
+    <link rel="stylesheet" th:href="@{/admin/css/app.css}">
+    <link rel="stylesheet" th:href="@{/admin/vendors/bootstrap-icons/bootstrap-icons.css}">
+    <style>
+        body {
+            background-color: #f8f9fa;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            text-align: center;
+        }
+        .error-container {
+            background: white;
+            padding: 40px;
+            border-radius: 16px;
+            box-shadow: 0 4px 10px rgba(0,0,0,0.1);
+            max-width: 480px;
+        }
+        h1 {
+            font-size: 96px;
+            color: #ff4b4b;
+            font-weight: 800;
+        }
+        h3 {
+            color: #333;
+        }
+        p {
+            color: #555;
+        }
+        .btn-back {
+            background-color: #0d6efd;
+            color: white;
+            padding: 10px 24px;
+            border-radius: 8px;
+            border: none;
+            text-decoration: none;
+            transition: 0.3s;
+        }
+        .btn-back:hover {
+            background-color: #0b5ed7;
+        }
+    </style>
+</head>
+<body>
+
+<div class="error-container">
+    <h1>403</h1>
+    <h3>Bu səhifəyə daxil olmaq üçün icazəniz yoxdur 🚫</h3>
+    <p>Əgər səhvən bura düşmüsünüzsə, aşağıdakı düymə ilə geri qayıda bilərsiniz.</p>
+
+    <div class="mt-4">
+        <a href="/" class="btn-back">🏠 Ana səhifə</a>
+        <a href="/staff/dashboard" class="btn-back ms-2">💇 Usta paneli</a>
+    </div>
+</div>
+
+</body>
+</html>
