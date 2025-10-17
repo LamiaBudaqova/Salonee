@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html lang="az"
+      xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="~{staff/layout}">
+<body>
+<main layout:fragment="content">
+    <div class="card shadow-sm mt-4">
+        <div class="card-header bg-primary text-white">
+            <h5>Profil redaktə</h5>
+        </div>
+
+        <div class="card-body">
+            <form th:action="@{/staff/profile/edit}" method="post" enctype="multipart/form-data">
+                <div class="row">
+                    <!-- Sol hissə: şəkil -->
+                    <div class="col-md-4 text-center mb-3">
+                        <img th:src="${staff.imageUrl}" alt="Profil şəkli"
+                             class="rounded-circle border border-3 border-primary mb-3"
+                             style="width: 160px; height: 160px; object-fit: cover;">
+                        <input type="file" name="image" class="form-control mt-2">
+                    </div>
+
+                    <!-- Sağ hissə: form sahələri -->
+                    <div class="col-md-8">
+                        <div class="mb-3">
+                            <label class="form-label">Ad Soyad</label>
+                            <input type="text" name="fullName" class="form-control"
+                                   th:value="${staff.fullName}">
+                        </div>
+
+                        <div class="mb-3">
+                            <label class="form-label">Telefon</label>
+                            <input type="text" name="phone" class="form-control"
+                                   th:value="${staff.phone}">
+                        </div>
+
+                        <div class="mb-3">
+                            <label class="form-label">Vəzifə</label>
+                            <input type="text" name="position" class="form-control"
+                                   th:value="${staff.position}">
+                        </div>
+
+                        <div class="mb-3">
+                            <label class="form-label">Filial</label>
+                            <select name="branchId" class="form-select">
+                                <option th:each="b : ${branches}"
+                                        th:value="${b.id}"
+                                        th:text="${b.name}"
+                                        th:selected="${b.name == staff.branchName}">
+                                </option>
+                            </select>
+                        </div>
+
+                        <button type="submit" class="btn btn-primary">Yadda saxla</button>
+                        <a href="/staff/profile" class="btn btn-secondary">Geri qayıt</a>
+                    </div>
+                </div>
+            </form>
+        </div>
+    </div>
+</main>
+</body>
+</html>

@@ -29,6 +29,14 @@ public class BranchServiceImpl implements BranchService {
     }
 
     @Override
+    public List<BranchDto> getAll() {
+        return branchRepository.findAll()
+                .stream()
+                .map(branch -> modelMapper.map(branch, BranchDto.class))
+                .collect(Collectors.toList());
+    }
+
+    @Override
     public void create(AdminBranchCreateDto dto) {
         Branch branch = modelMapper.map(dto, Branch.class);
         branchRepository.save(branch);

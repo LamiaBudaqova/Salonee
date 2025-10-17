@@ -8,6 +8,7 @@ import java.util.List;
 
 public interface BranchService {
     List<BranchDto> getAllBranches();
+    List<BranchDto> getAll();
     void create(AdminBranchCreateDto dto);
     void update(Long id, AdminBranchUpdateDto dto);
     void delete(Long id);

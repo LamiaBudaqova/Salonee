@@ -1,9 +1,11 @@
 package com.backend134.salon.services.impls;
 
 import com.backend134.salon.dtos.staff.StaffDashboardStatsDto;
+import com.backend134.salon.dtos.staff.StaffProfileUpdateDto;
 import com.backend134.salon.dtos.staff.StaffReservationDto;
 import com.backend134.salon.dtos.staff.StaffProfileDto;
 import com.backend134.salon.enums.ReservationStatus;
+import com.backend134.salon.models.Branch;
 import com.backend134.salon.models.Staff;
 import com.backend134.salon.repositories.ReservationRepository;
 import com.backend134.salon.repositories.StaffRepository;
@@ -81,6 +83,44 @@ import java.util.stream.Collectors;
         dto.setBranchName(staff.getBranch() != null ? staff.getBranch().getName() : "-");
 
         return dto;
+    }
+
+    @Override
+    @Transactional
+    public void updateProfile(String username, StaffProfileUpdateDto dto) {
+        Staff staff = staffRepository.findByEmail(username)
+                .orElseThrow(() -> new RuntimeException("Usta tapılmadı"));
+
+        staff.setFullName(dto.getFullName());
+        staff.setPhone(dto.getPhone());
+        staff.setPosition(dto.getPosition());
+
+        // filial dəyişibsə
+        if (dto.getBranchId() != null) {
+            staff.setBranch(new Branch());
+            staff.getBranch().setId(dto.getBranchId());
+        }
+
+        // şəkil varsa - sadə upload nümunəsi
+        if (dto.getImage() != null && !dto.getImage().isEmpty()) {
+            try {
+                String fileName = System.currentTimeMillis() + "_" + dto.getImage().getOriginalFilename();
+                String uploadDir = "uploads/staff/";
+
+                java.nio.file.Path uploadPath = java.nio.file.Paths.get(uploadDir);
+                if (!java.nio.file.Files.exists(uploadPath)) {
+                    java.nio.file.Files.createDirectories(uploadPath);
+                }
+
+                java.nio.file.Path filePath = uploadPath.resolve(fileName);
+                dto.getImage().transferTo(filePath.toFile());
+                staff.setImageUrl("/" + uploadDir + fileName);
+            } catch (Exception e) {
+                throw new RuntimeException("Şəkil yüklənərkən xəta baş verdi: " + e.getMessage());
+            }
+        }
+
+        staffRepository.save(staff);
     }
 
 }

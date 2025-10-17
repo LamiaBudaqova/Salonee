@@ -1,6 +1,8 @@
 package com.backend134.salon.controllers;
 
+import com.backend134.salon.dtos.staff.StaffProfileUpdateDto;
 import com.backend134.salon.enums.ReservationStatus;
+import com.backend134.salon.services.BranchService;
 import com.backend134.salon.services.StaffDashboardService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.access.prepost.PreAuthorize;
@@ -15,6 +17,7 @@ import org.springframework.web.bind.annotation.*;
 public class StaffDashboardController {
 
     private final StaffDashboardService staffDashboardService;
+    private final BranchService branchService;
 
     // 🔹 1. Ustanın əsas paneli (statistika + rezervasiyalar)
     @GetMapping("/dashboard/{staffId}")
@@ -78,4 +81,24 @@ public class StaffDashboardController {
 
         return "redirect:/";
     }
+
+    @GetMapping("/profile/edit")
+    public String editProfile(org.springframework.security.core.Authentication authentication, Model model) {
+        String username = authentication.getName();
+        var profile = staffDashboardService.getStaffProfile(username);
+
+        model.addAttribute("staff", profile);
+        model.addAttribute("branches", branchService.getAll()); // filial seçimi üçün
+        model.addAttribute("pageTitle", "Profil redaktə");
+        return "staff/profile-edit";
+    }
+
+    @PostMapping("/profile/edit")
+    public String updateProfile(@ModelAttribute StaffProfileUpdateDto dto,
+                                org.springframework.security.core.Authentication authentication) {
+        String username = authentication.getName();
+        staffDashboardService.updateProfile(username, dto);
+        return "redirect:/staff/profile?updated";
+    }
+
 }
