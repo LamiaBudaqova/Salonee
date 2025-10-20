@@ -14,6 +14,8 @@ import java.time.LocalTime;
 @AllArgsConstructor
 @NoArgsConstructor
 public class ReservationCreateDto {
+    @NotNull
+    private Long branchId;
 
     @NotNull
     private Long serviceId;

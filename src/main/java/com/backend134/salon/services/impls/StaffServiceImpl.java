@@ -35,4 +35,23 @@ public class StaffServiceImpl implements StaffService {
                 .map(staff -> modelMapper.map(staff, StaffSimpleDto.class))
                 .collect(Collectors.toList());
     }
+
+    @Override
+    public List<StaffSimpleDto> getByBranch(Long branchId) {
+        return staffRepository.findByBranch_Id(branchId)
+                .stream()
+                .filter(Staff::getActive)
+                .map(staff -> modelMapper.map(staff, StaffSimpleDto.class))
+                .collect(Collectors.toList());
+    }
+
+
+    @Override
+    public List<StaffSimpleDto> getByBranchAndService(Long branchId, Long serviceId) {
+        return staffRepository.findByBranch_IdAndServices_Id(branchId, serviceId)
+                .stream()
+                .filter(Staff::getActive)
+                .map(staff -> modelMapper.map(staff, StaffSimpleDto.class))
+                .collect(Collectors.toList());
+    }
 }

@@ -19,88 +19,175 @@
     </div>
 
     <div class="row justify-content-center">
-      <div class="col-lg-8">
-        <div th:if="${success}" class="alert alert-success text-center mb-4" th:text="${success}"></div>
+      <div class="col-lg-6 col-md-8 col-sm-10">
+        <!-- Uğur mesajı (görünməz, modal üçün) -->
+        <div th:if="${success}" id="successFlag" th:data-success="${success}"></div>
 
         <form th:action="@{/booking}" th:object="${reservation}" method="post"
               class="p-4 border rounded bg-light shadow-sm">
-          <div class="row g-3">
 
-            <!-- Xidmət seç -->
-            <div class="col-md-6">
-              <label class="form-label fw-bold">Xidmət seçin</label>
-              <select class="form-select"
-                      onchange="window.location.href='?serviceId=' + this.value"
-                      th:value="${selectedServiceId}">
-                <option value="">Seçin...</option>
-                <option th:each="s : ${services}"
-                        th:value="${s.id}"
-                        th:text="${s.name}"
-                        th:selected="${s.id == selectedServiceId}"></option>
-              </select>
-            </div>
-
-            <!-- Usta seç -->
-            <div class="col-md-6">
-              <label class="form-label fw-bold">Usta seçin</label>
-              <select th:field="*{staffId}" class="form-select" required>
-                <option value="">Seçin...</option>
-                <option th:each="st : ${staffList}"
-                        th:value="${st.id}"
-                        th:text="${st.fullName}"></option>
-              </select>
-            </div>
-
-            <!-- Tarix -->
-            <div class="col-md-6">
-              <label class="form-label fw-bold">Tarix</label>
-              <input type="date" id="dateInput" th:field="*{date}" class="form-control" required>
-            </div>
-
-            <!-- Saat -->
-            <div class="col-md-6">
-              <label class="form-label fw-bold">Vaxt</label>
-              <input type="time" th:field="*{startTime}" class="form-control" required>
-            </div>
-
-            <!-- Müştəri məlumatları -->
-            <div class="col-md-6">
-              <label class="form-label fw-bold">Ad və Soyad</label>
-              <input type="text" th:field="*{customerName}" class="form-control"
-                     placeholder="Məs: Lamiyə Budaqova" required>
-            </div>
-
-            <div class="col-md-6">
-              <label class="form-label fw-bold">Telefon</label>
-              <input type="text" th:field="*{customerPhone}" class="form-control"
-                     placeholder="+994..." required>
-            </div>
-
-            <div class="col-md-12">
-              <label class="form-label fw-bold">Əlavə qeyd</label>
-              <textarea th:field="*{notes}" class="form-control" rows="3"
-                        placeholder="Əlavə istək və ya qeyd..."></textarea>
-            </div>
-
-            <div class="col-12 text-center mt-4">
-              <button class="btn btn-primary px-5 py-2" type="submit">
-                <i class="bi bi-calendar-check me-2"></i>Rezerv et
-              </button>
-            </div>
-
+          <!-- Filial seç -->
+          <div class="mb-3">
+            <label class="form-label fw-bold">Filial seçin</label>
+            <select id="branchSelect" class="form-select" required>
+              <option value="">Seçin...</option>
+              <option th:each="b : ${branches}" th:value="${b.id}" th:text="${b.name}"></option>
+            </select>
           </div>
+
+          <!-- Usta seç -->
+          <div class="mb-3">
+            <label class="form-label fw-bold">Usta seçin</label>
+            <select id="staffSelect" class="form-select" disabled required>
+              <option value="">Seçin...</option>
+            </select>
+          </div>
+
+          <!-- Xidmət seç -->
+          <div class="mb-3">
+            <label class="form-label fw-bold">Xidmət seçin</label>
+            <select id="serviceSelect" class="form-select" disabled required>
+              <option value="">Seçin...</option>
+            </select>
+          </div>
+
+          <!-- Tarix -->
+          <div class="mb-3">
+            <label class="form-label fw-bold">Tarix</label>
+            <input type="date" id="dateInput" th:field="*{date}" class="form-control" required>
+          </div>
+
+          <!-- Vaxt -->
+          <div class="mb-3">
+            <label class="form-label fw-bold">Vaxt</label>
+            <input type="time" th:field="*{startTime}" class="form-control" required>
+          </div>
+
+          <!-- Müştəri məlumatları -->
+          <div class="mb-3">
+            <label class="form-label fw-bold">Ad və Soyad</label>
+            <input type="text" th:field="*{customerName}" class="form-control"
+                   placeholder="Məs: Lamiyə Budaqova" required>
+          </div>
+
+          <div class="mb-3">
+            <label class="form-label fw-bold">Telefon</label>
+            <input type="text" th:field="*{customerPhone}" class="form-control"
+                   placeholder="+994..." required>
+          </div>
+
+          <div class="mb-3">
+            <label class="form-label fw-bold">Əlavə qeyd</label>
+            <textarea th:field="*{notes}" class="form-control" rows="3"
+                      placeholder="Əlavə istək və ya qeyd..."></textarea>
+          </div>
+
+          <!-- Gizli inputlar -->
+          <input type="hidden" th:field="*{branchId}" id="branchIdHidden">
+          <input type="hidden" th:field="*{staffId}" id="staffIdHidden">
+          <input type="hidden" th:field="*{serviceId}" id="serviceIdHidden">
+
+          <div class="text-center mt-4">
+            <button class="btn btn-primary px-5 py-2" type="submit">
+              <i class="bi bi-calendar-check me-2"></i>Rezerv et
+            </button>
+          </div>
+
         </form>
       </div>
     </div>
   </div>
 
-  <!-- JS: keçmiş tarixlər bloklansın -->
+  <!-- ✅ Uğurlu rezervasiya modali -->
+  <div class="modal fade" id="successModal" tabindex="-1" aria-labelledby="successModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered">
+      <div class="modal-content border-success shadow">
+        <div class="modal-header bg-success text-white">
+          <h5 class="modal-title" id="successModalLabel">Rezervasiya uğurlu</h5>
+          <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal" aria-label="Bağla"></button>
+        </div>
+        <div class="modal-body text-center">
+          <i class="bi bi-check-circle-fill text-success" style="font-size: 48px;"></i>
+          <p class="mt-3 mb-0">Rezervasiyanız uğurla göndərildi!<br>Ən qısa zamanda sizinlə əlaqə saxlanılacaq.</p>
+        </div>
+        <div class="modal-footer justify-content-center">
+          <button type="button" class="btn btn-success px-4" data-bs-dismiss="modal">Bağla</button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- 🔹 JS: ardıcıl seçmə + modal -->
   <script>
-    const dateInput = document.getElementById("dateInput");
-    if (dateInput) {
-      const today = new Date().toISOString().split("T")[0];
-      dateInput.min = today;
-    }
+    document.addEventListener("DOMContentLoaded", () => {
+      const branchSelect = document.getElementById("branchSelect");
+      const staffSelect = document.getElementById("staffSelect");
+      const serviceSelect = document.getElementById("serviceSelect");
+      const hiddenBranch = document.getElementById("branchIdHidden");
+      const hiddenStaff = document.getElementById("staffIdHidden");
+      const hiddenService = document.getElementById("serviceIdHidden");
+
+      // 🔹 Filial seçiləndə ustalar
+      branchSelect.addEventListener("change", async () => {
+        const branchId = branchSelect.value;
+        hiddenBranch.value = branchId;
+        staffSelect.innerHTML = '<option value="">Seçin...</option>';
+        serviceSelect.innerHTML = '<option value="">Seçin...</option>';
+        staffSelect.disabled = !branchId;
+        serviceSelect.disabled = true;
+
+        if (branchId) {
+          const res = await fetch(`/booking/staff-by-branch/${branchId}`);
+          const data = await res.json();
+          data.forEach(st => {
+            const opt = document.createElement("option");
+            opt.value = st.id;
+            opt.textContent = st.fullName;
+            staffSelect.appendChild(opt);
+          });
+        }
+      });
+
+      // 🔹 Usta seçiləndə xidmətlər
+      staffSelect.addEventListener("change", async () => {
+        const staffId = staffSelect.value;
+        hiddenStaff.value = staffId;
+        serviceSelect.innerHTML = '<option value="">Seçin...</option>';
+        serviceSelect.disabled = !staffId;
+
+        if (staffId) {
+          const res = await fetch(`/booking/services-by-staff/${staffId}`);
+          const data = await res.json();
+          data.forEach(s => {
+            const opt = document.createElement("option");
+            opt.value = s.id;
+            opt.textContent = s.name;
+            serviceSelect.appendChild(opt);
+          });
+        }
+      });
+
+      // 🔹 Xidmət seçiləndə gizli input
+      serviceSelect.addEventListener("change", () => {
+        hiddenService.value = serviceSelect.value;
+      });
+
+      // 🔹 keçmiş tarixlərə icazə vermə
+      const dateInput = document.getElementById("dateInput");
+      if (dateInput) {
+        const today = new Date().toISOString().split("T")[0];
+        dateInput.min = today;
+      }
+
+      // 🔹 Uğur mesajı varsa modal aç
+      const successFlag = document.getElementById("successFlag");
+      if (successFlag) {
+        const modal = new bootstrap.Modal(document.getElementById('successModal'));
+        modal.show();
+        // 3 saniyə sonra avtomatik bağlansın
+        setTimeout(() => modal.hide(), 3000);
+      }
+    });
   </script>
 
 </main>

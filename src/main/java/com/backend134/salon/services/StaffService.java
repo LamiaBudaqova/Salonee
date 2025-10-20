@@ -7,5 +7,8 @@ import java.util.List;
 public interface StaffService {
     List<StaffSimpleDto> getAll();
     List<StaffSimpleDto> getByServiceId(Long serviceId);
+    List<StaffSimpleDto> getByBranch(Long branchId);
+    List<StaffSimpleDto> getByBranchAndService(Long branchId, Long serviceId);
+
 }
 

@@ -5,11 +5,10 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.http.HttpMethod;
-import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
-import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.SecurityFilterChain;
+import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 
 @Configuration
 @RequiredArgsConstructor
@@ -24,11 +23,16 @@ public class SecurityConfig {
 
     @Bean
     public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
+
         http
                 .csrf(csrf -> csrf.disable())
                 .authorizeHttpRequests(auth -> auth
 
-                        // ✅ Əvvəlcə statik fayllar (hər iki panel üçün)
+                        // ✅ 1. Rezervasiya — login olmadan GET və POST icazə
+                        .requestMatchers("/booking", "/booking/**").permitAll()
+                        .requestMatchers(HttpMethod.POST, "/booking").permitAll()
+
+                        // ✅ 2. Statik resurslar (ön və admin)
                         .requestMatchers(
                                 "/css/**", "/js/**", "/img/**", "/images/**",
                                 "/uploads/**",
@@ -37,26 +41,24 @@ public class SecurityConfig {
                                 "/staff/css/**", "/staff/js/**"
                         ).permitAll()
 
-                        // ✅ Əvvəlcə qorunan routelar (bu hissə indi daha sonra gəlir!)
+                        // ✅ 3. Açıq səhifələr (login tələb etmir)
+                        .requestMatchers(
+                                "/", "/about", "/service/**", "/services/**",
+                                "/category/**", "/price", "/gallery/**", "/team",
+                                "/blog/**", "/contact", "/contact/**",
+                                "/testimonial", "/testimonial/**",
+                                "/register", "/login"
+                        ).permitAll()
+
+                        // ✅ 4. Admin və staff üçün qorunan routelar
                         .requestMatchers("/admin/**").hasRole("ADMIN")
                         .requestMatchers("/staff/**").hasAnyRole("STAFF", "ADMIN")
 
-                        // ✅ Açıq səhifələr (login tələb etmir)
-                        .requestMatchers("/", "/about", "/service/**", "/services/**",
-                                "/category/**", "/price", "/gallery/**", "/team",
-                                "/blog/**", "/contact", "/contact/**",
-                                "/booking", "/booking/**",
-                                "/testimonial", "/testimonial/**",
-                                "/register", "/login").permitAll()
-
-                        // ✅ Açıq POST əməliyyatları
-                        .requestMatchers(HttpMethod.POST, "/contact", "/testimonial", "/booking").permitAll()
-
-                        // ✅ Qalan bütün URL-lər login tələb edir
+                        // ✅ 5. Qalan hər şey login tələb edir
                         .anyRequest().authenticated()
                 )
 
-                // ✅ Login
+                // ✅ Login formu
                 .formLogin(form -> form
                         .loginPage("/login")
                         .loginProcessingUrl("/login")
@@ -93,8 +95,10 @@ public class SecurityConfig {
                         .logoutSuccessUrl("/")
                         .permitAll()
                 )
-                .exceptionHandling(ex -> ex.accessDeniedPage("/error-403"));;
+
+                .exceptionHandling(ex -> ex.accessDeniedPage("/error-403"));
 
         return http.build();
     }
 }
+

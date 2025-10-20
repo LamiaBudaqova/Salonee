@@ -9,4 +9,7 @@ public interface SalonServiceService {
     List<SalonServiceDto> getServicesByCategoryId(Long categoryId);
     SalonServiceDto getServiceById(Long id);
     List<SalonService> getAll();
+    List<SalonServiceDto> getByBranch(Long branchId);
+    List<SalonServiceDto> getByStaff(Long staffId);
+
 }
