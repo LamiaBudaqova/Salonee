@@ -3,9 +3,12 @@ package com.backend134.salon.services.impls;
 import com.backend134.salon.services.TelegramNotificationService;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.http.HttpEntity;
+import org.springframework.http.HttpHeaders;
+import org.springframework.http.MediaType;
 import org.springframework.stereotype.Service;
 import org.springframework.web.client.RestTemplate;
-import org.springframework.web.util.UriComponentsBuilder;
+import java.util.Map;
 
 @Slf4j
 @Service
@@ -15,29 +18,31 @@ public class TelegramNotificationServiceImpl implements TelegramNotificationServ
     private String botToken;
 
     @Value("${telegram.chat.id}")
-    private String chatId; // Test üçün sabit, sonra dinamik olacaq
+    private String chatId;
 
     private final RestTemplate restTemplate = new RestTemplate();
 
     @Override
     public void sendTelegramMessage(String phone, String message) {
         try {
-            // 🔹 Mesajı URL üçün təhlükəsiz şəkildə kodlaşdır
-            String encodedMessage = UriComponentsBuilder
-                    .fromPath("")
-                    .queryParam("text", message)
-                    .build()
-                    .encode()
-                    .toUriString()
-                    .replace("?text=", ""); // sadəcə text hissəsini saxlayırıq
+            // 🔹 Telegram API URL
+            String url = String.format("https://api.telegram.org/bot%s/sendMessage", botToken);
 
-            // 🔹 Telegram API URL-i hazırlayırıq
-            String url = String.format(
-                    "https://api.telegram.org/bot%s/sendMessage?chat_id=%s&text=%s",
-                    botToken, chatId, encodedMessage
+            // 🔹 JSON body hazırlayırıq
+            Map<String, Object> body = Map.of(
+                    "chat_id", chatId,
+                    "text", message,
+                    "parse_mode", "HTML" // emoji və s. dəstəklənir
             );
 
-            restTemplate.getForObject(url, String.class);
+            // 🔹 Header-lar
+            HttpHeaders headers = new HttpHeaders();
+            headers.setContentType(MediaType.APPLICATION_JSON);
+
+            // 🔹 Request göndər
+            HttpEntity<Map<String, Object>> request = new HttpEntity<>(body, headers);
+            restTemplate.postForObject(url, request, String.class);
+
             log.info("✅ Telegram mesaj göndərildi (nömrə: {}): {}", phone, message);
 
         } catch (Exception e) {

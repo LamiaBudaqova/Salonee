@@ -5,12 +5,13 @@
       layout:decorate="~{staff/layout}">
 <body>
 <main layout:fragment="content">
-    <div class="card shadow-sm mt-4">
-        <div class="card-header bg-primary text-white">
-            <h5>Rezervasiyalarım</h5>
-        </div>
-        <div class="card-body">
 
+    <div class="card shadow-sm mt-4">
+        <div class="card-header bg-primary text-white d-flex justify-content-between align-items-center">
+            <h5 class="mb-0">Rezervasiyalarım</h5>
+        </div>
+
+        <div class="card-body">
             <!-- 🔍 Filtr formu -->
             <form th:action="@{/staff/reservations/filter}" method="post" class="row g-3 mb-4">
                 <div class="col-md-3">
@@ -33,9 +34,9 @@
                 </div>
             </form>
 
-            <!-- Mövcud cədvəl -->
-            <table class="table table-striped">
-                <thead>
+            <!-- 🧾 Cədvəl -->
+            <table class="table table-hover align-middle text-center">
+                <thead class="table-light">
                 <tr>
                     <th>ID</th>
                     <th>Xidmət</th>
@@ -44,7 +45,7 @@
                     <th>Müştəri</th>
                     <th>Telefon</th>
                     <th>Status</th>
-                    <th>Əməliyyat</th> <!-- ✅ Yeni sütun -->
+                    <th>Əməliyyat</th>
                 </tr>
                 </thead>
                 <tbody>
@@ -55,25 +56,32 @@
                     <td th:text="${#temporals.format(r.startTime, 'HH:mm')}"></td>
                     <td th:text="${r.customerName}"></td>
                     <td th:text="${r.customerPhone}"></td>
+
+                    <!-- Status rəngləri -->
                     <td>
-            <span th:text="${r.status}"
-                  th:classappend="${r.status.name() == 'PENDING'} ? 'badge bg-warning'
-                                : ${r.status.name() == 'APPROVED'} ? 'badge bg-success'
-                                : ${r.status.name() == 'REJECTED'} ? 'badge bg-danger'
-                                : 'badge bg-secondary'"></span>
+                        <span th:text="${r.status}"
+                              th:classappend="${r.status.name() == 'PENDING'} ? 'badge bg-warning text-dark'
+                              : (${r.status.name() == 'APPROVED'} ? 'badge bg-success'
+                              : (${r.status.name() == 'REJECTED'} ? 'badge bg-danger' : 'badge bg-secondary'))">
+                        </span>
                     </td>
 
-                    <!-- ✅ Yeni əməliyyat düymələri -->
+                    <!-- ✅ Əməliyyat düymələri -->
                     <td>
-                        <form th:action="@{'/staff/reservations/' + ${r.id} + '/approve'}" method="post" style="display:inline;">
-                            <button type="submit" class="btn btn-success btn-sm"
-                                    th:disabled="${r.status.name() != 'PENDING'}">Qəbul et</button>
-                        </form>
-
-                        <form th:action="@{'/staff/reservations/' + ${r.id} + '/reject'}" method="post" style="display:inline;">
-                            <button type="submit" class="btn btn-danger btn-sm"
-                                    th:disabled="${r.status.name() != 'PENDING'}">Rədd et</button>
-                        </form>
+                        <div class="d-flex justify-content-center gap-2">
+                            <form th:action="@{'/staff/reservations/' + ${r.id} + '/approve'}" method="post">
+                                <button type="submit" class="btn btn-success btn-sm"
+                                        th:disabled="${r.status.name() != 'PENDING'}">
+                                    ✅ Qəbul et
+                                </button>
+                            </form>
+                            <form th:action="@{'/staff/reservations/' + ${r.id} + '/reject'}" method="post">
+                                <button type="submit" class="btn btn-danger btn-sm"
+                                        th:disabled="${r.status.name() != 'PENDING'}">
+                                    ❌ Rədd et
+                                </button>
+                            </form>
+                        </div>
                     </td>
                 </tr>
 
@@ -86,6 +94,7 @@
             </table>
         </div>
     </div>
+
 </main>
 </body>
 </html>
