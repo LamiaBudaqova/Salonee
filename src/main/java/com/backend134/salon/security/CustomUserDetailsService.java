@@ -25,36 +25,36 @@ public class CustomUserDetailsService implements UserDetailsService {
     @Override
     @Transactional
     public UserDetails loadUserByUsername(String email) throws UsernameNotFoundException {
-        // 🔹 Əvvəlcə User (admin və ya normal user) cədvəlində axtar
-        Optional<User> userOpt = userRepository.findByEmail(email);
-        if (userOpt.isPresent()) {
-            User user = userOpt.get();
-            return new org.springframework.security.core.userdetails.User(
-                    user.getEmail(),
-                    user.getPassword(),
-                    List.of(new SimpleGrantedAuthority(user.getRole().name()))
-            );
-        }
+        String lookup = email == null ? "" : email.trim().toLowerCase();
 
-        // 🔹 Tapılmadısa, Staff (usta) cədvəlində axtar
-        Optional<Staff> staffOpt = staffRepository.findByEmail(email);
+        // 🔹 Əvvəlcə STAFF cədvəlində axtar
+        Optional<Staff> staffOpt = staffRepository.findByEmail(lookup);
         if (staffOpt.isPresent()) {
             Staff staff = staffOpt.get();
 
-            // 🔹 Yalnız aktiv ustalar login ola bilsin
-            if (staff.getActive() != null && !staff.getActive()) {
+            if (Boolean.FALSE.equals(staff.getActive())) {
                 throw new UsernameNotFoundException("Staff is inactive");
             }
 
-            // 🔹 Staff üçün avtomatik rol təyin et
             return new org.springframework.security.core.userdetails.User(
-                    staff.getEmail(),
+                    staff.getEmail().trim().toLowerCase(),
                     staff.getPassword(),
                     List.of(new SimpleGrantedAuthority("ROLE_STAFF"))
             );
         }
 
-        // 🔹 Heç kim tapılmadı
+        // 🔹 Sonra USER cədvəlində axtar (Admin və ya normal user)
+        Optional<User> userOpt = userRepository.findByEmail(lookup);
+        if (userOpt.isPresent()) {
+            User user = userOpt.get();
+
+            return new org.springframework.security.core.userdetails.User(
+                    user.getEmail().trim().toLowerCase(),
+                    user.getPassword(),
+                    List.of(new SimpleGrantedAuthority(user.getRole().name()))
+            );
+        }
+
         throw new UsernameNotFoundException("User or Staff not found with email: " + email);
     }
 

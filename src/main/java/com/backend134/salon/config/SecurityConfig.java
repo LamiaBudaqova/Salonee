@@ -60,8 +60,8 @@ public class SecurityConfig {
                                 "/testimonial", "/testimonial/**",
                                 "/register", "/login"
                         ).permitAll()
-                        .requestMatchers("/admin/**").hasRole("ADMIN")
-                        .requestMatchers("/staff/**").hasRole("STAFF")
+                        .requestMatchers("/admin/**").hasAuthority("ROLE_ADMIN")
+                        .requestMatchers("/staff/**").hasAuthority("ROLE_STAFF")
 
                         .anyRequest().authenticated()
                 )

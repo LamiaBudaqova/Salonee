@@ -30,6 +30,7 @@ public class Staff {
 
     private String fullName;
     private String phone;
+    @Column(unique = true, nullable = false, length = 255)
     private String email;
     private String position; // 🔹 əlavə etdik — profil üçün görünəcək
     @Column(name = "image_url")
