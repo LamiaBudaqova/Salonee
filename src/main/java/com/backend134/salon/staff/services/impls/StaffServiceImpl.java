@@ -1,9 +1,9 @@
-package com.backend134.salon.services.impls;
+package com.backend134.salon.staff.services.impls;
 
-import com.backend134.salon.dtos.staff.StaffSimpleDto;
+import com.backend134.salon.staff.dtos.StaffSimpleDto;
 import com.backend134.salon.models.Staff;
-import com.backend134.salon.repositories.StaffRepository;
-import com.backend134.salon.services.StaffService;
+import com.backend134.salon.staff.repositories.StaffRepository;
+import com.backend134.salon.staff.services.StaffService;
 import lombok.RequiredArgsConstructor;
 import org.modelmapper.ModelMapper;
 import org.springframework.stereotype.Service;

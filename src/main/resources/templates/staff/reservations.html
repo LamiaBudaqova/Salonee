@@ -44,6 +44,7 @@
                     <th>Müştəri</th>
                     <th>Telefon</th>
                     <th>Status</th>
+                    <th>Əməliyyat</th> <!-- ✅ Yeni sütun -->
                 </tr>
                 </thead>
                 <tbody>
@@ -55,12 +56,29 @@
                     <td th:text="${r.customerName}"></td>
                     <td th:text="${r.customerPhone}"></td>
                     <td>
-                        <span th:text="${r.status}" class="badge bg-secondary"></span>
+            <span th:text="${r.status}"
+                  th:classappend="${r.status.name() == 'PENDING'} ? 'badge bg-warning'
+                                : ${r.status.name() == 'APPROVED'} ? 'badge bg-success'
+                                : ${r.status.name() == 'REJECTED'} ? 'badge bg-danger'
+                                : 'badge bg-secondary'"></span>
+                    </td>
+
+                    <!-- ✅ Yeni əməliyyat düymələri -->
+                    <td>
+                        <form th:action="@{'/staff/reservations/' + ${r.id} + '/approve'}" method="post" style="display:inline;">
+                            <button type="submit" class="btn btn-success btn-sm"
+                                    th:disabled="${r.status.name() != 'PENDING'}">Qəbul et</button>
+                        </form>
+
+                        <form th:action="@{'/staff/reservations/' + ${r.id} + '/reject'}" method="post" style="display:inline;">
+                            <button type="submit" class="btn btn-danger btn-sm"
+                                    th:disabled="${r.status.name() != 'PENDING'}">Rədd et</button>
+                        </form>
                     </td>
                 </tr>
 
                 <tr th:if="${#lists.isEmpty(reservations)}">
-                    <td colspan="7" class="text-center text-muted py-3">
+                    <td colspan="8" class="text-center text-muted py-3">
                         Rezervasiya yoxdur
                     </td>
                 </tr>

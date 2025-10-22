@@ -3,7 +3,7 @@ package com.backend134.salon.services.impls;
 import com.backend134.salon.dtos.salonservice.SalonServiceDto;
 import com.backend134.salon.models.SalonService;
 import com.backend134.salon.repositories.SalonServiceRepository;
-import com.backend134.salon.repositories.StaffRepository;
+import com.backend134.salon.staff.repositories.StaffRepository;
 import com.backend134.salon.services.SalonServiceService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;

@@ -1,7 +1,7 @@
-package com.backend134.salon.services;
+package com.backend134.salon.staff.services;
 
-import com.backend134.salon.dtos.staff.*;
 import com.backend134.salon.enums.ReservationStatus;
+import com.backend134.salon.staff.dtos.*;
 
 import java.util.List;
 import java.util.Optional;

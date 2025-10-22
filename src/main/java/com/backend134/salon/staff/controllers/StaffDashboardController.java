@@ -1,10 +1,10 @@
-package com.backend134.salon.controllers;
+package com.backend134.salon.staff.controllers;
 
-import com.backend134.salon.dtos.staff.StaffProfileUpdateDto;
-import com.backend134.salon.dtos.staff.StaffReservationFilterDto;
+import com.backend134.salon.staff.dtos.StaffProfileUpdateDto;
+import com.backend134.salon.staff.dtos.StaffReservationFilterDto;
 import com.backend134.salon.enums.ReservationStatus;
 import com.backend134.salon.services.BranchService;
-import com.backend134.salon.services.StaffDashboardService;
+import com.backend134.salon.staff.services.StaffDashboardService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.stereotype.Controller;

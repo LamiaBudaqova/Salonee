@@ -109,6 +109,14 @@
         <div class="modal-body text-center">
           <i class="bi bi-check-circle-fill text-success" style="font-size: 48px;"></i>
           <p class="mt-3 mb-0">Rezervasiyanız uğurla göndərildi!<br>Ən qısa zamanda sizinlə əlaqə saxlanılacaq.</p>
+
+          <!-- 🔹 Telegram yönləndirmə mesajı -->
+          <p class="mt-2">
+            Qəbul və ya rədd edildiyini öyrənmək üçün
+            <a href="https://t.me/lamiabeauty_bot" target="_blank" class="text-primary fw-bold">
+              @lamiabeauty_bot
+            </a> Telegram botuna yazın 💬
+          </p>
         </div>
         <div class="modal-footer justify-content-center">
           <button type="button" class="btn btn-success px-4" data-bs-dismiss="modal">Bağla</button>
@@ -185,7 +193,7 @@
         const modal = new bootstrap.Modal(document.getElementById('successModal'));
         modal.show();
         // 3 saniyə sonra avtomatik bağlansın
-        setTimeout(() => modal.hide(), 3000);
+        // setTimeout(() => modal.hide(), 3000);
       }
     });
   </script>

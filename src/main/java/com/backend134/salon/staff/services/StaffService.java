@@ -1,6 +1,6 @@
-package com.backend134.salon.services;
+package com.backend134.salon.staff.services;
 
-import com.backend134.salon.dtos.staff.StaffSimpleDto;
+import com.backend134.salon.staff.dtos.StaffSimpleDto;
 
 import java.util.List;
 

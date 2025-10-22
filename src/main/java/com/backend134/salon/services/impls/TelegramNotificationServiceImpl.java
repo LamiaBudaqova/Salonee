@@ -1,41 +1,47 @@
 package com.backend134.salon.services.impls;
 
 import com.backend134.salon.services.TelegramNotificationService;
-import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 import org.springframework.web.client.RestTemplate;
+import org.springframework.web.util.UriComponentsBuilder;
 
-import java.util.HashMap;
-import java.util.Map;
-
+@Slf4j
 @Service
-@RequiredArgsConstructor
 public class TelegramNotificationServiceImpl implements TelegramNotificationService {
 
     @Value("${telegram.bot.token}")
     private String botToken;
 
     @Value("${telegram.chat.id}")
-    private String chatId;
+    private String chatId; // Test üçün sabit, sonra dinamik olacaq
+
+    private final RestTemplate restTemplate = new RestTemplate();
 
     @Override
-    public void sendMessage(String message) {
+    public void sendTelegramMessage(String phone, String message) {
         try {
-            // ✅ 1. Telegram API endpoint
-            String url = "https://api.telegram.org/bot" + botToken + "/sendMessage";
+            // 🔹 Mesajı URL üçün təhlükəsiz şəkildə kodlaşdır
+            String encodedMessage = UriComponentsBuilder
+                    .fromPath("")
+                    .queryParam("text", message)
+                    .build()
+                    .encode()
+                    .toUriString()
+                    .replace("?text=", ""); // sadəcə text hissəsini saxlayırıq
 
-            // ✅ 2. Mesajın bədəni (JSON kimi göndəririk)
-            Map<String, String> body = new HashMap<>();
-            body.put("chat_id", chatId);
-            body.put("text", message);
+            // 🔹 Telegram API URL-i hazırlayırıq
+            String url = String.format(
+                    "https://api.telegram.org/bot%s/sendMessage?chat_id=%s&text=%s",
+                    botToken, chatId, encodedMessage
+            );
 
-            // ✅ 3. HTTP POST ilə göndəririk (artıq encode etmirik!)
-            new RestTemplate().postForObject(url, body, String.class);
+            restTemplate.getForObject(url, String.class);
+            log.info("✅ Telegram mesaj göndərildi (nömrə: {}): {}", phone, message);
 
-            System.out.println("✅ Telegram mesajı göndərildi: " + message);
         } catch (Exception e) {
-            System.err.println("❌ Telegram mesajı göndərilmədi: " + e.getMessage());
+            log.error("❌ Telegram mesaj göndərilmədi ({}): {}", phone, e.getMessage());
         }
     }
 }

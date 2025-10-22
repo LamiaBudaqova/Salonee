@@ -6,6 +6,7 @@ import com.backend134.salon.models.*;
 import com.backend134.salon.repositories.*;
 import com.backend134.salon.services.ReservationService;
 import com.backend134.salon.services.TelegramNotificationService;
+import com.backend134.salon.staff.repositories.StaffRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -56,4 +57,46 @@ public class ReservationServiceImpl implements ReservationService {
         return r.getId();
     }
 
+    @Override
+    @Transactional
+    public void approveReservation(Long id) {
+        Reservation reservation = reservationRepository.findById(id)
+                .orElseThrow(() -> new RuntimeException("Rezerv tapılmadı"));
+
+        reservation.setStatus(ReservationStatus.APPROVED);
+        reservationRepository.save(reservation);
+
+        // 🔹 Telegram mesajı göndər (əgər servisin varsa)
+        String message = String.format(
+                "Salam %s! 🌸\nSizin '%s' xidmətinə rezervasiyanız qəbul olundu ✅\n📅 Tarix: %s\n⏰ Saat: %s\nSizi gözləyirik 💇‍♀️",
+                reservation.getCustomerName(),
+                reservation.getService().getName(),
+                reservation.getDate(),
+                reservation.getStartTime()
+        );
+
+        telegramNotificationService.sendTelegramMessage(
+                reservation.getCustomerPhone(), message
+        );
+    }
+
+    @Override
+    @Transactional
+    public void rejectReservation(Long id) {
+        Reservation reservation = reservationRepository.findById(id)
+                .orElseThrow(() -> new RuntimeException("Rezerv tapılmadı"));
+
+        reservation.setStatus(ReservationStatus.REJECTED);
+        reservationRepository.save(reservation);
+
+        String message = String.format(
+                "Salam %s! 😔\nTəəssüf ki, '%s' xidmətinə rezervasiyanız qəbul edilmədi.\nXahiş edirik başqa tarix seçəsiniz 💅",
+                reservation.getCustomerName(),
+                reservation.getService().getName()
+        );
+
+        telegramNotificationService.sendTelegramMessage(
+                reservation.getCustomerPhone(), message
+        );
+    }
 }

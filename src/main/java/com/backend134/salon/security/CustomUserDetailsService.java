@@ -3,7 +3,7 @@ package com.backend134.salon.security;
 import com.backend134.salon.models.User;
 import com.backend134.salon.models.Staff;
 import com.backend134.salon.repositories.UserRepository;
-import com.backend134.salon.repositories.StaffRepository;
+import com.backend134.salon.staff.repositories.StaffRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;

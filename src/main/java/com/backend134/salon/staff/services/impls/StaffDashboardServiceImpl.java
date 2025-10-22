@@ -1,14 +1,14 @@
-package com.backend134.salon.services.impls;
+package com.backend134.salon.staff.services.impls;
 
-import com.backend134.salon.dtos.staff.*;
 import com.backend134.salon.enums.ReservationStatus;
 import com.backend134.salon.models.Branch;
 import com.backend134.salon.models.Reservation;
 import com.backend134.salon.models.Staff;
 import com.backend134.salon.repositories.ReservationRepository;
-import com.backend134.salon.repositories.StaffRepository;
-import com.backend134.salon.services.StaffDashboardService;
+import com.backend134.salon.staff.repositories.StaffRepository;
+import com.backend134.salon.staff.services.StaffDashboardService;
 import com.backend134.salon.services.TelegramNotificationService;
+import com.backend134.salon.staff.dtos.*;
 import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
 import org.modelmapper.ModelMapper;
@@ -81,7 +81,10 @@ import java.util.stream.Collectors;
 
         // 🔹 Əgər mesaj varsa, Telegrama göndər
         if (message != null) {
-            telegramNotificationService.sendMessage(message);
+            telegramNotificationService.sendTelegramMessage(
+                    reservation.getCustomerPhone(),
+                    message
+            );
         }
     }
 

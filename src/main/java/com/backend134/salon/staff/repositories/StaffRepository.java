@@ -1,4 +1,4 @@
-package com.backend134.salon.repositories;
+package com.backend134.salon.staff.repositories;
 
 import com.backend134.salon.models.SalonService;
 import com.backend134.salon.models.Staff;

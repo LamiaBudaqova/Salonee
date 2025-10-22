@@ -7,7 +7,7 @@ import com.backend134.salon.admin.services.AdminStaffService;
 import com.backend134.salon.models.Branch;
 import com.backend134.salon.models.Staff;
 import com.backend134.salon.repositories.BranchRepository;
-import com.backend134.salon.repositories.StaffRepository;
+import com.backend134.salon.staff.repositories.StaffRepository;
 import lombok.RequiredArgsConstructor;
 import org.modelmapper.ModelMapper;
 import org.springframework.security.crypto.password.PasswordEncoder;

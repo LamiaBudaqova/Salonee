@@ -1,6 +1,5 @@
 package com.backend134.salon.repositories;
 
-import com.backend134.salon.dtos.staff.StaffReservationDto;
 import com.backend134.salon.enums.ReservationStatus;
 import com.backend134.salon.models.Reservation;
 import org.springframework.data.jpa.repository.JpaRepository;

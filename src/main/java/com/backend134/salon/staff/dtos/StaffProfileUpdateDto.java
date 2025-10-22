@@ -1,4 +1,4 @@
-package com.backend134.salon.dtos.staff;
+package com.backend134.salon.staff.dtos;
 
 import lombok.AllArgsConstructor;
 import lombok.Getter;
