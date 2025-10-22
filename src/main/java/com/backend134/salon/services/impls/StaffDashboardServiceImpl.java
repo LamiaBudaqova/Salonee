@@ -8,6 +8,7 @@ import com.backend134.salon.models.Staff;
 import com.backend134.salon.repositories.ReservationRepository;
 import com.backend134.salon.repositories.StaffRepository;
 import com.backend134.salon.services.StaffDashboardService;
+import com.backend134.salon.services.TelegramNotificationService;
 import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
 import org.modelmapper.ModelMapper;
@@ -24,6 +25,8 @@ import java.util.stream.Collectors;
     private final ReservationRepository reservationRepository;
     private final ModelMapper modelMapper;
     private final StaffRepository staffRepository;
+    private final TelegramNotificationService telegramNotificationService;
+
 
     @Override
     public StaffDashboardStatsDto getStatsForStaff(Long staffId) {
@@ -44,25 +47,70 @@ import java.util.stream.Collectors;
     @Override
     @Transactional
     public void updateReservationStatus(Long reservationId, ReservationStatus status) {
-        reservationRepository.updateStatus(reservationId, status);
+        var reservation = reservationRepository.findById(reservationId)
+                .orElseThrow(() -> new RuntimeException("Rezerv tapılmadı"));
+
+        reservation.setStatus(status);
+        reservationRepository.save(reservation);
+
+        // 🔹 Telegram mesajı yalnız status dəyişəndə göndərilir
+        String message = null;
+
+        if (status == ReservationStatus.APPROVED) {
+            message = """
+                ✅ Hörmətli %s,
+                Sizin rezervasiyanız təsdiqləndi!
+                📅 Tarix: %s %s
+                💇‍♀️ Usta: %s
+                💅 Xidmət: %s
+                Sizi salonumuzda gözləyirik 🌸
+                """.formatted(
+                    reservation.getCustomerName(),
+                    reservation.getDate(),
+                    reservation.getStartTime(),
+                    reservation.getStaff().getFullName(),
+                    reservation.getService().getName()
+            );
+        } else if (status == ReservationStatus.REJECTED) {
+            message = """
+                ❌ Hörmətli %s,
+                Təəssüf ki, rezervasiyanız təsdiqlənmədi.
+                Əlavə məlumat üçün bizimlə əlaqə saxlayın 📞
+                """.formatted(reservation.getCustomerName());
+        }
+
+        // 🔹 Əgər mesaj varsa, Telegrama göndər
+        if (message != null) {
+            telegramNotificationService.sendMessage(message);
+        }
     }
+
 
     @Override
     public Optional<StaffProfileDto> getProfileByUsername(String username) {
-        return staffRepository.findByEmail(username)
-                .map(staff -> {
-                    StaffProfileDto dto = new StaffProfileDto();
-                    dto.setId(staff.getId()); // 🔹 Əlavə et
-                    dto.setFullName(staff.getFullName());
-                    dto.setPhone(staff.getPhone());
-                    dto.setEmail(staff.getEmail());
-                    dto.setPosition(staff.getPosition());
-                    dto.setImageUrl(staff.getImageUrl());
-                    if (staff.getBranch() != null)
-                        dto.setBranchName(staff.getBranch().getName());
-                    return dto;
-                });
+        // Əvvəl email ilə axtar
+        Optional<Staff> staffOpt = staffRepository.findByEmail(username);
+
+        // Əgər email-lə tapılmadısa, username ilə axtar
+        if (staffOpt.isEmpty()) {
+            staffOpt = staffRepository.findByUsername(username);
+        }
+
+        // Əgər tapdısa DTO-ya çevir
+        return staffOpt.map(staff -> {
+            StaffProfileDto dto = new StaffProfileDto();
+            dto.setId(staff.getId());
+            dto.setFullName(staff.getFullName());
+            dto.setPhone(staff.getPhone());
+            dto.setEmail(staff.getEmail());
+            dto.setPosition(staff.getPosition());
+            dto.setImageUrl(staff.getImageUrl());
+            if (staff.getBranch() != null)
+                dto.setBranchName(staff.getBranch().getName());
+            return dto;
+        });
     }
+
 
 
     @Override

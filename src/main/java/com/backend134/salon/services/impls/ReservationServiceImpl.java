@@ -33,11 +33,9 @@ public class ReservationServiceImpl implements ReservationService {
 
         LocalTime end = dto.getStartTime().plusMinutes(30);
 
-        // ✅ Burada artıq findConflicts mövcuddur
         var conflicts = reservationRepository.findConflicts(
                 dto.getDate(), dto.getStartTime(), end, staff != null ? staff.getId() : null
         );
-
         if (!conflicts.isEmpty()) {
             throw new IllegalStateException("Bu vaxt artıq doludur!");
         }
@@ -54,15 +52,8 @@ public class ReservationServiceImpl implements ReservationService {
         r.setNotes(dto.getNotes());
 
         reservationRepository.save(r);
-        // ✅ Telegram bildirişi
-        telegramNotificationService.sendMessage(
-                "💅 Yeni rezervasiya!\n" +
-                        "👩 Müştəri: " + dto.getCustomerName() + "\n" +
-                        "📞 Telefon: " + dto.getCustomerPhone() + "\n" +
-                        "🧖‍♀️ Xidmət: " + service.getName() + "\n" +
-                        "👩‍🎤 Usta: " + (staff != null ? staff.getFullName() : "Seçilməyib") + "\n" +
-                        "📅 Tarix: " + dto.getDate() + " " + dto.getStartTime()
-        );
+
         return r.getId();
     }
+
 }

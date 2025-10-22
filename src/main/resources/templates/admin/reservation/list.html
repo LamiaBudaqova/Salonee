@@ -6,19 +6,20 @@
 
 <main layout:fragment="content" class="container-fluid py-4">
 
-  <!-- Başlıq və mesaj -->
+  <!-- 🔹 Başlıq və uğur mesajı -->
   <div class="d-flex justify-content-between align-items-center mb-4">
     <h4 class="mb-0">Rezervasiyalar</h4>
-    <div th:if="${success}" class="alert alert-success py-1 px-3 mb-0" th:text="${success}"></div>
+    <div th:if="${success}" class="alert alert-success py-1 px-3 mb-0 rounded-3 shadow-sm"
+         th:text="${success}"></div>
   </div>
 
-  <!-- Kart -->
-  <div class="card shadow-sm">
+  <!-- 🔹 Rezervasiyalar Cədvəli -->
+  <div class="card shadow-sm border-0">
     <div class="card-body table-responsive">
-      <table class="table table-bordered table-hover align-middle text-center mb-0">
+      <table class="table table-striped table-hover align-middle text-center mb-0">
         <thead class="table-light">
         <tr>
-          <th>ID</th>
+          <th>#</th>
           <th>Xidmət</th>
           <th>Usta</th>
           <th>Tarix</th>
@@ -31,44 +32,52 @@
         </tr>
         </thead>
         <tbody>
-        <tr th:each="r : ${reservations}">
-          <td th:text="${r.id}"></td>
-          <td th:text="${r.service.name}"></td>
+        <tr th:each="r, iter : ${reservations}">
+          <td th:text="${iter.count}"></td>
+          <td th:text="${r.service != null ? r.service.name : '-'}"></td>
           <td th:text="${r.staff != null ? r.staff.fullName : '—'}"></td>
-          <td th:text="${r.date}"></td>
+          <td th:text="${#temporals.format(r.date, 'dd.MM.yyyy')}"></td>
           <td th:text="${#temporals.format(r.startTime, 'HH:mm')}"></td>
           <td th:text="${r.customerName}"></td>
           <td th:text="${r.customerPhone}"></td>
 
-          <!-- Status və qeyd formu -->
+          <!-- 🔹 Status Badge -->
           <td>
-            <span th:switch="${r.status}">
-              <span th:case="'PENDING'" class="badge bg-warning text-dark">Gözləmədə</span>
-              <span th:case="'APPROVED'" class="badge bg-success">Təsdiqlənib</span>
-              <span th:case="'REJECTED'" class="badge bg-danger">Rədd edilib</span>
-              <span th:case="'DONE'" class="badge bg-primary">Tamamlanıb</span>
-              <span th:case="'CANCELLED'" class="badge bg-secondary">Ləğv edilib</span>
-              <span th:case="*"
-                    class="badge bg-light text-dark"
-                    th:text="${r.status}"></span>
-            </span>
+                        <span th:switch="${r.status}">
+                          <span th:case="'PENDING'" class="badge bg-warning text-dark px-3 py-2">Gözləmədə</span>
+                          <span th:case="'APPROVED'" class="badge bg-success px-3 py-2">Təsdiqlənib</span>
+                          <span th:case="'REJECTED'" class="badge bg-danger px-3 py-2">Rədd edilib</span>
+                          <span th:case="'DONE'" class="badge bg-primary px-3 py-2">Tamamlanıb</span>
+                          <span th:case="'CANCELLED'" class="badge bg-secondary px-3 py-2">Ləğv edilib</span>
+                          <span th:case="*" class="badge bg-light text-dark px-3 py-2" th:text="${r.status}"></span>
+                        </span>
           </td>
 
+          <!-- 🔹 Qeyd -->
           <td th:text="${r.notes != null ? r.notes : '-'}"></td>
 
+          <!-- 🔹 Status və qeyd formu -->
           <td>
-            <form th:action="@{/admin/reservations/update}" method="post" class="d-flex align-items-center">
+            <form th:action="@{/admin/reservations/update}" method="post" class="d-flex align-items-center justify-content-center gap-2">
               <input type="hidden" name="id" th:value="${r.id}">
-              <select name="status" class="form-select form-select-sm me-2">
+              <select name="status" class="form-select form-select-sm w-auto">
                 <option th:each="s : ${statuses}"
                         th:value="${s}"
                         th:text="${s}"
                         th:selected="${s == r.status}"></option>
               </select>
-              <input type="text" name="notes" placeholder="Qeyd (istəyə görə)" class="form-control form-control-sm me-2" style="width: 150px;">
-              <button type="submit" class="btn btn-sm btn-primary">Yenilə</button>
+              <input type="text" name="notes" placeholder="Qeyd (istəyə görə)"
+                     class="form-control form-control-sm w-auto" style="width: 150px;">
+              <button type="submit" class="btn btn-sm btn-outline-primary px-3">
+                <i class="bi bi-check2-circle"></i> Yenilə
+              </button>
             </form>
           </td>
+        </tr>
+
+        <!-- 🔹 Əgər rezervasiya yoxdursa -->
+        <tr th:if="${#lists.isEmpty(reservations)}">
+          <td colspan="10" class="text-muted py-4">Heç bir rezervasiya tapılmadı.</td>
         </tr>
         </tbody>
       </table>

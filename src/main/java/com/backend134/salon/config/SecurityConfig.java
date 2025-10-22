@@ -5,10 +5,12 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.http.HttpMethod;
+import org.springframework.security.authentication.AuthenticationManager;
+import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
+import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.SecurityFilterChain;
-import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 
 @Configuration
 @RequiredArgsConstructor
@@ -21,18 +23,29 @@ public class SecurityConfig {
         return new BCryptPasswordEncoder();
     }
 
+    // ✅ YENİ versiya (and() yoxdur artıq)
+    @Bean
+    public AuthenticationManager authenticationManager(HttpSecurity http,
+                                                       PasswordEncoder passwordEncoder,
+                                                       CustomUserDetailsService userDetailsService)
+            throws Exception {
+
+        AuthenticationManagerBuilder authBuilder =
+                http.getSharedObject(AuthenticationManagerBuilder.class);
+
+        authBuilder
+                .userDetailsService(userDetailsService)
+                .passwordEncoder(passwordEncoder);
+
+        return authBuilder.build();
+    }
+
     @Bean
     public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
 
-        http
-                .csrf(csrf -> csrf.disable())
+        http.csrf(csrf -> csrf.disable())
                 .authorizeHttpRequests(auth -> auth
-
-                        // ✅ 1. Rezervasiya — login olmadan GET və POST icazə
-                        .requestMatchers("/booking", "/booking/**").permitAll()
-                        .requestMatchers(HttpMethod.POST, "/booking").permitAll()
-
-                        // ✅ 2. Statik resurslar (ön və admin)
+                        .requestMatchers("/booking/**").permitAll()
                         .requestMatchers(
                                 "/css/**", "/js/**", "/img/**", "/images/**",
                                 "/uploads/**",
@@ -40,8 +53,6 @@ public class SecurityConfig {
                                 "/admin/css/**", "/admin/js/**",
                                 "/staff/css/**", "/staff/js/**"
                         ).permitAll()
-
-                        // ✅ 3. Açıq səhifələr (login tələb etmir)
                         .requestMatchers(
                                 "/", "/about", "/service/**", "/services/**",
                                 "/category/**", "/price", "/gallery/**", "/team",
@@ -49,16 +60,10 @@ public class SecurityConfig {
                                 "/testimonial", "/testimonial/**",
                                 "/register", "/login"
                         ).permitAll()
-
-                        // ✅ 4. Admin və staff üçün qorunan routelar
                         .requestMatchers("/admin/**").hasRole("ADMIN")
                         .requestMatchers("/staff/**").hasAnyRole("STAFF", "ADMIN")
-
-                        // ✅ 5. Qalan hər şey login tələb edir
                         .anyRequest().authenticated()
                 )
-
-                // ✅ Login formu
                 .formLogin(form -> form
                         .loginPage("/login")
                         .loginProcessingUrl("/login")
@@ -75,11 +80,11 @@ public class SecurityConfig {
                                 response.sendRedirect("/admin");
                             } else if (isStaff) {
                                 var staffOpt = userDetailsService.findStaffByUsername(username);
-                                if (staffOpt.isPresent()) {
+                                if (staffOpt.isPresent() && Boolean.TRUE.equals(staffOpt.get().getActive())) {
                                     var staff = staffOpt.get();
                                     response.sendRedirect("/staff/dashboard/" + staff.getId());
                                 } else {
-                                    response.sendRedirect("/");
+                                    response.sendRedirect("/login?error=inactive");
                                 }
                             } else {
                                 response.sendRedirect("/");
@@ -88,17 +93,13 @@ public class SecurityConfig {
                         .failureUrl("/login?error")
                         .permitAll()
                 )
-
-                // ✅ Logout
                 .logout(logout -> logout
                         .logoutUrl("/logout")
                         .logoutSuccessUrl("/")
                         .permitAll()
                 )
-
                 .exceptionHandling(ex -> ex.accessDeniedPage("/error-403"));
 
         return http.build();
     }
 }
-

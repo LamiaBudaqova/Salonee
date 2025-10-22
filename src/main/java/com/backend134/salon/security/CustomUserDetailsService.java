@@ -5,12 +5,12 @@ import com.backend134.salon.models.Staff;
 import com.backend134.salon.repositories.UserRepository;
 import com.backend134.salon.repositories.StaffRepository;
 import lombok.RequiredArgsConstructor;
-import org.springframework.stereotype.Service;
-import org.springframework.transaction.annotation.Transactional;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
+import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 import java.util.Optional;
@@ -46,10 +46,11 @@ public class CustomUserDetailsService implements UserDetailsService {
                 throw new UsernameNotFoundException("Staff is inactive");
             }
 
+            // 🔹 Staff üçün avtomatik rol təyin et
             return new org.springframework.security.core.userdetails.User(
                     staff.getEmail(),
                     staff.getPassword(),
-                    List.of(new SimpleGrantedAuthority(staff.getRole().name()))
+                    List.of(new SimpleGrantedAuthority("ROLE_STAFF"))
             );
         }
 
