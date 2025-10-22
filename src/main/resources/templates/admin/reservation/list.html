@@ -34,8 +34,8 @@
         <tbody>
         <tr th:each="r, iter : ${reservations}">
           <td th:text="${iter.count}"></td>
-          <td th:text="${r.service != null ? r.service.name : '-'}"></td>
-          <td th:text="${r.staff != null ? r.staff.fullName : '—'}"></td>
+          <td th:text="${r.serviceName != null ? r.serviceName : '-'}"></td>
+          <td th:text="${r.staffName != null ? r.staffName : '—'}"></td>
           <td th:text="${#temporals.format(r.date, 'dd.MM.yyyy')}"></td>
           <td th:text="${#temporals.format(r.startTime, 'HH:mm')}"></td>
           <td th:text="${r.customerName}"></td>
@@ -60,14 +60,14 @@
           <td>
             <form th:action="@{/admin/reservations/update}" method="post" class="d-flex align-items-center justify-content-center gap-2">
               <input type="hidden" name="id" th:value="${r.id}">
-              <select name="status" class="form-select form-select-sm w-auto">
-                <option th:each="s : ${statuses}"
-                        th:value="${s}"
-                        th:text="${s}"
-                        th:selected="${s == r.status}"></option>
-              </select>
-              <input type="text" name="notes" placeholder="Qeyd (istəyə görə)"
-                     class="form-control form-control-sm w-auto" style="width: 150px;">
+              <span th:switch="${r.status}">
+  <span th:case="'PENDING'" class="badge bg-warning text-dark px-3 py-2">Gözləmədə</span>
+  <span th:case="'APPROVED'" class="badge bg-success px-3 py-2">Təsdiqlənib</span>
+  <span th:case="'REJECTED'" class="badge bg-danger px-3 py-2">Rədd edilib</span>
+  <span th:case="'DONE'" class="badge bg-primary px-3 py-2">Tamamlanıb</span>
+  <span th:case="'CANCELLED'" class="badge bg-secondary px-3 py-2">Ləğv edilib</span>
+</span>
+
               <button type="submit" class="btn btn-sm btn-outline-primary px-3">
                 <i class="bi bi-check2-circle"></i> Yenilə
               </button>

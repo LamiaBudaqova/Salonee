@@ -29,19 +29,21 @@ public class AuthController {
     @PostMapping("/register")
     public String register(@ModelAttribute UserRegisterDto registerDto,
                            HttpServletRequest request) {
+        // ✅ 1. İstifadəçini qeydiyyatdan keçirdirik
         boolean result = userService.register(registerDto);
 
         if (result) {
-            String continueParam = request.getParameter("continue");
-            if (continueParam != null && !continueParam.isBlank()) {
-                return "redirect:/login?success&continue=" + continueParam;
+            try {
+                // ✅ 2. Uğurlu qeydiyyatdan sonra avtomatik login edirik
+                request.login(registerDto.getEmail(), registerDto.getPassword());
+
+                // ✅ 3. Uğurlu login sonra ana səhifəyə yönləndiririk
+                return "redirect:/";
+            } catch (Exception e) {
+                e.printStackTrace();
+                return "redirect:/login?autoLoginError";
             }
-            return "redirect:/login?success";
         } else {
-            String continueParam = request.getParameter("continue");
-            if (continueParam != null && !continueParam.isBlank()) {
-                return "redirect:/register?error&continue=" + continueParam;
-            }
             return "redirect:/register?error";
         }
     }
