@@ -21,4 +21,5 @@ public class StaffReservationDto {
     private String customerName;
     private String customerPhone;
     private ReservationStatus status; // rezervasiyanın veziyyeti (PENDING, APPROVED, DONE)
+    private String notes;
 }

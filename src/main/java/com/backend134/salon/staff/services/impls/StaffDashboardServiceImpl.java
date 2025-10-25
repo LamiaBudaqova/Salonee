@@ -40,7 +40,11 @@ import java.util.stream.Collectors;
     public List<StaffReservationDto> getReservationsForStaff(Long staffId) {
         return reservationRepository.findByStaff_Id(staffId)
                 .stream()
-                .map(r -> modelMapper.map(r, StaffReservationDto.class))
+                .map(r -> {
+                    StaffReservationDto dto = modelMapper.map(r, StaffReservationDto.class);
+                    dto.setNotes(r.getNotes()); // 🔹 Əlavə qeyd (note) əlavə olundu
+                    return dto;
+                })
                 .collect(Collectors.toList());
     }
 
@@ -191,7 +195,11 @@ import java.util.stream.Collectors;
         }
 
         return list.stream()
-                .map(r -> modelMapper.map(r, StaffReservationDto.class))
+                .map(r -> {
+                    StaffReservationDto dto = modelMapper.map(r, StaffReservationDto.class);
+                    dto.setNotes(r.getNotes()); // 🔹 Əlavə qeyd (note) əlavə olundu
+                    return dto;
+                })
                 .collect(Collectors.toList());
     }
 

@@ -34,6 +34,7 @@ public class Reservation {
     private LocalTime endTime;
 
     @Enumerated(EnumType.STRING)
+    @Column(nullable = false)
     private ReservationStatus status = ReservationStatus.PENDING;
 
     private String customerName;
