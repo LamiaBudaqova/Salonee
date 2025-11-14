@@ -27,7 +27,7 @@ public class CustomUserDetailsService implements UserDetailsService {
     public UserDetails loadUserByUsername(String email) throws UsernameNotFoundException {
         String lookup = email == null ? "" : email.trim().toLowerCase();
 
-        // 🔹 Əvvəlcə STAFF cədvəlində axtar
+        // evvelce STAFF cedvelinde axtar
         Optional<Staff> staffOpt = staffRepository.findByEmail(lookup);
         if (staffOpt.isPresent()) {
             Staff staff = staffOpt.get();
@@ -43,7 +43,7 @@ public class CustomUserDetailsService implements UserDetailsService {
             );
         }
 
-        // 🔹 Sonra USER cədvəlində axtar (Admin və ya normal user)
+        // sonra USER cedvelinde axtar (admin ve ya normal user)
         Optional<User> userOpt = userRepository.findByEmail(lookup);
         if (userOpt.isPresent()) {
             User user = userOpt.get();
@@ -58,7 +58,7 @@ public class CustomUserDetailsService implements UserDetailsService {
         throw new UsernameNotFoundException("User or Staff not found with email: " + email);
     }
 
-    // 🔹 Staff redirect üçün köməkçi metod
+    // staff redirect üçün komekci metod
     public Optional<Staff> findStaffByUsername(String username) {
         return staffRepository.findByEmail(username);
     }

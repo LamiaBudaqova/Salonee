@@ -25,6 +25,8 @@ public class SalonService {
     private String image;       // xidmət şəkili
 
     private String extraInfo;
+    @Column(nullable = false)
+    private Double price;
 
     @ManyToOne
     @JoinColumn(name = "category_id")

@@ -44,4 +44,6 @@ public class Reservation {
     private String notes;
 
     private LocalDateTime createdAt = LocalDateTime.now();
+    @ManyToOne
+    private User user;
 }

@@ -25,5 +25,7 @@ public class User {
     private String password;
 
     @Enumerated(EnumType.STRING)
-    private Role role; // enum kimi sadə sahə
+    private Role role;
+    @Column(nullable = false)
+    private Double cashbackBalance = 0.0;
 }
