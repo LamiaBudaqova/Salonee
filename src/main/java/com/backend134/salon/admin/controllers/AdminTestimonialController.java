@@ -1,6 +1,5 @@
 package com.backend134.salon.admin.controllers;
 
-import com.backend134.salon.admin.dtos.AdminPriceCreateDto;
 import com.backend134.salon.admin.dtos.AdminTestimonialCreateDto;
 import com.backend134.salon.admin.dtos.AdminTestimonialUpdateDto;
 import com.backend134.salon.admin.services.AdminTestimonialService;
@@ -24,7 +23,7 @@ public class AdminTestimonialController {
 
     @GetMapping("/create")
     public String createForm(Model model){
-        model.addAttribute("testimonial", new AdminPriceCreateDto());
+        model.addAttribute("testimonial", new AdminTestimonialCreateDto());
         return "admin/testimonial/create";
     }
 

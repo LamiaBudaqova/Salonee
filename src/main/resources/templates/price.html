@@ -31,11 +31,11 @@
             <div class="col-lg-8 mx-auto">
                 <div class="list-group">
 
-                    <!-- Burda DB-dən gələn qiymətlər -->
-                    <div th:each="price : ${prices}"
+                    <!-- Xidmətlər cədvəlindən qiymətlər və adlar -->
+                    <div th:each="service : ${services}"
                          class="list-group-item d-flex justify-content-between align-items-center border-0 border-bottom py-3">
-                        <span th:text="${price.serviceName}">Xidmət adı</span>
-                        <strong th:text="${price.amount + ' AZN'}">Qiymət</strong>
+                        <span th:text="${service.name}">Xidmət adı</span>
+                        <strong th:text="${service.price} + ' AZN'">Qiymət</strong>
                     </div>
 
                 </div>

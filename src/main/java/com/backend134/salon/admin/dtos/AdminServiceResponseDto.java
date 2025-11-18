@@ -17,4 +17,5 @@ public class AdminServiceResponseDto {
     private String extraInfo;
     private String categoryName;
     private Long categoryId;
+    private Double price;
 }

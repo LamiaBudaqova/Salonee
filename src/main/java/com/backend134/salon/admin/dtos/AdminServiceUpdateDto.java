@@ -16,4 +16,5 @@ public class AdminServiceUpdateDto {
     private String image;
     private String extraInfo;
     private Long categoryId;
+    private Double price;
 }

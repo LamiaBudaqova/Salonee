@@ -15,4 +15,5 @@ public class AdminServiceCreateDto {
     private String image;
     private String extraInfo;
     private Long categoryId;
+    private Double price;
 }

@@ -17,19 +17,27 @@
             <th>#</th>
             <th>Ad</th>
             <th>Kateqoriya</th>
+            <th>Qiymət</th>
             <th>Əlavə Məlumat</th>
             <th>Əməliyyatlar</th>
         </tr>
         </thead>
+
         <tbody>
         <tr th:each="s, iter : ${services}">
             <td th:text="${iter.index + 1}"></td>
             <td th:text="${s.name}"></td>
             <td th:text="${s.categoryName}"></td>
+
+            <!-- ⭐ PRICE GÖRÜNÜR -->
+            <td th:text="${s.price} + ' ₼'"></td>
+
             <td th:text="${s.extraInfo}"></td>
+
             <td>
                 <a th:href="@{'/admin/services/edit/' + ${s.id}}" class="btn btn-sm btn-warning">Redaktə</a>
-                <a th:href="@{'/admin/services/delete/' + ${s.id}}" class="btn btn-sm btn-danger"
+                <a th:href="@{'/admin/services/delete/' + ${s.id}}"
+                   class="btn btn-sm btn-danger"
                    onclick="return confirm('Silmək istədiyinə əminsən?')">Sil</a>
             </td>
         </tr>

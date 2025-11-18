@@ -16,7 +16,6 @@ public class HomeController {
     private final GalleryImageService galleryImageService;
     private final BlogService blogService;
     private final HeroService heroService;
-    private final PriceService priceService;
     private final TeamTextService teamTextService;
     private final TeamMemberService teamMemberService;
     private final TestimonialService testimonialService;
@@ -30,8 +29,12 @@ public class HomeController {
         model.addAttribute("navCategories", categoryService.getAllCategories());
         model.addAttribute("blogs", blogService.getLatestPosts());
         model.addAttribute("hero", heroService.getHero());
-        model.addAttribute("prices", priceService.getHomePrices()); //  ilk 5 qiymət
-        model.addAttribute("galleryImages", galleryImageService.getLimitedImages(6));
+        model.addAttribute("prices",
+                salonServiceService.getAll()
+                        .stream()
+                        .limit(5)
+                        .toList()
+        );        model.addAttribute("galleryImages", galleryImageService.getLimitedImages(6));
         model.addAttribute("teamText", teamTextService.getText());
         model.addAttribute("teamMembers", teamMemberService.getFirstFourMembers());
         model.addAttribute("testimonials", testimonialService.getLatestFiveTestimonials()); // ✅ yalnız son 5

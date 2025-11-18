@@ -47,9 +47,13 @@ public class AdminServiceServiceImpl implements AdminServiceService {
     @Override
     public void create(AdminServiceCreateDto dto) {
         SalonService service = modelMapper.map(dto, SalonService.class);
+
+        service.setPrice(dto.getPrice());
+
         Category category = categoryRepository.findById(dto.getCategoryId())
                 .orElseThrow(() -> new RuntimeException("Kateqoriya tapılmadı"));
         service.setCategory(category);
+
         salonServiceRepository.save(service);
     }
 
@@ -63,12 +67,15 @@ public class AdminServiceServiceImpl implements AdminServiceService {
         service.setImage(dto.getImage());
         service.setExtraInfo(dto.getExtraInfo());
 
+        service.setPrice(dto.getPrice());
+
         Category category = categoryRepository.findById(dto.getCategoryId())
                 .orElseThrow(() -> new RuntimeException("Kateqoriya tapılmadı"));
         service.setCategory(category);
 
         salonServiceRepository.save(service);
     }
+
 
     @Override
     public void delete(Long id) {

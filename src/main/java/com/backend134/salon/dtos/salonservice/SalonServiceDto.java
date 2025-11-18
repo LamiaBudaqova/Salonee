@@ -16,4 +16,5 @@ public class SalonServiceDto {
     private String image;
     private String categoryName;
     private String extraInfo;
+    private Double price;
 }
