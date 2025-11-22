@@ -17,14 +17,12 @@ public class AdminTeamMemberController {
     private final AdminTeamMemberService adminTeamMemberService;
     private final BranchService branchService;
 
-    // 🔹 1. Siyahı (bütün komanda üzvləri)
     @GetMapping
     public String list(Model model) {
         model.addAttribute("members", adminTeamMemberService.getAll());
         return "admin/team/list";
     }
 
-    // 🔹 2. Create formu
     @GetMapping("/create")
     public String createForm(Model model) {
         model.addAttribute("member", new AdminTeamMemberCreateDto());
@@ -32,14 +30,12 @@ public class AdminTeamMemberController {
         return "admin/team/create";
     }
 
-    // 🔹 3. Yeni komanda üzvü yarat
     @PostMapping("/create")
     public String create(@ModelAttribute AdminTeamMemberCreateDto dto) {
         adminTeamMemberService.create(dto);
         return "redirect:/admin/team-members";
     }
 
-    // 🔹 4. Edit formu
     @GetMapping("/edit/{id}")
     public String editForm(@PathVariable Long id, Model model) {
         var existing = adminTeamMemberService.getById(id);
@@ -58,7 +54,6 @@ public class AdminTeamMemberController {
         return "admin/team/edit";
     }
 
-    // 🔹 5. Mövcud komanda üzvünü yenilə
     @PostMapping("/edit/{id}")
     public String update(@PathVariable Long id,
                          @ModelAttribute AdminTeamMemberUpdateDto dto) {
@@ -66,7 +61,6 @@ public class AdminTeamMemberController {
         return "redirect:/admin/team-members";
     }
 
-    // 🔹 6. Üzvü sil
     @GetMapping("/delete/{id}")
     public String delete(@PathVariable Long id) {
         adminTeamMemberService.delete(id);

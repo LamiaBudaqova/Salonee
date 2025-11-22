@@ -28,6 +28,6 @@ public class TestimonialController {
     @PostMapping("/testimonial")
     public String createTestimonial(@ModelAttribute("testimonialForm") TestimonialCreateDto dto) {
         testimonialService.createTestimonial(dto);
-        return "redirect:/testimonial"; // redirect edirik ki səhifə yenilənsin
+        return "redirect:/testimonial"; // redirect edirik ki səhife yenilənsin
     }
 }

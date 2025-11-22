@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="az"
+      xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="~{user/layout}">
+
+<main layout:fragment="content">
+
+    <div class="page-heading">
+        <h3>Profil redaktə</h3>
+    </div>
+
+    <div class="card shadow-sm">
+        <div class="card-body">
+
+            <form th:action="@{/user/profile/edit}" method="post">
+
+                <div class="mb-3">
+                    <label class="form-label">Ad</label>
+                    <input type="text" class="form-control" name="name" th:value="${user.name}">
+                </div>
+
+                <div class="mb-3">
+                    <label class="form-label">Soyad</label>
+                    <input type="text" class="form-control" name="surname" th:value="${user.surname}">
+                </div>
+
+                <div class="mb-3">
+                    <label class="form-label">Email</label>
+                    <input type="email" class="form-control" name="email" th:value="${user.email}">
+                </div>
+
+                <button class="btn btn-primary">Yadda saxla</button>
+
+            </form>
+
+        </div>
+    </div>
+
+</main>
+</html>

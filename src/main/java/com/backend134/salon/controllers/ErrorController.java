@@ -8,6 +8,6 @@ public class ErrorController {
 
     @GetMapping("/error-403")
     public String accessDenied() {
-        return "error/error-403"; // ✅ templates/error/error-403.html
+        return "error/error-403"; //  templates/error/error-403.html
     }
 }

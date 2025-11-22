@@ -21,7 +21,7 @@ public class PagesController {
     @GetMapping("/services")
     public String services(Model model){
         model.addAttribute("activePage", "services");
-        model.addAttribute("navCategories", categoryService.getAllCategories()); // ✅ əlavə etdik
+        model.addAttribute("navCategories", categoryService.getAllCategories());
         return "service";
     }
 
@@ -38,7 +38,7 @@ public class PagesController {
         model.addAttribute("activePage", "gallery");
         model.addAttribute("images", galleryImageService.getAllImages());
         model.addAttribute("text", galleryTextService.getText());
-        model.addAttribute("navCategories", categoryService.getAllCategories()); // ✅ əlavə etdik
+        model.addAttribute("navCategories", categoryService.getAllCategories());
         return "gallery";
     }
 }

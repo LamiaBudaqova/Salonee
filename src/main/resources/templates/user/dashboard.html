@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="az"
+      xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="~{user/layout}">
+<main layout:fragment="content">
+
+    <div class="page-heading">
+        <h3>Salam, <span th:text="${user.name}"></span>! 👋</h3>
+        <p class="text-muted">Buradan hesabınızı, rezervasiyalarınızı və keşbek balansınızı idarə edə bilərsiniz.</p>
+    </div>
+
+    <section class="row">
+        <!-- Rezervasiya sayı -->
+        <div class="col-12 col-md-4">
+            <div class="card shadow-sm">
+                <div class="card-body">
+                    <h6>Ümumi rezervasiyalar</h6>
+                    <h2 class="text-primary" th:text="${totalReservations}">0</h2>
+                </div>
+            </div>
+        </div>
+
+        <!-- Cashback -->
+        <div class="col-12 col-md-4">
+            <div class="card shadow-sm">
+                <div class="card-body">
+                    <h6>Cashback Balans</h6>
+                    <h2 class="text-success" th:text="${user.cashbackBalance + ' ₼'}">0 ₼</h2>
+                </div>
+            </div>
+        </div>
+
+        <!-- Son rezervasiya -->
+        <div class="col-12 col-md-4">
+            <div class="card shadow-sm">
+                <div class="card-body">
+                    <h6>Son rezervasiya</h6>
+                    <p th:if="${lastReservation != null}">
+                        <strong th:text="${lastReservation.serviceName}"></strong> <br>
+                        <span th:text="${lastReservation.date}"></span> /
+                        <span th:text="${lastReservation.startTime}"></span>
+                    </p>
+                    <p th:if="${lastReservation == null}" class="text-muted">
+                        Rezervasiya tapılmadı
+                    </p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+</main>
+</html>

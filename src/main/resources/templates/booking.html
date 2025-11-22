@@ -3,6 +3,7 @@
       xmlns:th="http://www.thymeleaf.org"
       xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
       layout:decorate="~{layout}">
+
 <body>
 <main layout:fragment="content">
 
@@ -20,8 +21,13 @@
 
     <div class="row justify-content-center">
       <div class="col-lg-6 col-md-8 col-sm-10">
-        <!-- Uğur mesajı (görünməz, modal üçün) -->
-        <div th:if="${success}" id="successFlag" th:data-success="${success}"></div>
+
+        <!-- Error mesajı -->
+        <div th:if="${error}" class="alert alert-danger text-center mb-4"
+             th:text="${error}"></div>
+
+        <!-- Uğur flagı (modal trigger) -->
+        <div th:if="${success}" id="successFlag"></div>
 
         <form th:action="@{/booking}" th:object="${reservation}" method="post"
               class="p-4 border rounded bg-light shadow-sm">
@@ -82,7 +88,23 @@
                       placeholder="Əlavə istək və ya qeyd..."></textarea>
           </div>
 
-          <!-- Gizli inputlar -->
+          <!-- Cashback yalnız login olanlara -->
+          <div class="mb-3" th:if="${loggedUser != null}">
+            <label class="form-label fw-bold d-block">Cashback istifadə et</label>
+
+            <div class="form-check">
+              <input class="form-check-input" type="checkbox" th:field="*{useCashback}">
+              <label class="form-check-label">
+                Mövcud balans: <span th:text="${loggedUser.cashbackBalance}"></span> ₼
+              </label>
+            </div>
+
+            <small class="text-muted">
+              Cashback yalnız daxil olmuş istifadəçilər üçün keçərlidir.
+            </small>
+          </div>
+
+          <!-- Hidden inputlar -->
           <input type="hidden" th:field="*{branchId}" id="branchIdHidden">
           <input type="hidden" th:field="*{staffId}" id="staffIdHidden">
           <input type="hidden" th:field="*{serviceId}" id="serviceIdHidden">
@@ -98,26 +120,25 @@
     </div>
   </div>
 
-  <!-- ✅ Uğurlu rezervasiya modali -->
-  <div class="modal fade" id="successModal" tabindex="-1" aria-labelledby="successModalLabel" aria-hidden="true">
+  <!-- MODAL -->
+  <div class="modal fade" id="successModal" tabindex="-1">
     <div class="modal-dialog modal-dialog-centered">
       <div class="modal-content border-success shadow">
         <div class="modal-header bg-success text-white">
-          <h5 class="modal-title" id="successModalLabel">Rezervasiya uğurlu</h5>
-          <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal" aria-label="Bağla"></button>
+          <h5 class="modal-title">Rezervasiya uğurlu</h5>
+          <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal"></button>
         </div>
+
         <div class="modal-body text-center">
           <i class="bi bi-check-circle-fill text-success" style="font-size: 48px;"></i>
-          <p class="mt-3 mb-0">Rezervasiyanız uğurla göndərildi!<br>Ən qısa zamanda sizinlə əlaqə saxlanılacaq.</p>
-
-          <!-- 🔹 Telegram yönləndirmə mesajı -->
+          <p class="mt-3">Rezervasiyanız uğurla göndərildi!</p>
           <p class="mt-2">
             Qəbul və ya rədd edildiyini öyrənmək üçün
-            <a href="https://t.me/lamiabeauty_bot" target="_blank" class="text-primary fw-bold">
-              @lamiabeauty_bot
-            </a> Telegram botuna yazın 💬
+            <a href="https://t.me/lamiabeauty_bot" target="_blank" class="text-primary fw-bold">@lamiabeauty_bot</a>
+            Telegram botuna yazın 💬
           </p>
         </div>
+
         <div class="modal-footer justify-content-center">
           <button type="button" class="btn btn-success px-4" data-bs-dismiss="modal">Bağla</button>
         </div>
@@ -125,76 +146,65 @@
     </div>
   </div>
 
-  <!-- 🔹 JS: ardıcıl seçmə + modal -->
+  <!-- =================== JS ==================== -->
   <script>
-    document.addEventListener("DOMContentLoaded", () => {
-      const branchSelect = document.getElementById("branchSelect");
-      const staffSelect = document.getElementById("staffSelect");
-      const serviceSelect = document.getElementById("serviceSelect");
-      const hiddenBranch = document.getElementById("branchIdHidden");
-      const hiddenStaff = document.getElementById("staffIdHidden");
-      const hiddenService = document.getElementById("serviceIdHidden");
 
-      // 🔹 Filial seçiləndə ustalar
-      branchSelect.addEventListener("change", async () => {
-        const branchId = branchSelect.value;
-        hiddenBranch.value = branchId;
-        staffSelect.innerHTML = '<option value="">Seçin...</option>';
-        serviceSelect.innerHTML = '<option value="">Seçin...</option>';
-        staffSelect.disabled = !branchId;
-        serviceSelect.disabled = true;
+    // === Filial seçiləndə ustaları doldur ===
+    document.getElementById("branchSelect").addEventListener("change", function () {
+      let branchId = this.value;
+      document.getElementById("branchIdHidden").value = branchId;
 
-        if (branchId) {
-          const res = await fetch(`/booking/staff-by-branch/${branchId}`);
-          const data = await res.json();
-          data.forEach(st => {
-            const opt = document.createElement("option");
-            opt.value = st.id;
-            opt.textContent = st.fullName;
-            staffSelect.appendChild(opt);
-          });
+      if (!branchId) return;
+
+      fetch(`/booking/staff-by-branch/${branchId}`)
+              .then(res => res.json())
+              .then(data => {
+                let staffSelect = document.getElementById("staffSelect");
+                staffSelect.innerHTML = '<option value="">Seçin...</option>';
+
+                data.forEach(st => {
+                  staffSelect.innerHTML += `<option value="${st.id}">${st.fullName}</option>`;
+                });
+
+                staffSelect.disabled = false;
+              });
+    });
+
+    // === Usta seçiləndə xidmətləri doldur ===
+    document.getElementById("staffSelect").addEventListener("change", function () {
+      let staffId = this.value;
+      document.getElementById("staffIdHidden").value = staffId;
+
+      if (!staffId) return;
+
+      fetch(`/booking/services-by-staff/${staffId}`)
+              .then(res => res.json())
+              .then(data => {
+                let serviceSelect = document.getElementById("serviceSelect");
+                serviceSelect.innerHTML = '<option value="">Seçin...</option>';
+
+                data.forEach(s => {
+                  serviceSelect.innerHTML += `<option value="${s.id}">${s.name}</option>`;
+                });
+
+                serviceSelect.disabled = false;
+              });
+    });
+
+    // === Hidden serviceId doldur ===
+    document.getElementById("serviceSelect").addEventListener("change", function () {
+      document.getElementById("serviceIdHidden").value = this.value;
+    });
+
+  </script>
+
+  <!-- MODAL AUTO-SHOW FIX -->
+  <script>
+    document.addEventListener("DOMContentLoaded", function () {
+        if (document.getElementById("successFlag")) {
+            var modal = new bootstrap.Modal(document.getElementById("successModal"));
+            modal.show();
         }
-      });
-
-      // 🔹 Usta seçiləndə xidmətlər
-      staffSelect.addEventListener("change", async () => {
-        const staffId = staffSelect.value;
-        hiddenStaff.value = staffId;
-        serviceSelect.innerHTML = '<option value="">Seçin...</option>';
-        serviceSelect.disabled = !staffId;
-
-        if (staffId) {
-          const res = await fetch(`/booking/services-by-staff/${staffId}`);
-          const data = await res.json();
-          data.forEach(s => {
-            const opt = document.createElement("option");
-            opt.value = s.id;
-            opt.textContent = s.name;
-            serviceSelect.appendChild(opt);
-          });
-        }
-      });
-
-      // 🔹 Xidmət seçiləndə gizli input
-      serviceSelect.addEventListener("change", () => {
-        hiddenService.value = serviceSelect.value;
-      });
-
-      // 🔹 keçmiş tarixlərə icazə vermə
-      const dateInput = document.getElementById("dateInput");
-      if (dateInput) {
-        const today = new Date().toISOString().split("T")[0];
-        dateInput.min = today;
-      }
-
-      // 🔹 Uğur mesajı varsa modal aç
-      const successFlag = document.getElementById("successFlag");
-      if (successFlag) {
-        const modal = new bootstrap.Modal(document.getElementById('successModal'));
-        modal.show();
-        // 3 saniyə sonra avtomatik bağlansın
-        // setTimeout(() => modal.hide(), 3000);
-      }
     });
   </script>
 

@@ -18,7 +18,10 @@
                         <img th:src="${staff.imageUrl}" alt="Profil şəkli"
                              class="rounded-circle border border-3 border-primary mb-3"
                              style="width: 160px; height: 160px; object-fit: cover;">
-                        <input type="file" name="image" class="form-control mt-2">
+                        <label class="btn btn-primary mt-2">
+                            Şəkil seç
+                            <input type="file" name="image" hidden>
+                        </label>
                     </div>
 
                     <!-- Sağ hissə: form sahələri -->

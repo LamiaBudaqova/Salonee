@@ -1,0 +1,24 @@
+<!DOCTYPE html>
+<html lang="az"
+      xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="~{user/layout}">
+<main layout:fragment="content">
+
+  <div class="page-heading">
+    <h3>Cashback Balansım</h3>
+  </div>
+
+  <div class="card shadow-sm">
+    <div class="card-body">
+      <h4 class="text-success" th:text="${user.cashbackBalance + ' ₼'}">0 ₼</h4>
+
+      <p class="text-muted mt-3">
+        🎁 *Cashback necə işləyir?*
+        Hər rezervasiya təsdiqləndikdə xidmət qiymətinin 2%-i sizin balansınıza əlavə olunur.
+      </p>
+    </div>
+  </div>
+
+</main>
+</html>

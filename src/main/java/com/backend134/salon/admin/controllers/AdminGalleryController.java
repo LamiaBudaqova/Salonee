@@ -18,14 +18,12 @@ public class AdminGalleryController {
     private final AdminGalleryImageService adminGalleryImageService;
     private final GalleryTextService galleryTextService;
 
-    // ---  Qalereya şəkillərinin siyahısı ---
     @GetMapping
     public String list(Model model) {
         model.addAttribute("images", adminGalleryImageService.getAll());
         return "admin/gallery/list"; // templates/admin/gallery/list.html
     }
 
-    // ---  Yeni şəkil formu ---
     @GetMapping("/create")
     public String createForm(Model model) {
         model.addAttribute("image", new AdminGalleryImageCreateDto());
@@ -51,14 +49,12 @@ public class AdminGalleryController {
         return "redirect:/admin/gallery";
     }
 
-    // ---  Silmək ---
     @GetMapping("/delete/{id}")
     public String delete(@PathVariable Long id) {
         adminGalleryImageService.delete(id);
         return "redirect:/admin/gallery";
     }
 
-    // --- Qalereya başlığı (title/subtitle) redaktəsi ---
     @GetMapping("/text")
     public String editText(Model model) {
         GalleryTextDto text = galleryTextService.getText();
@@ -69,8 +65,6 @@ public class AdminGalleryController {
 
     @PostMapping("/text")
     public String updateText(@ModelAttribute GalleryTextDto dto) {
-        // Əgər gələcəkdə service-də update metodu yazsan, bura əlavə ediləcək
-        // galleryTextService.update(dto);
         return "redirect:/admin/gallery/text?success";
     }
 }

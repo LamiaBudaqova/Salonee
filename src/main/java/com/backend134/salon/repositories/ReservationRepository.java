@@ -13,13 +13,13 @@ import java.util.List;
 
 public interface ReservationRepository extends JpaRepository<Reservation, Long> {
 
-    // 🔹 Ustanın rezervlərini tapmaq
+    // ustanın rezervlerini tapmaq
     List<Reservation> findByStaff_Id(Long staffId);
 
-    // 🔹 Statusa görə say
+    // statusa göre say
     long countByStaff_IdAndStatus(Long staffId, ReservationStatus status);
 
-    // 🔹 Vaxt toqquşmalarını tapmaq (Booking zamanı)
+    // vaxt toqquşmalarını tapmaq (Booking zamanı)
     @Query("""
         SELECT r FROM Reservation r
         WHERE r.date = :date
@@ -39,5 +39,6 @@ public interface ReservationRepository extends JpaRepository<Reservation, Long> 
     List<Reservation> findByStaff_IdAndDateBetween(Long staffId, LocalDate start, LocalDate end);
     List<Reservation> findByStaff_IdAndStatus(Long staffId, ReservationStatus status);
     List<Reservation> findByStaff_IdAndStatusAndDateBetween(Long staffId, ReservationStatus status, LocalDate start, LocalDate end);
+    List<Reservation> findByUser_EmailOrderByDateDescStartTimeAsc(String email); // user ucun rezervler
 
 }

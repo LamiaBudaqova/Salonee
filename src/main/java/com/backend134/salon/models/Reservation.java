@@ -24,10 +24,10 @@ public class Reservation {
     private Long id;
 
     @ManyToOne(optional = false)
-    private SalonService service; // seçilən xidmət
+    private SalonService service;
 
     @ManyToOne
-    private Staff staff; // usta (mini dashboard üçün)
+    private Staff staff; // usta (mini dashboard ucun)
 
     private LocalDate date;
     private LocalTime startTime;
@@ -42,6 +42,9 @@ public class Reservation {
 
     @Column(columnDefinition = "TEXT")
     private String notes;
+
+    @Column(nullable = false)
+    private Double usedCashback = 0.0;
 
     private LocalDateTime createdAt = LocalDateTime.now();
     @ManyToOne

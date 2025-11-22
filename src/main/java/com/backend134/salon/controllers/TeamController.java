@@ -22,20 +22,20 @@ public class TeamController {
             @RequestParam(value = "branchId", required = false) Long branchId,
             Model model
     ) {
-        //  Filial siyahısını databazadan gətiririk
+        //  Filial siyahısını databazadan getiririk
         model.addAttribute("branches", branchService.getAllBranches());
 
         //  Komanda başlıqları (TeamText)
         model.addAttribute("teamText", teamTextService.getText());
 
-        //  Əgər konkret filial seçilibsə, həmin filialdakı ustaları göstər
+        //  eger konkret filial seçilibse, hemin filialdakı ustaları göster
         if (branchId != null) {
             model.addAttribute("members", teamMemberService.getByBranch(branchId));
         } else {
             model.addAttribute("members", teamMemberService.getAllTeamMembers());
         }
 
-        // ️Dropdown üçün seçilmiş filial ID-si
+        // ️Dropdown ucun seçilmiş filial ID-si
         model.addAttribute("selectedBranchId", branchId);
 
         return "team";

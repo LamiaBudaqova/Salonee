@@ -44,4 +44,16 @@ public class UserServiceImpl implements UserService {
         return userRepository.findByEmail(email)
                 .orElseThrow(() -> new RuntimeException("İstifadəçi tapılmadı: " + email));
     }
+
+    @Override
+    public User updateProfile(Long id, String name, String surname, String email) {
+        User user = userRepository.findById(id)
+                .orElseThrow(() -> new RuntimeException("User tapılmadı"));
+
+        user.setName(name);
+        user.setSurname(surname);
+        user.setEmail(email);
+
+        return userRepository.save(user);
+    }
 }

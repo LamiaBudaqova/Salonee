@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html lang="az"
+      xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="~{user/layout}">
+<main layout:fragment="content">
+
+    <div class="page-heading">
+        <h3>Profilim</h3>
+    </div>
+
+    <div class="card shadow-sm">
+        <div class="card-body">
+
+            <p><strong>Ad:</strong> <span th:text="${user.name}"></span></p>
+            <p><strong>Soyad:</strong> <span th:text="${user.surname}"></span></p>
+            <p><strong>Email:</strong> <span th:text="${user.email}"></span></p>
+            <p><strong>Cashback:</strong> <span th:text="${user.cashbackBalance}"></span> ₼</p>
+
+            <a class="btn btn-primary mt-3" th:href="@{/user/profile/edit}">Profil redaktə</a>
+
+        </div>
+    </div>
+
+</main>
+</html>

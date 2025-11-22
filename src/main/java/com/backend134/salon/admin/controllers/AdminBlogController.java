@@ -36,19 +36,19 @@ public class AdminBlogController {
         return "redirect:/admin/blogs";
     }
 
-    // Blog redaktə formu
+    // Blog redakte formu
     @GetMapping("/edit/{id}")
     public String editForm(@PathVariable Long id, Model model) {
         // Mövcud blog məlumatını al
         AdminBlogResponseDto blog = adminBlogService.getById(id);
 
-        // AdminBlogUpdateDto yaradıb mövcud məlumatları doldur
+        // AdminBlogUpdateDto yaradıb mövcud melumatları doldur
         AdminBlogUpdateDto dto = new AdminBlogUpdateDto();
         dto.setTitle(blog.getTitle());
         dto.setContent(blog.getContent());
         dto.setImagePath(blog.getImagePath());
 
-        // Modelə əlavə et
+        // Modelə elavə et
         model.addAttribute("blogId", id);
         model.addAttribute("blog", dto);
 
@@ -62,7 +62,7 @@ public class AdminBlogController {
         return "redirect:/admin/blogs";
     }
 
-    //  Blog silmək
+    //  Blog silmek
     @GetMapping("/delete/{id}")
     public String delete(@PathVariable Long id) {
         adminBlogService.delete(id);

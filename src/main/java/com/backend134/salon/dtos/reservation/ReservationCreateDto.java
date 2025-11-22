@@ -16,26 +16,19 @@ import java.time.LocalTime;
 public class ReservationCreateDto {
     @NotNull
     private Long branchId;
-
     @NotNull
     private Long serviceId;
-
     private Long staffId;
-
     @NotNull
     private LocalDate date;
-
     @NotNull
     private LocalTime startTime;
-
     @NotBlank
     private String customerName;
-
     @NotBlank
     private String customerPhone;
-
     @Email
     private String customerEmail;
-
     private String notes;
+    private boolean useCashback;
 }

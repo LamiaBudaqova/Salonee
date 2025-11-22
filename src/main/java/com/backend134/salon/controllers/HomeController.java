@@ -25,7 +25,7 @@ public class HomeController {
     public String home(Model model) {
         model.addAttribute("activePage", "home");
         model.addAttribute("categories", categoryService.getHomeFeaturedCategories());
-        model.addAttribute("about", aboutService.getAboutForHome()); // ana səhifə üçün qısaldılmış
+        model.addAttribute("about", aboutService.getAboutForHome()); // ana sehife ucun qısaldılmış
         model.addAttribute("navCategories", categoryService.getAllCategories());
         model.addAttribute("blogs", blogService.getLatestPosts());
         model.addAttribute("hero", heroService.getHero());
@@ -37,7 +37,7 @@ public class HomeController {
         );        model.addAttribute("galleryImages", galleryImageService.getLimitedImages(6));
         model.addAttribute("teamText", teamTextService.getText());
         model.addAttribute("teamMembers", teamMemberService.getFirstFourMembers());
-        model.addAttribute("testimonials", testimonialService.getLatestFiveTestimonials()); // ✅ yalnız son 5
+        model.addAttribute("testimonials", testimonialService.getLatestFiveTestimonials()); //  son 5
         model.addAttribute("testimonialText", testimonialTextService.getText());
         return "index";
     }

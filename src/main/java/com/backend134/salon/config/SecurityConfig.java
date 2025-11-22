@@ -23,7 +23,6 @@ public class SecurityConfig {
         return new BCryptPasswordEncoder();
     }
 
-    // ✅ YENİ versiya (and() yoxdur artıq)
     @Bean
     public AuthenticationManager authenticationManager(HttpSecurity http,
                                                        PasswordEncoder passwordEncoder,
@@ -63,6 +62,8 @@ public class SecurityConfig {
                         ).permitAll()
                         .requestMatchers("/admin/**").hasAuthority("ROLE_ADMIN")
                         .requestMatchers("/staff/**").hasAuthority("ROLE_STAFF")
+                        .requestMatchers("/user/**").hasAuthority("ROLE_USER")
+
 
                         .anyRequest().authenticated()
                 )
@@ -88,9 +89,12 @@ public class SecurityConfig {
                                 } else {
                                     response.sendRedirect("/login?error=inactive");
                                 }
+                            } else if (authorities.stream().anyMatch(a -> a.getAuthority().equals("ROLE_USER"))) {
+                                response.sendRedirect("/user");
                             } else {
                                 response.sendRedirect("/");
                             }
+
                         })
                         .failureUrl("/login?error")
                         .permitAll()
