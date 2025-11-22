@@ -26,19 +26,34 @@ public class BookingController {
 
     @GetMapping("/booking")
     public String showBookingForm(Model model) {
+
+        // login olmuş emailli götürürük
+        String email = SecurityUtil.getLoggedUserEmail();
+
+        // login olmayıbsa → booking açılır, amma cashback yoxdur
+        if (email == null) {
+            model.addAttribute("loggedUser", null);
+        } else {
+            // USER cədvəlində varsa, müştəridir
+            var user = userService.findOptionalByEmail(email);
+
+            // Əgər user yoxdur → deməli STAFF və ya ADMIN-dir
+            if (user.isEmpty()) {
+                // STAFF və ya ADMIN üçün booking qadağandır → yönləndiririk
+                return "redirect:/";
+            }
+
+            // user varsa → müştəri
+            model.addAttribute("loggedUser", user.get());
+        }
+
+        // filiallar və boş form
         model.addAttribute("branches", branchService.getAll());
         model.addAttribute("reservation", new ReservationCreateDto());
 
-        // login olmuş useri modele ötürürük (cashback üçün)
-        String email = SecurityUtil.getLoggedUserEmail();
-        if (email != null) {
-            model.addAttribute("loggedUser", userService.findByEmail(email));
-        } else {
-            model.addAttribute("loggedUser", null);
-        }
-
         return "booking";
     }
+
 
     @GetMapping("/booking/staff-by-branch/{branchId}")
     @ResponseBody
