@@ -6,6 +6,9 @@ import com.backend134.salon.repositories.BlogRepository;
 import com.backend134.salon.services.BlogService;
 import lombok.RequiredArgsConstructor;
 import org.modelmapper.ModelMapper;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDate;
@@ -61,5 +64,13 @@ public class BlogServiceImpl implements BlogService {
     @Override
     public void delete(Long id) {
         blogRepository.deleteById(id);
+    }
+
+    @Override
+    public Page<BlogDto> getBlogsPage(int page, int size) {
+        PageRequest pageable = PageRequest.of(page, size, Sort.by("createdAt").descending());
+
+        return blogRepository.findAllByOrderByCreatedAtDesc(pageable)
+                .map(blog -> modelMapper.map(blog, BlogDto.class));
     }
 }
