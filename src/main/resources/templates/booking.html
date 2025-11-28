@@ -60,7 +60,12 @@
           <!-- Tarix -->
           <div class="mb-3">
             <label class="form-label fw-bold">Tarix</label>
-            <input type="date" id="dateInput" th:field="*{date}" class="form-control" required>
+            <input type="date"
+                   id="dateInput"
+                   th:field="*{date}"
+                   class="form-control"
+                   required
+                   th:attr="min=${#dates.format(#dates.createNow(),'yyyy-MM-dd')}">
           </div>
 
           <!-- Vaxt -->

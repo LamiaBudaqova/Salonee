@@ -1,5 +1,6 @@
 package com.backend134.salon.services.impls;
 
+import com.backend134.salon.dtos.about.AboutFullDto;
 import com.backend134.salon.dtos.about.AboutHomeDto;
 import com.backend134.salon.repositories.AboutRepository;
 import com.backend134.salon.services.AboutService;
@@ -32,12 +33,12 @@ public class AboutServiceImpl implements AboutService {
     }
 
     @Override
-    public AboutHomeDto getAboutForPage() {
+    public AboutFullDto getAboutForPage() {
         return aboutRepository.findAll()
                 .stream()
                 .reduce((first, second) -> second)
-                .map(about -> modelMapper.map(about, AboutHomeDto.class))
+                .map(about -> modelMapper.map(about, AboutFullDto.class))
                 .orElse(null);
-
     }
+
 }

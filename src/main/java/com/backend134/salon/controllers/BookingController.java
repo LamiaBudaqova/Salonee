@@ -78,13 +78,21 @@ public class BookingController {
     @PostMapping("/booking")
     public String createReservation(@ModelAttribute @Valid ReservationCreateDto dto,
                                     RedirectAttributes ra) {
+
+        // === Keçmiş tarix seçmək qadağandır ===
+        if (dto.getDate() != null && dto.getDate().isBefore(java.time.LocalDate.now())) {
+            ra.addFlashAttribute("error", "Keçmiş tarix seçmək olmaz!");
+            return "redirect:/booking";
+        }
+
         try {
             reservationService.create(dto);
             ra.addFlashAttribute("success", "Rezervasiya uğurla yaradıldı!");
+
         } catch (IllegalStateException e) {
-            // meselen: "Bu vaxt artıq doludur!"
             ra.addFlashAttribute("error", e.getMessage());
         }
+
         return "redirect:/booking";
     }
 
