@@ -2,6 +2,7 @@ package com.backend134.salon.controllers;
 
 import com.backend134.salon.dtos.blog.BlogDto;
 import com.backend134.salon.services.BlogService;
+import com.backend134.salon.services.CategoryService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
 import org.springframework.stereotype.Controller;
@@ -15,6 +16,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 public class BlogController {
 
     private final BlogService blogService;
+    private final CategoryService categoryService;
 
     @GetMapping("/blog")
     public String blogList(
@@ -37,6 +39,8 @@ public class BlogController {
         model.addAttribute("blogs", blogPage.getContent());
         model.addAttribute("currentPage", page);
         model.addAttribute("totalPages", totalPages);
+        model.addAttribute("navCategories", categoryService.getAllCategories());
+        model.addAttribute("activePage", "blog");
 
         return "blog";
     }
@@ -44,6 +48,9 @@ public class BlogController {
     @GetMapping("/blog/{id}")
     public String blogDetail(@PathVariable Long id, Model model){
         model.addAttribute("blog", blogService.getById(id));
+        model.addAttribute("navCategories", categoryService.getAllCategories());
+        model.addAttribute("activePage", "blog");
+
         return "blog-detail";
     }
 }
