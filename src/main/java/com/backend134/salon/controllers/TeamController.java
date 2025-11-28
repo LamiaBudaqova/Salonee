@@ -1,6 +1,7 @@
 package com.backend134.salon.controllers;
 
 import com.backend134.salon.services.BranchService;
+import com.backend134.salon.services.CategoryService;
 import com.backend134.salon.services.TeamMemberService;
 import com.backend134.salon.services.TeamTextService;
 import lombok.RequiredArgsConstructor;
@@ -16,6 +17,7 @@ public class TeamController {
     private final TeamMemberService teamMemberService;
     private final TeamTextService teamTextService;
     private final BranchService branchService;
+    private final CategoryService categoryService;
 
     @GetMapping("/team")
     public String teamPage(
@@ -35,8 +37,10 @@ public class TeamController {
             model.addAttribute("members", teamMemberService.getAllTeamMembers());
         }
 
-        // ️Dropdown ucun seçilmiş filial ID-si
         model.addAttribute("selectedBranchId", branchId);
+        model.addAttribute("navCategories", categoryService.getAllCategories());
+        model.addAttribute("activePage", "team");
+
 
         return "team";
     }

@@ -1,6 +1,7 @@
 package com.backend134.salon.controllers;
 
 import com.backend134.salon.dtos.testimonial.TestimonialCreateDto;
+import com.backend134.salon.services.CategoryService;
 import com.backend134.salon.services.TestimonialService;
 import com.backend134.salon.services.TestimonialTextService;
 import lombok.RequiredArgsConstructor;
@@ -16,12 +17,15 @@ public class TestimonialController {
 
     private final TestimonialService testimonialService;
     private final TestimonialTextService testimonialTextService;
+    private final CategoryService categoryService;
 
     @GetMapping("/testimonial")
     private String testimonialPage(Model model){
         model.addAttribute("testimonials", testimonialService.getAllTestimonials());
         model.addAttribute("testimonialText", testimonialTextService.getText());
         model.addAttribute("testimonialForm", new TestimonialCreateDto()); //    form üçün boş DTO
+        model.addAttribute("navCategories", categoryService.getAllCategories());
+        model.addAttribute("activePage", "testimonial");
         return "testimonial";
     }
 
